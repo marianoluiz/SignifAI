@@ -1,15 +1,11 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "../../app/store";
-
-// Define a type for the slice state
-interface CounterState {
-  value: number;
-}
+import type { CounterState } from "./counterTypes"
 
 // Define the initial state using that type
 const initialState: CounterState = {
   value: 0,
-} as CounterState;
+};
 
 export const counterSlice = createSlice({
   name: "counter",
@@ -29,6 +25,7 @@ export const counterSlice = createSlice({
   },
 });
 
+// action creators
 export const { increment, decrement, incrementByAmount } = counterSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type
