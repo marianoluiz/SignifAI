@@ -1,9 +1,17 @@
 import { NavLink } from "react-router"
+import { AUDIO } from "../../../constants/audio"
 
 const GamePage = () => {
   return (
     <div>
       <div>Game</div>
+      <audio autoPlay loop>
+        <source src={AUDIO.wonderful_world} />
+      </audio>
+
+      <audio autoPlay loop>
+        <source src={AUDIO.click_sound} />
+      </audio>
 
       <NavLink
         to="/play/song-select"

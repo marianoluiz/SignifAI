@@ -6,6 +6,8 @@ import { setAppInitialized, setLoading } from "../../features/app/appSlice";
 
 import SplashScreen from "../../components/SplashScreen";
 import { IMAGES } from "../../constants/images"
+import { AUDIO } from "../../constants/audio"
+import useAudio from "../../hooks/useAudio"
 
 /**
  * Home component that initializes the app and displays the home page.
@@ -13,6 +15,8 @@ import { IMAGES } from "../../constants/images"
  * - Navigates to the "About" page using NavLink.
  */
 const HomePage = () => {
+  const clickSound = useAudio(AUDIO.click_sound);
+
   // Redux state selectors
   const isLoading = useAppSelector((state) => state.app.isLoading);
   const isAppInitialized = useAppSelector(
@@ -62,15 +66,27 @@ const HomePage = () => {
       </div>
 
       <div className="flex flex-row justify-center gap-8">
-        <NavLink to="/practice" className="h-16">
+        <NavLink
+          to="/practice"
+          className="h-16"
+          onClick={() => clickSound.playAudio()}
+        >
           <img src={IMAGES.btn_pract} className="h-16" alt="Practice Button" />
         </NavLink>
 
-        <NavLink to="/play" className="h-24">
+        <NavLink
+          to="/play"
+          className="h-24"
+          onClick={() => clickSound.playAudio()}
+        >
           <img src={IMAGES.btn_play} className="h-24" alt="Play Button" />
         </NavLink>
 
-        <NavLink to="/leaderboard" className="h-16">
+        <NavLink
+          to="/leaderboard"
+          className="h-16"
+          onClick={() => clickSound.playAudio()}
+        >
           <img
             src={IMAGES.btn_lboard}
             className="h-16"
