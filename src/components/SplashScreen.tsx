@@ -3,7 +3,7 @@ import SplashImage from "/splash_screen.png";
 const SplashScreen = () => {
   return (
     <div className="flex w-screen h-screen justify-center items-center">
-      <img className="animate-pulse" src={SplashImage} alt="Splash Screen" />
+      <img className="animate-ltr" src={SplashImage} alt="Splash Screen" />
     </div>
   );
 };
