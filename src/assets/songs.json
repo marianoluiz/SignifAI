@@ -1,0 +1,53 @@
+{
+    "songs": [
+      {
+        "level": "Easy",
+        "title": "What a Wonderful World - Louis Armstrong",
+        "tempo": "72 BPM",
+        "duration": "0:45 to 1:15",
+        "entries": [
+          { "timestamp": "0:33", "prompt": "TREE", "asl": "T" },
+          { "timestamp": "0:36", "prompt": "ROSE", "asl": "R" },
+          { "timestamp": "0:39", "prompt": "BLOOM", "asl": "B" },
+          { "timestamp": "0:42", "prompt": "YOU", "asl": "Y" },
+          { "timestamp": "0:45", "prompt": "THINK", "asl": "T" },
+          { "timestamp": "0:48", "prompt": "WORLD", "asl": "W" },
+          { "timestamp": "0:52", "prompt": "BLUE", "asl": "B" },
+          { "timestamp": "0:55", "prompt": "CLOUD", "asl": "C" },
+          { "timestamp": "0:58", "prompt": "DAY", "asl": "D" }
+        ]
+      },
+      {
+        "level": "Medium",
+        "title": "Count on Me - Bruno Mars",
+        "tempo": "88 BPM",
+        "duration": "0:21 to 0:45",
+        "entries": [
+          { "timestamp": "0:21", "prompt": "FIND", "asl": "F" },
+          { "timestamp": "0:24", "prompt": "SEA", "asl": "S" },
+          { "timestamp": "0:27", "prompt": "WORLD", "asl": "W" },
+          { "timestamp": "0:30", "prompt": "DARK", "asl": "D" },
+          { "timestamp": "0:33", "prompt": "SEE", "asl": "V" },
+          { "timestamp": "0:36", "prompt": "LIGHT", "asl": "L" },
+          { "timestamp": "0:39", "prompt": "ILY", "asl": "ILY" }
+        ]
+      },
+      {
+        "level": "Hard",
+        "title": "You Belong With Me - Taylor Swift",
+        "tempo": "130 BPM",
+        "entries": [
+          { "timestamp": "0:40", "prompt": "YOU", "asl": "YOU" },
+          { "timestamp": "0:45", "prompt": "ME", "asl": "ME" },
+          { "timestamp": "0:50", "prompt": "C", "asl": "C" },
+          { "timestamp": "0:55", "prompt": "ILY", "asl": "ILY" },
+          { "timestamp": "1:00", "prompt": "YOU", "asl": "YOU" },
+          { "timestamp": "1:05", "prompt": "ME", "asl": "ME" },
+          { "timestamp": "1:10", "prompt": "YOU", "asl": "YOU" },
+          { "timestamp": "1:15", "prompt": "YOU", "asl": "YOU" },
+          { "timestamp": "1:20", "prompt": "ILY", "asl": "ILY" }
+        ]
+      }
+    ]
+  }
+  
