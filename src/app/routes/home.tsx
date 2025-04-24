@@ -12,7 +12,7 @@ import { IMAGES } from "../../constants/images"
  * - Shows a splash screen while loading.
  * - Navigates to the "About" page using NavLink.
  */
-const Home = () => {
+const HomePage = () => {
   // Redux state selectors
   const isLoading = useAppSelector((state) => state.app.isLoading);
   const isAppInitialized = useAppSelector(
@@ -82,4 +82,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default HomePage;

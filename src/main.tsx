@@ -4,10 +4,11 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router";
 import { Provider } from "react-redux";
 import store from './app/store';
 
-import Home from "./app/routes/home";
+import HomePage from "./app/routes/home";
 import GamePage from "./app/routes/play/game";
 import SongSelectPage from "./app/routes/play/song-select";
 import ResultPage from './app/routes/play/result';
+import LeaderboardPage from "./app/routes/leaderboard"
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
@@ -15,10 +16,11 @@ createRoot(document.getElementById("root")!).render(
       <BrowserRouter>
         <Routes>
           {/* Home */}
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<HomePage />} />
+          {/* Leaderboard */}
+          <Route path="/leaderboard" element={<LeaderboardPage />} />
           {/* Play */}
           <Route path="/play">
-            {/* replace - to prevent looping back to /play route */}
             <Route
               index
               element={<Navigate to="/play/song-select" replace />}
