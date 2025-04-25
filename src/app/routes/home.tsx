@@ -16,12 +16,13 @@ const HomePage = () => {
   // Get isLoading status from a custom hook
   const { isLoading } = useAppInitialization();
 
-  if ( isLoading ) {
-    return <SplashScreen />;
-  }
-
   return (
     <div>
+
+      {isLoading && (
+        <SplashScreen />
+      )}
+
       <img
         className="absolute top-28 right-44 size-28 -z-1"
         src={IMAGES.bg_glitch1}
