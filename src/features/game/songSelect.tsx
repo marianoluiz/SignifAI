@@ -1,9 +1,9 @@
 import { NavLink } from "react-router";
-import { IMAGES } from "../../../constants/images";
-import { AUDIO } from "../../../constants/audio"
-import useAudio from "../../../hooks/useAudio";
+import { IMAGES } from "../../constants/images";
+import { AUDIO } from "../../constants/audio"
+import useAudio from "../../hooks/useAudio";
 
-import songs_config from "../../../config/songs_config.json"
+import songs_config from "../../config/songs_config.json"
 
 const SongSelectPage = () => {
   const clickSound = useAudio(AUDIO.click_sound)
