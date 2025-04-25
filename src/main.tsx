@@ -19,14 +19,14 @@ createRoot(document.getElementById("root")!).render(
           <Route path="/" element={<HomePage />} />
           {/* Leaderboard */}
           <Route path="/leaderboard" element={<LeaderboardPage />} />
-          {/* Play */}
+          {/* Play, replace param to not loop when backing */}
           <Route path="/play">
             <Route
               index
-              element={<Navigate to="/play/song-select" replace />}
+              element={<Navigate to="/play/select" replace />}
             />
-            <Route path="/play/song-select" element={<SongSelectPage />} />
-            <Route path="/play/game" element={<GamePage />} />
+            <Route path="/play/select" element={<SongSelectPage />} />
+            <Route path="/play/song/:songId" element={<GamePage />} />
             <Route path="/play/result" element={<ResultPage />} />
           </Route>
         </Routes>
