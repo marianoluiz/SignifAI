@@ -1,13 +1,9 @@
-import { useEffect } from "react";
 import { NavLink } from "react-router";
-
-import { useAppSelector, useAppDispatch } from "../../app/hooks";
-import { setAppInitialized, setLoading } from "../../features/app/appSlice";
-
 import SplashScreen from "../../components/SplashScreen";
 import { IMAGES } from "../../constants/images"
 import { AUDIO } from "../../constants/audio"
 import useAudio from "../../hooks/useAudio"
+import useAppInitialization from "../../hooks/useAppInitialization";
 
 /**
  * Home component that initializes the app and displays the home page.
@@ -17,29 +13,10 @@ import useAudio from "../../hooks/useAudio"
 const HomePage = () => {
   const clickSound = useAudio(AUDIO.click_sound);
 
-  // Redux state selectors
-  const isLoading = useAppSelector((state) => state.app.isLoading);
-  const isAppInitialized = useAppSelector(
-    (state) => state.app.isAppInitialized
-  );
+  // Get isLoading status from a custom hook
+  const { isLoading } = useAppInitialization();
 
-  // Redux dispatcher
-  const dispatch = useAppDispatch();
-
-  // Initialize the app on first load only
-  useEffect(() => {
-    if (!isAppInitialized) {
-      const initializeApp = () => {
-        dispatch(setLoading(false));
-        dispatch(setAppInitialized(true));
-      };
-
-      const timer = setTimeout(initializeApp, 1500);
-      return () => clearTimeout(timer);
-    }
-  }, [dispatch, isAppInitialized]);
-
-  if (isLoading) {
+  if ( isLoading ) {
     return <SplashScreen />;
   }
 

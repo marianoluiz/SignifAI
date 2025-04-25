@@ -10,6 +10,10 @@ const appSlice = createSlice({
   name: "app",
   initialState,
   reducers: {
+    // dispatching: dispatch(setLoading(true))
+    // redux transform it to: { type: 'app/setLoading', payload: true }
+    // the reducer receives it in this form:
+    // setLoading(currentState, { type: 'app/setLoading', payload: true })
     setLoading: (state, action: PayloadAction<boolean>) => {
       state.isLoading = action.payload;
     },
