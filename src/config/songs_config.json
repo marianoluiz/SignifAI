@@ -2,7 +2,8 @@
     "songs": [
       {
         "level": "Easy",
-        "title": "What a Wonderful World - Louis Armstrong",
+        "title": "What a Wonderful World",
+        "author": "Louis Armstrong",
         "tempo": "72 BPM",
         "duration": "0:45 to 1:15",
         "var_name": "wonderful_world",
@@ -20,35 +21,40 @@
       },
       {
         "level": "Medium",
-        "title": "Count on Me - Bruno Mars",
+        "title": "Count on Me",
+        "author": "Bruno Mars",
         "tempo": "88 BPM",
         "duration": "0:21 to 0:45",
         "var_name": "count_on_me",
         "entries": [
-          { "timestamp": "0:21", "prompt": "FIND", "asl": "F" },
-          { "timestamp": "0:24", "prompt": "SEA", "asl": "S" },
-          { "timestamp": "0:27", "prompt": "WORLD", "asl": "W" },
-          { "timestamp": "0:30", "prompt": "DARK", "asl": "D" },
-          { "timestamp": "0:33", "prompt": "SEE", "asl": "V" },
-          { "timestamp": "0:36", "prompt": "LIGHT", "asl": "L" },
-          { "timestamp": "0:39", "prompt": "ILY", "asl": "ILY" }
+          { "timestamp": "0:06", "prompt": "FIND", "asl": "F" },
+          { "timestamp": "0:09", "prompt": "SEA", "asl": "S" },
+          { "timestamp": "0:13", "prompt": "WORLD", "asl": "W" },
+          { "timestamp": "0:18", "prompt": "DARK", "asl": "D" },
+          { "timestamp": "0:20", "prompt": "SEE", "asl": "V" },
+          { "timestamp": "0:23", "prompt": "LIGHT", "asl": "L" },
+          { "timestamp": "0:39", "prompt": "ILY", "asl": "ILY" },
+          { "timestamp": "0:40", "prompt": "1", "asl": "1" },
+          { "timestamp": "0:41", "prompt": "2", "asl": "2" },
+          { "timestamp": "0:42", "prompt": "3", "asl": "3" }
         ]
       },
       {
         "level": "Hard",
-        "title": "You Belong With Me - Taylor Swift",
+        "title": "You Belong With Me",
+        "author": "Taylor Swift",
         "tempo": "130 BPM",
         "var_name": "you_belong_w_me",
         "entries": [
-          { "timestamp": "0:40", "prompt": "YOU", "asl": "YOU" },
-          { "timestamp": "0:45", "prompt": "ME", "asl": "ME" },
-          { "timestamp": "0:50", "prompt": "C", "asl": "C" },
-          { "timestamp": "0:55", "prompt": "ILY", "asl": "ILY" },
-          { "timestamp": "1:00", "prompt": "YOU", "asl": "YOU" },
-          { "timestamp": "1:05", "prompt": "ME", "asl": "ME" },
-          { "timestamp": "1:10", "prompt": "YOU", "asl": "YOU" },
-          { "timestamp": "1:15", "prompt": "YOU", "asl": "YOU" },
-          { "timestamp": "1:20", "prompt": "ILY", "asl": "ILY" }
+          { "timestamp": "0:10", "prompt": "YOU", "asl": "YOU" },
+          { "timestamp": "0:13", "prompt": "ME", "asl": "ME" },
+          { "timestamp": "0:19", "prompt": "C", "asl": "C" },
+          { "timestamp": "0:23", "prompt": "ILY", "asl": "ILY" },
+          { "timestamp": "0:26", "prompt": "YOU", "asl": "YOU" },
+          { "timestamp": "0:31", "prompt": "ME", "asl": "ME" },
+          { "timestamp": "0:37", "prompt": "YOU", "asl": "YOU" },
+          { "timestamp": "0:39", "prompt": "YOU", "asl": "YOU" },
+          { "timestamp": "0:44", "prompt": "ILY", "asl": "ILY" }
         ]
       }
     ]
