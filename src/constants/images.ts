@@ -11,7 +11,6 @@ import sound_icon from "/src/assets/img/start_screen/sound.png";
 import select_scr_bg from "/src/assets/img/select_song/select_scr_bg.jpg";
 import choice_frame1 from "/src/assets/img/select_song/choice_frame1.png"
 import choice_frame2 from "/src/assets/img/select_song/choice_frame2.png"
-import back_btn from "/src/assets/img/select_song/back_btn.png"
 
 /* ON-GAME assets */
 import a from "/src/assets/img/sign/A_test.jpg";
@@ -58,7 +57,6 @@ export const IMAGES = {
     select_scr_bg,
     choice_frame1,
     choice_frame2,
-    back_btn,
 
     /* sign */
     a,

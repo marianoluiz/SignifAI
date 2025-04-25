@@ -6,7 +6,7 @@ import store from './app/store';
 
 import HomePage from "./app/routes/home";
 import GamePage from "./app/routes/play/game";
-import SongSelectPage from "./app/routes/play/song-select";
+import SongSelectPage from "./app/routes/play/songSelect";
 import ResultPage from './app/routes/play/result';
 import LeaderboardPage from "./app/routes/leaderboard"
 
