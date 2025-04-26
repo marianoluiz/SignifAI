@@ -17,9 +17,15 @@ const useAudio = (audioSrc: string) => {
         audioRef.current.pause();
     }
 
+    const stopAudio = () => {
+        audioRef.current.pause();
+        audioRef.current.currentTime = 0;
+    }
+
     return {
         playAudio,
         pauseAudio,
+        stopAudio,
         audioRef
     }
 }

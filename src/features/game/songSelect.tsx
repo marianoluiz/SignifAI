@@ -52,6 +52,7 @@ const SongSelectPage = () => {
             to={`/play/song/${song.var_name}`}
             className={"relative"}
             onClick={() => clickSound.playAudio()}
+            key={index}
           >
             {/* modulo 2 since img are either 0 or 1 */}
             <img

@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useAppSelector, useAppDispatch } from "../app/hooks";
-import { setAppInitialized, setLoading } from "../features/app/appSlice";
+import { setAppInitialized, setLoading } from "../features/appState/appSlice";
 
 /**
  *  App Initialization Hook, used to handle initial loading
@@ -9,7 +9,7 @@ const useAppInitialization = () => {
     // Redux state: While false, animation happens
     const isAppInitialized = useAppSelector((state) => state.app.isAppInitialized);
     const dispatch = useAppDispatch();
-
+    
     // useEffect: initialize app after 1500ms
     useEffect(() => {
         const initializeApp = () => {
