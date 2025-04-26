@@ -29,10 +29,7 @@
           { "timestamp": "0:18", "prompt": "DARK", "asl": "D" },
           { "timestamp": "0:20", "prompt": "SEE", "asl": "V" },
           { "timestamp": "0:23", "prompt": "LIGHT", "asl": "L" },
-          { "timestamp": "0:39", "prompt": "ILY", "asl": "ILY" },
-          { "timestamp": "0:40", "prompt": "1", "asl": "1" },
-          { "timestamp": "0:41", "prompt": "2", "asl": "2" },
-          { "timestamp": "0:42", "prompt": "3", "asl": "3" }
+          { "timestamp": "0:39", "prompt": "ILY", "asl": "ILY" }
         ]
       },
       {
