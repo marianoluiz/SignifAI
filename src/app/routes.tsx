@@ -1,9 +1,9 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router";
 
 import HomePage from "../features/home/home";
-import GamePage from "../features/game/game";
-import SongSelectPage from "../features/game/songSelect";
-import ResultPage from "../features/game/result";
+import GamePage from "../features/game/pages/game";
+import SongSelectPage from "../features/game/pages/songSelect";
+import ResultPage from "../features/game/pages/result";
 import LeaderboardPage from "../features/leaderboard/leaderboard";
 
 const AppRoutes = () => {
