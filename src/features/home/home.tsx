@@ -1,5 +1,5 @@
 import { NavLink } from "react-router";
-import SplashScreen from "../../components/SplashScreen";
+import { SplashScreenAnimation } from "../../components/SplashScreenAnimation";
 import { IMAGES } from "../../constants/images"
 import { AUDIO } from "../../constants/audio"
 import useAudio from "../../hooks/useAudio"
@@ -17,12 +17,12 @@ const HomePage = () => {
   const { isLoading } = useAppInitialization();
 
   return (
+    
     <div>
-
       {isLoading && (
-        <SplashScreen />
+        <SplashScreenAnimation />
       )}
-
+    
       <img
         className="absolute top-28 right-44 size-28 -z-1"
         src={IMAGES.bg_glitch1}

@@ -1,7 +1,10 @@
 export interface GameState {
     song_duration: number;
     score: number;
-    handEntryCount: number;
+
+
+    currentSymbol: string;
+    currentPrompt: string;
     currentHandDuration: number;
 }
 
@@ -27,6 +30,7 @@ type ReduceDurationAction = {
 
 type AddHandEntryAction = {
   type: typeof ADD_HAND_ENTRY;
+  payload: { currentHandDuration: number, currentSymbol: string, currentPrompt: string }
 };
 
 export type GameAction =

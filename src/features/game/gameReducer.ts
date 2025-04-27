@@ -32,8 +32,8 @@ export const gameReducer = (state: GameState, action: GameAction) => {
       return { ...state, song_duration: state.song_duration - 1000}
 
     case ADD_HAND_ENTRY:
-      return { ...state, handEntryCount: state.handEntryCount + 1}
-
+      return { ...state, currentHandDuration: action.payload.currentHandDuration, currentSymbol: action.payload.currentSymbol, currentPrompt: action.payload.currentPrompt}
+    
     default:
       return state;
   }
@@ -54,6 +54,7 @@ export const reduceDuration = () => ({
   type: REDUCE_DURATION,
 });
 
-export const addHandEntry = () => ({
+export const addHandEntry = ( currentHandDuration: number, currentSymbol: string, currentPrompt: string) => ({
   type: ADD_HAND_ENTRY,
+  payload: { currentHandDuration, currentSymbol, currentPrompt}
 });
