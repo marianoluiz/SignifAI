@@ -1,3 +1,7 @@
+# git ignore the models of Mr. Timothy
+src/lib/handLandmarker.ts
+src/assets/models
+
 # Logs
 logs
 *.log
