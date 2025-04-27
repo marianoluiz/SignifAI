@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useAppSelector, useAppDispatch } from "../app/hooks";
-import { setAppInitialized, setLoading } from "../features/appState/appSlice";
+import { setAppInitialized, setLoading } from "../globals/appState/appSlice";
 
 /**
  *  App Initialization Hook, used to handle initial loading

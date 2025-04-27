@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-const useSplashScreen = () => {
+const useSplashScreenAnimation = () => {
   const [ isSplashVisible, setIsSplashVisible ] = useState(true);
 
   useEffect(() => {
@@ -14,4 +14,4 @@ const useSplashScreen = () => {
   return isSplashVisible; // state
 }
 
-export default useSplashScreen;
+export default useSplashScreenAnimation;
