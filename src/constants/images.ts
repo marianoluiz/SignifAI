@@ -11,35 +11,26 @@ import sound_icon from "/src/assets/img/start_screen/sound.png";
 import select_scr_bg from "/src/assets/img/select_song/select_scr_bg.jpg";
 import choice_frame1 from "/src/assets/img/select_song/choice_frame1.png"
 import choice_frame2 from "/src/assets/img/select_song/choice_frame2.png"
+import bg_game from "/src/assets/img/on_game/bg_game.webp"
 
-/* ON-GAME assets */
-import a from "/src/assets/img/sign/A_test.jpg";
-import b from "/src/assets/img/sign/B_test.jpg";
-import c from "/src/assets/img/sign/C_test.jpg";
-import d from "/src/assets/img/sign/D_test.jpg";
-import e from "/src/assets/img/sign/E_test.jpg";
-import f from "/src/assets/img/sign/F_test.jpg";
-import g from "/src/assets/img/sign/G_test.jpg";
-import h from "/src/assets/img/sign/H_test.jpg";
-import i from "/src/assets/img/sign/I_test.jpg";
-import j from "/src/assets/img/sign/J_test.jpg";
-import k from "/src/assets/img/sign/K_test.jpg";
-import l from "/src/assets/img/sign/L_test.jpg";
-import m from "/src/assets/img/sign/M_test.jpg";
-import n from "/src/assets/img/sign/N_test.jpg";
-import o from "/src/assets/img/sign/O_test.jpg";
-import p from "/src/assets/img/sign/P_test.jpg";
-import q from "/src/assets/img/sign/Q_test.jpg";
-import r from "/src/assets/img/sign/R_test.jpg";
-import s from "/src/assets/img/sign/S_test.jpg";
-import t from "/src/assets/img/sign/T_test.jpg";
-import u from "/src/assets/img/sign/U_test.jpg";
-import v from "/src/assets/img/sign/V_test.jpg";
-import w from "/src/assets/img/sign/W_test.jpg";
-import x from "/src/assets/img/sign/X_test.jpg";
-import y from "/src/assets/img/sign/Y_test.jpg";
-import z from "/src/assets/img/sign/Z_test.jpg";
-import thank_you from "/src/assets/img/sign/TY_test.jpg";
+/* signs */
+import ONE from "/src/assets/img/signs/1.png";
+import TWO from "/src/assets/img/signs/2.png";
+import THREE from "/src/assets/img/signs/3.png";
+import B from "/src/assets/img/signs/B.png";
+import C from "/src/assets/img/signs/C.png";
+import D from "/src/assets/img/signs/D.png";
+import F from "/src/assets/img/signs/F.png";
+import ILY from "/src/assets/img/signs/ILY.png";
+import L from "/src/assets/img/signs/L.png";
+import ME from "/src/assets/img/signs/ME.png";
+import R from "/src/assets/img/signs/R.png";
+import S from "/src/assets/img/signs/S.png";
+import T from "/src/assets/img/signs/T.png";
+import V from "/src/assets/img/signs/V.png";
+import W from "/src/assets/img/signs/W.png";
+import Y from "/src/assets/img/signs/Y.png";
+import YOU from "/src/assets/img/signs/YOU.png";
 
 export const IMAGES = {
     /* start_screen */
@@ -58,32 +49,26 @@ export const IMAGES = {
     choice_frame1,
     choice_frame2,
 
-    /* sign */
-    a,
-    b,
-    c,
-    d,
-    e,
-    f,
-    g,
-    h,
-    i,
-    j,
-    k,
-    l,
-    m,
-    n,
-    o,
-    p,
-    q,
-    r,
-    s,
-    t,
-    u,
-    v,
-    w,
-    x,
-    y,
-    z,
-    thank_you
+    /* on_game */
+    bg_game,
+    
+    /* signs */
+    ONE, 
+    TWO, 
+    THREE, 
+    B, 
+    C, 
+    D, 
+    F, 
+    ILY, 
+    L, 
+    ME, 
+    R, 
+    S, 
+    T, 
+    V, 
+    W, 
+    Y, 
+    YOU
+
 };

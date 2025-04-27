@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 @theme {
-    --animate-ltr: left_to_right 2s ease-in-out forwards;
+    --animate-ltr: left_to_right 2s ease-in-out infinite;
 
     @keyframes left_to_right {
         0% {
@@ -20,4 +20,36 @@
             opacity: 0
         }
     }
+
+    --font-moko-regular: "mokokoto-regular";
+    --font-moko-glitch: "mokoto-glitch";
+
+}
+
+@font-face {
+    font-family: K2D-Regular;
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url("../assets/fonts/K2D-Regular.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: mokokoto-regular;
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url("../assets/fonts/mokoto-mokoto-regular-400.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: mokoto-glitch;
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url("../assets/fonts/mokoto-mokoto-regular-glitch-mark-1-400.ttf") format("truetype");
+}
+
+body {
+    font-family: K2D-regular;
 }

@@ -8,15 +8,15 @@
         "song_duration": 56000,
         "var_name": "wonderful_world",
         "entries": [
-          { "timestamp": "0:06", "duration": "6000", "prompt": "TREE", "asl": "T" },
-          { "timestamp": "0:12", "duration": "4000", "prompt": "ROSE", "asl": "R" },
-          { "timestamp": "0:16", "duration": "3000", "prompt": "BLOOM", "asl": "B" },
-          { "timestamp": "0:19", "duration": "3000", "prompt": "YOU", "asl": "YOU" },
-          { "timestamp": "0:22", "duration": "5000", "prompt": "THINK", "asl": "T" },
-          { "timestamp": "0:27", "duration": "7000", "prompt": "WORLD", "asl": "W" },
-          { "timestamp": "0:34", "duration": "4000", "prompt": "BLUE", "asl": "B" },
-          { "timestamp": "0:38", "duration": "5000", "prompt": "CLOUD", "asl": "C" },
-          { "timestamp": "0:43", "duration": "5000", "prompt": "DAY", "asl": "D" }
+          { "timestamp": "0:06", "duration": 6000, "prompt": "TREE", "asl": "T" },
+          { "timestamp": "0:12", "duration": 4000, "prompt": "ROSE", "asl": "R" },
+          { "timestamp": "0:16", "duration": 3000, "prompt": "BLOOM", "asl": "B" },
+          { "timestamp": "0:19", "duration": 3000, "prompt": "YOU", "asl": "YOU" },
+          { "timestamp": "0:22", "duration": 5000, "prompt": "THINK", "asl": "T" },
+          { "timestamp": "0:27", "duration": 7000, "prompt": "WORLD", "asl": "W" },
+          { "timestamp": "0:34", "duration": 4000, "prompt": "BLUE", "asl": "B" },
+          { "timestamp": "0:38", "duration": 5000, "prompt": "CLOUD", "asl": "C" },
+          { "timestamp": "0:43", "duration": 5000, "prompt": "DAY", "asl": "D" }
         ]
       },
       {
@@ -27,15 +27,15 @@
         "song_duration": 45000,
         "var_name": "count_on_me",
         "entries": [
-          { "timestamp": "0:06", "duration": "3000", "prompt": "FIND", "asl": "F" },
-          { "timestamp": "0:09", "duration": "4000", "prompt": "SEA", "asl": "S" },
-          { "timestamp": "0:13", "duration": "5000", "prompt": "WORLD", "asl": "W" },
-          { "timestamp": "0:18", "duration": "2000", "prompt": "DARK", "asl": "D" },
-          { "timestamp": "0:20", "duration": "3000", "prompt": "SEE", "asl": "V" },
-          { "timestamp": "0:23", "duration": "16000", "prompt": "LIGHT", "asl": "L" },
-          { "timestamp": "0:40", "duration": "1000", "prompt": "1", "asl": "1" },
-          { "timestamp": "0:41", "duration": "1000", "prompt": "2", "asl": "2" },
-          { "timestamp": "0:42", "duration": "3000", "prompt": "3", "asl": "3" }
+          { "timestamp": "0:06", "duration": 6000, "prompt": "FIND", "asl": "F" },
+          { "timestamp": "0:09", "duration": 3000, "prompt": "SEA", "asl": "S" },
+          { "timestamp": "0:13", "duration": 4000, "prompt": "WORLD", "asl": "W" },
+          { "timestamp": "0:18", "duration": 5000, "prompt": "DARK", "asl": "D" },
+          { "timestamp": "0:20", "duration": 2000, "prompt": "SEE", "asl": "V" },
+          { "timestamp": "0:23", "duration": 3000, "prompt": "LIGHT", "asl": "L" },
+          { "timestamp": "0:39", "duration": 16000, "prompt": "ILY", "asl": "ILY" },
+          { "timestamp": "0:40", "duration": 1000, "prompt": "ONE", "asl": "ONE" },
+          { "timestamp": "0:42", "duration": 2000, "prompt": "THREE", "asl": "THREE" }
         ]
       },
       {
@@ -46,15 +46,15 @@
         "song_duration": 46000,
         "var_name": "you_belong_w_me",
         "entries": [
-          { "timestamp": "0:10", "duration": "3000", "prompt": "YOU", "asl": "YOU" },
-          { "timestamp": "0:13", "duration": "6000", "prompt": "ME", "asl": "ME" },
-          { "timestamp": "0:19", "duration": "4000", "prompt": "C", "asl": "C" },
-          { "timestamp": "0:23", "duration": "3000", "prompt": "ILY", "asl": "ILY" },
-          { "timestamp": "0:26", "duration": "5000", "prompt": "YOU", "asl": "YOU" },
-          { "timestamp": "0:31", "duration": "6000", "prompt": "ME", "asl": "ME" },
-          { "timestamp": "0:37", "duration": "2000", "prompt": "YOU", "asl": "YOU" },
-          { "timestamp": "0:39", "duration": "5000", "prompt": "YOU", "asl": "YOU" },
-          { "timestamp": "0:44", "duration": "5000", "prompt": "ILY", "asl": "ILY" }
+          { "timestamp": "0:10", "duration": 3000, "prompt": "YOU", "asl": "YOU" },
+          { "timestamp": "0:13", "duration": 6000, "prompt": "ME", "asl": "ME" },
+          { "timestamp": "0:19", "duration": 4000, "prompt": "C", "asl": "C" },
+          { "timestamp": "0:23", "duration": 3000, "prompt": "ILY", "asl": "ILY" },
+          { "timestamp": "0:26", "duration": 5000, "prompt": "YOU", "asl": "YOU" },
+          { "timestamp": "0:31", "duration": 6000, "prompt": "ME", "asl": "ME" },
+          { "timestamp": "0:37", "duration": 2000, "prompt": "YOU", "asl": "YOU" },
+          { "timestamp": "0:39", "duration": 5000, "prompt": "YOU", "asl": "YOU" },
+          { "timestamp": "0:44", "duration": 5000, "prompt": "ILY", "asl": "ILY" }
         ]
       }
     ]
