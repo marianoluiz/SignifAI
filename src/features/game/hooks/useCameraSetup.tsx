@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import {
   initializeHandLandmarker,
   startWebcamAndDetect,
-} from "../../../lib/handLandmarker";
+} from "../../../utils/handLandmarkerHelper";
 
 
 /**

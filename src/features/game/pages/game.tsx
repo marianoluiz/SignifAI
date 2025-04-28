@@ -15,6 +15,8 @@ import { useCameraSetup } from "../hooks/useCameraSetup";
 import { useGameSetup } from "../hooks/useGameSetup";
 import { useGameTimer } from "../hooks/useGameTimer";
 import { useHandMovement } from "../hooks/useHandMovement";
+import { getPrediction } from "../../../utils/modelHelper";
+import { resultLandmarks } from "../../../utils/handLandmarkerHelper";
 
 const GamePage = () => {
   const navigate = useNavigate();
@@ -175,6 +177,15 @@ const GamePage = () => {
           className="px-4 py-2 bg-violet-300"
         >
           Add MISS Score
+        </button>
+        <button
+          onClick={()=> 
+            getPrediction(resultLandmarks).then((result) => {
+              console.log("Prediction result:", result);
+            }) 
+          }
+          className="px-4 py-2 bg-red-300"
+        > Predict 
         </button>
         <h2>Current Prompt: {state.currentPrompt}</h2>
         <h2>Current Rating: {state.currentRating}</h2>
