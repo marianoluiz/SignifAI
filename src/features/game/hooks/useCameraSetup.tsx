@@ -8,8 +8,12 @@ import {
 /**
  * Function draw and set camera Ready
  * - Setup landmarks and  start camera
- * - sets the global state isCameraReady to True
- * - sets the global state isCameraReady to False after unmount
+ * - Sets the global state isCameraReady to True
+ * - Sets the global state isCameraReady to False after unmount
+ * 
+ * @param videoRef - the video object reference
+ * @param canvasRef - the canvas object reference that has landmarks
+ * @param setIsCameraReady - state setter to mark camera is ready
  */
 export const useCameraSetup = (
   videoRef: React.RefObject<HTMLVideoElement | null>,
@@ -37,11 +41,10 @@ export const useCameraSetup = (
     setupTracker();
 
     return () => {
-      
       setIsCameraReady(false);
       videoRef.current?.removeEventListener("loadeddata", () => {
         console.log("Removed loadeddata event listener");
       });
     };
-  }, [setIsCameraReady]);
+  }, [canvasRef, setIsCameraReady, videoRef]);
 };

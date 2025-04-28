@@ -1,4 +1,4 @@
-import { useEffect, useState, useReducer } from "react";
+import { useState, useReducer } from "react";
 import { useParams, useNavigate } from "react-router";
 
 import { IMAGES } from "../../../constants/images"
@@ -6,158 +6,65 @@ import { AUDIO } from "../../../constants/audio";
 import { SplashScreenAnimation } from "../../../components/SplashScreenAnimation";
 import songs_config from "../../../config/songs_config.json";
 import { gameReducer } from "../gameReducer";
-import { setGame, addScore, addHandEntry } from "../gameReducer";
+import { addScore } from "../gameReducer";
 import useAudio from "../../../hooks/useAudio";
 
 import { formatTime } from "../../../utils/timeHelpers"
 import { useCamera } from "../../../globals/camera/cameraContext";
 import { useCameraSetup } from "../hooks/useCameraSetup";
+import { useGameSetup } from "../hooks/useGameSetup";
 import { useGameTimer } from "../hooks/useGameTimer";
+import { useHandMovement } from "../hooks/useHandMovement";
 
 const GamePage = () => {
   const navigate = useNavigate();
 
-  // song id
+  // fetch song
   const { song_var } = useParams();
-  // fetch right song
   const song_details = songs_config.songs.find(
     (song) => song.var_name === song_var
   );
-  // play song
-  const song = useAudio(AUDIO[song_var as keyof typeof AUDIO]);
-
-  // duration of whole song
-  const initialSongDuration = song_details?.song_duration ?? 0;
+  const wholeSongDuration = song_details?.song_duration ?? 0;
   const song_entries = song_details?.entries;
 
-  // x-coordinate of the hand sign
-  const [handXCoordinate, setHandXCoordinate] = useState(0);
-  const goalDistance = 600;
+  // play song in a global hook
+  const song = useAudio(AUDIO[song_var as keyof typeof AUDIO]);
 
-  // states with initial state
+  // Local States
+  const [handXCoordinate, setHandXCoordinate] = useState(0);
+  const [areHandsignsDone, setAreHandsignsDone] = useState(false);
+
+  // Reducer States with initial state
   const [state, dispatch] = useReducer(gameReducer, {
-    song_duration: 0,
+    song_duration: wholeSongDuration,
     score: 0,
-    currentHandDuration: 0,
     currentSymbol: "bg_glitch1" as keyof typeof IMAGES,
-    currentPrompt: "No Val",
+    currentPrompt: "No Prompt",
+    currentRating: "No Rating",
   });
 
-  // camera status
+  // camera status and refs
   const { isCameraReady, setIsCameraReady, canvasRef, videoRef } = useCamera();
 
-  /**
-   * Function set the game
-   * - plays the audio
-   * - sets the reducer state initialSongDuration for game length
-   * - when unmount... stop the audio
-   */
-  useEffect(() => {
-    if (!isCameraReady) return;
-    song.playAudio();
-    dispatch(setGame(initialSongDuration ?? 0));
+  // Call the useGameSetup hook to set up the game when the camera is ready.
+  useGameSetup( isCameraReady, song, dispatch, wholeSongDuration );
 
-    // cleanup function
-    return () => {
-      song.stopAudio();
-    };
-  }, [isCameraReady, initialSongDuration]);
+  // Setup camera and sets the game to start
+  useCameraSetup( videoRef, canvasRef, setIsCameraReady );
 
-  /**
-   * Function draw and set camera Ready
-   * - Setup landmarks and  start camera
-   * - sets the global state isCameraReady to True
-   * - sets the global state isCameraReady to False after unmount
-   */
-  useCameraSetup(videoRef, canvasRef, setIsCameraReady);
-
-  /**
-   * Function handle game over
-   * LOOP: until state.initialSongDuration is 0:
-   *  - subtract 1000 to the state.initialSongDuration
-   *  - if 0 then end the game
-   */
+  // Start and End the game
   useGameTimer(state.song_duration, dispatch, navigate);
-  
-  /**
-   * Function handles hand xCoordinate and entries
-   * OUTER LOOP: until hand_count is equal to handEntryCount:
-   *  - iterate hand counts
-   *  - set state.currentSymbol for text and image use
-   *  - set state.currentPrompt for text use
-   *
-   *    INNER LOOP: until goalDistance is reached
-   *      - subtract the handXCoordinate
-   * 
-   * ** NOTE: in useEffect, any variables are stale unless you
-   * ** put it in the dependency array which is not ideal for this
-   * ** loop... I debugged this for like 6 hours and a normal function
-   * ** could have saved my life.
-   */
-  useEffect(() => {
-    if (!isCameraReady) return;
-    if (!song_entries) return;
 
-    // the innerloop for moving the hands
-    let interval: NodeJS.Timeout;
+  // Handle the hand entries and hand movements
+  useHandMovement(
+    isCameraReady,
+    song_entries,
+    dispatch,
+    setAreHandsignsDone,
+    setHandXCoordinate
+  );
 
-    // Recursion Loop
-    const handleHandEntry = (index: number) => {
-      // Base case: If we've reached the end of the song entries, stop
-      if (index >= song_entries.length) return;
-
-      console.log(`\nProcessing hand entry: ${index}`);
-      dispatch(
-        addHandEntry(
-          song_entries[index].duration,
-          song_entries[index].asl,
-          song_entries[index].prompt
-        )
-      );
-
-      const localCurrentHandDuration = song_entries[index].duration;;
-
-      const startTime = Date.now();
-
-      // hand sign movement logic
-      interval = setInterval(() => {
-        // get elapsed time
-        const elapsedTime = Date.now() - startTime;
-
-        console.log(
-          "currentHandDuration of main useeeffect ",
-          state.currentHandDuration
-        );
-
-        // get progress (percentage)
-        const progressDecimal = elapsedTime / localCurrentHandDuration;
-        // min to make sure its either 0.xx or 1
-        const progress = Math.min(progressDecimal, 1);
-
-        // stop if more than 100% complete
-        if (progress >= 1) {
-          setHandXCoordinate(0);
-          clearInterval(interval);
-
-          setTimeout(() => {
-            handleHandEntry(index + 1);
-          }, 500);
-        } else {
-          // get new hand position
-          const newPosition = progress * goalDistance;
-          setHandXCoordinate(newPosition);
-        }
-      }, 32);
-
-    };
-
-    handleHandEntry(0); // Start with 0 Index
-
-    return () => {
-      if (interval) clearInterval(interval); 
-    };
-  }, [isCameraReady]);
-  
+  // soon
   const handleAddScore = (rating: string, difficulty: string) => {
     dispatch(addScore(rating, difficulty));
   };
@@ -207,15 +114,40 @@ const GamePage = () => {
         </div>
       </div>
 
-      <div className="mt-8 flex justify-end content-center">
-        <div style={{ transform: `translateX(-${handXCoordinate}px)` }}>
-          <img
-            src={IMAGES[state.currentSymbol as keyof typeof IMAGES]}
-            className="w-28 h-32"
-            alt="Hand"
-          />
-          <h2 className="4xl text-center font-bold">{state.currentSymbol}</h2>
-        </div>
+      {/* Hand Conveyer */}
+      <div className="mt-8 flex relative justify-end content-center">
+        {/* Hand signs */}
+        {!areHandsignsDone && (
+          <div
+            className="py-2 px-1 rounded-xs bg-[rgba(0,0,0,0.1)] z-10"
+            style={{ transform: `translateX(-${handXCoordinate}px)` }}
+          >
+            <img
+              src={IMAGES[state.currentSymbol as keyof typeof IMAGES]}
+              className="w-28 h-32"
+              alt="Hand"
+            />
+            <h2 className="4xl text-center font-bold">{state.currentSymbol}</h2>
+          </div>
+        )}
+
+        {/* Area bars */}
+        <div
+          className="absolute w-4 h-full bg-[rgba(52,211,153,0.8)] z-4"
+          style={{ transform: "translateX(-552px)" }}
+        ></div>
+        <div
+          className="absolute w-13 h-full bg-[rgba(135,255,245,0.8)] z-3"
+          style={{ transform: "translateX(-535px)" }}
+        ></div>
+        <div
+          className="absolute w-22 h-full bg-[rgba(118,143,255,0.8)] z-2"
+          style={{ transform: "translateX(-518px)" }}
+        ></div>
+        <div
+          className="absolute w-90 h-full bg-[rgba(208,136,255,0.8)] z-1"
+          style={{ transform: "translateX(-359px)" }}
+        ></div>
       </div>
 
       <div className="absolute bottom-2 w-md">
@@ -244,9 +176,8 @@ const GamePage = () => {
         >
           Add MISS Score
         </button>
-        <h2>Countdown till next hand: {state.currentHandDuration}</h2>
-
         <h2>Current Prompt: {state.currentPrompt}</h2>
+        <h2>Current Rating: {state.currentRating}</h2>
       </div>
     </div>
   );

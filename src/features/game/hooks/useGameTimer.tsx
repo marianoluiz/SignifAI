@@ -8,6 +8,10 @@ import { NavigateFunction } from "react-router";
  * LOOP: until state.initialSongDuration is 0:
  *  - subtract 1000 to the state.initialSongDuration
  *  - if 0 then end the game
+ * 
+ * @param song_duration - fetched from json how long the song is
+ * @param dispatch - the dispatch object to access reducer states
+ * @param navigate - to move to result page
  */
 export const useGameTimer = (
   song_duration: number,
@@ -16,13 +20,14 @@ export const useGameTimer = (
 ) => {
   useEffect(() => {
     const interval = setInterval(() => {
-      if (song_duration > 0) {
-        dispatch(reduceDuration());
-      } else {
-        // clearInterval(interval);
-        // navigate("/result");
-      }
-    }, 1000);
+    if (song_duration > 0) {
+      dispatch(reduceDuration());
+    } else if (song_duration <= 0) {
+      // navigate("/play/result");
+      clearInterval(interval);
+    }
+
+  }, 1000);
 
     return () => clearInterval(interval);
   }, [song_duration, dispatch, navigate]);
