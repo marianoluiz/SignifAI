@@ -97,7 +97,7 @@ const drawConnections = (
   width: number,
   height: number
 ) => {
-  ctx.strokeStyle = 'white';
+  ctx.strokeStyle = 'rgba(0, 255, 255, 0.7)';
   ctx.lineWidth = 4;
 
   for (const [startIdx, endIdx] of HAND_CONNECTIONS) {
@@ -148,7 +148,7 @@ const predictWebcam = async (
               resultLandmarks.push([landmark.x, landmark.y]); // Store landmark coordinates as pairs of [x, y] to be flattened later
               ctx.beginPath();
               ctx.arc(landmark.x * video.videoWidth, landmark.y * video.videoHeight, 5, 0, 2 * Math.PI);
-              ctx.fillStyle = 'red';
+              ctx.fillStyle = 'rgba(255, 0, 255, 0.7)';
               ctx.fill();
           }
       }
