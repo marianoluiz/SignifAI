@@ -1,11 +1,21 @@
 import * as tf from '@tensorflow/tfjs';
 
+/**
+ * Cached TensorFlow.js GraphModel instance.
+ */
 let model: tf.GraphModel | null = null;
 
-const loadModel = async () => {
+/**
+ * Loads the TensorFlow.js GraphModel from the /models directory.
+ * Uses a cached instance if already loaded.
+ * 
+ * @returns {Promise<tf.GraphModel | null>} The loaded model or null if loading fails.
+ */
+const loadModel = async (): Promise<tf.GraphModel | null> => {
   if (model) return model;
   try {
-    // Assumes model files are in public/models/
+    // Model folder should be in the public directory
+    // and accessible via the URL /models/model.json
     model = await tf.loadGraphModel('/models/model.json');
     return model;
   } catch (error) {
@@ -14,8 +24,16 @@ const loadModel = async () => {
   }
 };
 
-function preProcessLandmark(landmarkList: number[][]): number[] {
-  // Deep copy
+/**
+ * Preprocesses hand landmark coordinates for model input.
+ * - Converts to relative coordinates based on the first landmark.
+ * - Flattens the 2D array to 1D.
+ * - Normalizes values by the maximum absolute value.
+ * 
+ * @param {number[][]} landmarkList - Array of [x, y] landmark coordinates.
+ * @returns {number[]} The processed and normalized 1D array.
+ */
+export function preProcessLandmark(landmarkList: number[][]): number[] {
   const tempLandmarkList = landmarkList.map(point => [...point]);
 
   // Convert to relative coordinates
@@ -39,7 +57,13 @@ function preProcessLandmark(landmarkList: number[][]): number[] {
   return normalized;
 }
 
-export const getPrediction = async (landmarkList: number[][]) => {
+/**
+ * Runs inference on the given hand landmark list and returns the predicted class index.
+ * 
+ * @param {number[][]} landmarkList - Array of [x, y] landmark coordinates.
+ * @returns {Promise<number | null>} The predicted class index, or null if model is not loaded.
+ */
+export const getPrediction = async (landmarkList: number[][]): Promise<number | null> => {
   const processedInput = preProcessLandmark(landmarkList);
   const loadedModel = await loadModel();
   if (!loadedModel) {
@@ -51,5 +75,5 @@ export const getPrediction = async (landmarkList: number[][]) => {
   const predictionArray = prediction.arraySync() as number[][];
   // Get the first (and only) prediction, then the index of the max value
   const resultIndex = predictionArray[0].indexOf(Math.max(...predictionArray[0]));
-  return resultIndex;
+  return resultIndex; // Returns the index of the predicted class
 };

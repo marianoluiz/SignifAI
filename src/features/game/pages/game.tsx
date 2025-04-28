@@ -183,7 +183,7 @@ const GamePage = () => {
             getPrediction(resultLandmarks).then((result) => {
               console.log("Prediction result:", result);
             }) 
-          }
+            /* Example usage of getPrediction function */          }
           className="px-4 py-2 bg-red-300"
         > Predict 
         </button>
