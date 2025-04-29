@@ -63,11 +63,8 @@ export const useHandMovement = (
       // get duration in an entry
       const duration = song_entries[index].duration;
 
-      const finalDistance = 600;
-      const perfectZoneX = 500;
-
-      const perfectTime = duration - 500;
-      const localCurrentHandDuration = perfectTime + 500;
+      const perfectZoneX = 400;
+      const perfectTime = duration;
 
       const startTime = Date.now();
 
@@ -75,15 +72,15 @@ export const useHandMovement = (
       interval = setInterval(() => {
         // get progress and move the hand
         const elapsedTime = Date.now() - startTime;
-        const progress = Math.min(elapsedTime / localCurrentHandDuration, 1);
-        const newPosition = progress * finalDistance;
+        const progress = Math.min(elapsedTime / perfectTime, 1);
+        const newPosition = progress * perfectZoneX;
 
         setHandXCoordinate(newPosition);
 
         // Evaluate if hand sign is true
         // ...
         // useRef to access
-        if (newPosition > 300) {
+        if (newPosition > 200) {
           dispatch(setCurrentRating(newPosition, perfectZoneX));
         }
 
@@ -94,6 +91,9 @@ export const useHandMovement = (
           setHandXCoordinate(0);
         }
       }, 16);
+
+
+      
     };
 
     // Start with 0 Index
