@@ -62,7 +62,7 @@ const GamePage = () => {
 
   // Game timer logic
   // Starts and ends the game based on the song's duration
-  useGameTimer(state.song_duration, dispatch, navigate, state);
+  useGameTimer(state.song_duration, dispatch, navigate, state, song_details?.title ?? "Unknown Title");
 
   // Hand movement logic
   // Handles the movement of hand signs and evaluates player performance

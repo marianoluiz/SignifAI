@@ -4,7 +4,7 @@ import { IMAGES } from "../../../constants/images";
 const ResultPage = () => {
 
   const location = useLocation();
-  const { score } = location.state || {}; 
+  const { score, song_title } = location.state || {}; 
 
   return (
     /* row */
@@ -26,7 +26,10 @@ const ResultPage = () => {
       <div className="flex flex-col gap-12 mr-20">
         {/* score col */}
         <div className="flex flex-col">
-          <p className="text-4xl text-center text-white">Score: </p>
+          <div className="flex justify-between">
+            <p className="text-4xl text-center text-white">Score: </p>
+            <p className="text-4xl text-center text-white">Song: {song_title}</p>
+          </div>
 
           <img
             src={IMAGES.result_stars}
