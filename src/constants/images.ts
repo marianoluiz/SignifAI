@@ -14,6 +14,9 @@ import select_scr_bg from "/src/assets/img/select_song/select_scr_bg.jpg";
 import wonderful_world_album from "/src/assets/img/select_song/wonder_world-album.png"
 import count_on_me_album from "/src/assets/img/select_song/count_on_me-album.png"
 import you_belong_w_me_album from "/src/assets/img/select_song/you_belong_w_me-album.png"
+import wonderful_world_palbum from "/src/assets/img/select_song/wonderful_world-palbum.png"
+import count_on_me_palbum from "/src/assets/img/select_song/count_on_me-palbum.png"
+import you_belong_w_me_palbum from "/src/assets/img/select_song/you_belong_w_me-palbum.png"
 import count_on_me_bg from "/src/assets/img/on_game/count_on_me-bg.webp"
 import wonderful_world_bg from "/src/assets/img/on_game/wonderful_world-bg.webp"
 import you_belong_w_me_bg from "/src/assets/img/on_game/you_belong_w_me-bg.webp"
@@ -25,6 +28,8 @@ import results_bg from "/src/assets/img/results/results_bg.webp"
 import result_hand_design from "/src/assets/img/results/result_hand_design.png"
 import result_stars from "/src/assets/img/results/result_stars.png"
 import score_outline from "/src/assets/img/results/score_outline.png"
+import disco_img from "/src/assets/img/results/disco_img.png"
+ 
 
 /* signs */
 import ONE from "/src/assets/img/signs/1.png";
@@ -62,6 +67,9 @@ export const IMAGES = {
     count_on_me_album,
     you_belong_w_me_album,
     wonderful_world_album,
+    count_on_me_palbum,
+    you_belong_w_me_palbum,
+    wonderful_world_palbum,
 
     /* on_game */
     count_on_me_bg,
@@ -71,12 +79,15 @@ export const IMAGES = {
     OK_rating_effect,
     GOOD_rating_effect,
     PERFECT_rating_effect,
-
+    
     /* results */
     results_bg,
     result_hand_design,
     result_stars,
     score_outline,
+    
+    /* scores */
+    disco_img,
 
     /* signs */
     ONE, 
