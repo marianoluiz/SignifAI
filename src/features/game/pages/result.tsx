@@ -64,6 +64,7 @@ const ResultPage = () => {
             type="text"
             placeholder="Your Name"
             value={username}
+            maxLength={24}
             onChange={(e) => setUsername(e.target.value)}
             className="w-full px-4 py-2 mt-4 text-lg text-gray-100 rounded-lg border-2 border-white focus:outline-none focus:ring-4 focus:ring-violet-500 focus:border-violet-500 placeholder-gray-400"
           />
@@ -72,7 +73,7 @@ const ResultPage = () => {
             onClick={() => {
               saveScore(score, song_title, username);
               setShowModal(true);
-              clickSound.playAudio()
+              clickSound.playAudio();
             }}
           >
             Save
@@ -95,8 +96,8 @@ const ResultPage = () => {
               to="/"
               className="px-6 py-2 bg-violet-500 text-white rounded-md"
               onClick={() => {
-                setShowModal(false)
-                clickSound.playAudio()
+                setShowModal(false);
+                clickSound.playAudio();
               }}
             >
               Back to Home
