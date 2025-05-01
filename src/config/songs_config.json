@@ -28,11 +28,20 @@
         "var_name": "count_on_me",
         "entries": [
                       { "timestamp": "0:06", "duration": 6000, "lyric": "If you ever find yourself", "prompt": "FIND", "asl": "F" },
-                      { "timestamp": "0:09", "duration": 3000, "lyric": "Stuck in the middle of the sea", "prompt": "SEA", "asl": "S" },
+                      { "timestamp": "0:08", "duration": 3000, "lyric": "Stuck in the middle of the sea", "prompt": "SEA", "asl": "S" },
                       { "timestamp": "0:12", "duration": 3000, "lyric": "I'll sail the world to find you", "prompt": "WORLD", "asl": "W" },
                       { "timestamp": "0:18", "duration": 6000, "lyric": "If you ever find yourself lost in the dark", "prompt": "DARK", "asl": "D" },
                       { "timestamp": "0:20", "duration": 2000, "lyric": "And you can't see", "prompt": "SEE", "asl": "V" },
-                      { "timestamp": "0:23", "duration": 3000, "lyric": "I'll be the light to guide you", "prompt": "LIGHT", "asl": "L" }
+                      { "timestamp": "0:23", "duration": 3000, "lyric": "I'll be the light to guide you", "prompt": "LIGHT", "asl": "L" },
+                      { "timestamp": "0:26", "duration": 3000, "lyric": "Find out what we're made of", "prompt": "ILY", "asl": "ILY" },
+                      { "timestamp": "0:34", "duration": 2000, "lyric": "Help our friends in need", "prompt": "NEED", "asl": "N" },
+                      { "timestamp": "0:39", "duration": 2000, "lyric": "You can count on me", "prompt": "ME", "asl": "ME" },
+                      { "timestamp": "0:42", "duration": 2000, "lyric": "Like one, two, three", "prompt": "THREE", "asl": "C" },
+                      { "timestamp": "0:44", "duration": 2000, "lyric": "I'll be there", "prompt": "THERE", "asl": "T" },
+                      { "timestamp": "0:48", "duration": 2000, "lyric": "I know when I need it", "prompt": "IT", "asl": "I" },
+                      { "timestamp": "0:50", "duration": 2000, "lyric": "I can count on you", "prompt": "YOU", "asl": "Y" },
+                      { "timestamp": "0:52", "duration": 2000, "lyric": "Like four, three, two", "prompt": "TWO", "asl": "V" },
+                      { "timestamp": "0:57", "duration": 2000, "lyric": "You'll be there", "prompt": "THERE", "asl": "T" }
                     ]
       },
       {
