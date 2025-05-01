@@ -140,7 +140,13 @@ const GamePage = () => {
             style={{ transform: `translateX(-${handXCoordinate}px)` }}
           >
             <img
-              src={IMAGES[state.currentSymbol as keyof typeof IMAGES]}
+              src={
+                IMAGES[
+                  state.currentSymbol === "I love you"
+                    ? "I_love_you"
+                    : (state.currentSymbol as keyof typeof IMAGES)
+                ]
+              }
               className="w-28 h-32"
               alt="Hand"
             />
@@ -171,8 +177,11 @@ const GamePage = () => {
       </div>
 
       <div className="absolute bottom-2 w-md">
-        <h2 className="text-4xl text-white">Current Prompt: {state.currentPrompt}</h2>
+        <h2 className="text-4xl text-white">
+          Current Prompt: {state.currentPrompt}
+        </h2>
         <h2>Current Rating: {state.currentRating}</h2>
+        <h2>Current Symbol: {state.currentSymbol}</h2>
       </div>
     </div>
   );

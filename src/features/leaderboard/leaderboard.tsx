@@ -17,7 +17,7 @@ const LeaderboardPage = () => {
     const getScores = async () => {
       try {
         const fetchedScores = await fetchScore("leaderboards");
-        setEntries(fetchedScores);
+        setEntries(fetchedScores); // ignore error
       } catch (error) {
         console.error("Error fetching scores:", error);
       }
