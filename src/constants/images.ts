@@ -9,9 +9,22 @@ import main_img from "/src/assets/img/start_screen/main_img.png";
 import setting_icon from "/src/assets/img/start_screen/setting.png";
 import sound_icon from "/src/assets/img/start_screen/sound.png";
 import select_scr_bg from "/src/assets/img/select_song/select_scr_bg.jpg";
-import choice_frame1 from "/src/assets/img/select_song/choice_frame1.png"
-import choice_frame2 from "/src/assets/img/select_song/choice_frame2.png"
-import bg_game from "/src/assets/img/on_game/bg_game.webp"
+// import choice_frame1 from "/src/assets/img/select_song/choice_frame1.png"
+// import choice_frame2 from "/src/assets/img/select_song/choice_frame2.png"
+import wonderful_world_album from "/src/assets/img/select_song/wonder_world-album.png"
+import count_on_me_album from "/src/assets/img/select_song/count_on_me-album.png"
+import you_belong_w_me_album from "/src/assets/img/select_song/you_belong_w_me-album.png"
+import count_on_me_bg from "/src/assets/img/on_game/count_on_me-bg.webp"
+import wonderful_world_bg from "/src/assets/img/on_game/wonderful_world-bg.webp"
+import you_belong_w_me_bg from "/src/assets/img/on_game/you_belong_w_me-bg.webp"
+import MISS_rating_effect from "/src/assets/img/on_game/miss_rating_effect.png"
+import OK_rating_effect from "/src/assets/img/on_game/ok_rating_effect.png"
+import GOOD_rating_effect from "/src/assets/img/on_game/good_rating_effect.png"
+import PERFECT_rating_effect from "/src/assets/img/on_game/perfect_rating_effect.png"
+import results_bg from "/src/assets/img/results/results_bg.webp"
+import result_hand_design from "/src/assets/img/results/result_hand_design.png"
+import result_stars from "/src/assets/img/results/result_stars.png"
+import score_outline from "/src/assets/img/results/score_outline.png"
 
 /* signs */
 import ONE from "/src/assets/img/signs/1.png";
@@ -46,12 +59,25 @@ export const IMAGES = {
 
     /* select_screen */
     select_scr_bg,
-    choice_frame1,
-    choice_frame2,
+    count_on_me_album,
+    you_belong_w_me_album,
+    wonderful_world_album,
 
     /* on_game */
-    bg_game,
-    
+    count_on_me_bg,
+    wonderful_world_bg,
+    you_belong_w_me_bg,
+    MISS_rating_effect,
+    OK_rating_effect,
+    GOOD_rating_effect,
+    PERFECT_rating_effect,
+
+    /* results */
+    results_bg,
+    result_hand_design,
+    result_stars,
+    score_outline,
+
     /* signs */
     ONE, 
     TWO, 
