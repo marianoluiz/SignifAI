@@ -11,7 +11,7 @@
                     { "timestamp": "0:06", "duration": 6000, "lyric": "I see trees of green", "prompt": "TREE", "asl": "T" },
                     { "timestamp": "0:12", "duration": 6000, "lyric": "Red roses too", "prompt": "ROSE", "asl": "R" },
                     { "timestamp": "0:16", "duration": 4000, "lyric": "I see them bloom", "prompt": "BLOOM", "asl": "B" },
-                    { "timestamp": "0:19", "duration": 3000, "lyric": "For me and you", "prompt": "YOU", "asl": "YOU" },
+                    { "timestamp": "0:19", "duration": 3000, "lyric": "For me and you", "prompt": "YOU", "asl": "You" },
                     { "timestamp": "0:22", "duration": 3000, "lyric": "And I think to myself", "prompt": "THINK", "asl": "T" },
                     { "timestamp": "0:27", "duration": 5000, "lyric": "What a wonderful world", "prompt": "WORLD", "asl": "W" },
                     { "timestamp": "0:34", "duration": 7000, "lyric": "I see skies of blue", "prompt": "BLUE", "asl": "B" },
@@ -32,10 +32,7 @@
                       { "timestamp": "0:12", "duration": 3000, "lyric": "I'll sail the world to find you", "prompt": "WORLD", "asl": "W" },
                       { "timestamp": "0:18", "duration": 6000, "lyric": "If you ever find yourself lost in the dark", "prompt": "DARK", "asl": "D" },
                       { "timestamp": "0:20", "duration": 2000, "lyric": "And you can't see", "prompt": "SEE", "asl": "V" },
-                      { "timestamp": "0:23", "duration": 3000, "lyric": "I'll be the light to guide you", "prompt": "LIGHT", "asl": "L" },
-                      { "timestamp": "0:31", "duration": 8000, "lyric": "Find out what we're made of", "prompt": "ILY", "asl": "ILY" },
-                      { "timestamp": "0:40", "duration": 9000, "lyric": "You can count on me like one", "prompt": "ONE", "asl": "ONE" },
-                      { "timestamp": "0:42", "duration": 2000, "lyric": "two three", "prompt": "THREE", "asl": "THREE" }
+                      { "timestamp": "0:23", "duration": 3000, "lyric": "I'll be the light to guide you", "prompt": "LIGHT", "asl": "L" }
                     ]
       },
       {
@@ -46,15 +43,15 @@
         "song_duration": 46000,
         "var_name": "you_belong_w_me",
         "entries": [
-                        { "timestamp": "0:10", "duration": 10000, "lyric": "You belong with me", "prompt": "YOU", "asl": "YOU" },
-                        { "timestamp": "0:13", "duration": 3000, "lyric": "You belong with me", "prompt": "ME", "asl": "ME" },
+                        { "timestamp": "0:10", "duration": 10000, "lyric": "You belong with me", "prompt": "You", "asl": "You" },
+                        { "timestamp": "0:13", "duration": 3000, "lyric": "You belong with me", "prompt": "Me", "asl": "Me" },
                         { "timestamp": "0:19", "duration": 6000, "lyric": "I'm the one who makes you laugh", "prompt": "C", "asl": "C" },
-                        { "timestamp": "0:23", "duration": 4000, "lyric": "Think I know where you belong", "prompt": "ILY", "asl": "ILY" },
-                        { "timestamp": "0:26", "duration": 3000, "lyric": "I think I know it's with", "prompt": "YOU", "asl": "YOU" },
-                        { "timestamp": "0:31", "duration": 5000, "lyric": "You belong with me", "prompt": "ME", "asl": "ME" },
-                        { "timestamp": "0:37", "duration": 6000, "lyric": "You belong with me", "prompt": "YOU", "asl": "YOU" },
-                        { "timestamp": "0:39", "duration": 2000, "lyric": "You belong with me", "prompt": "YOU", "asl": "YOU" },
-                        { "timestamp": "0:44", "duration": 5000, "lyric": "Standing by and waiting at your back door", "prompt": "ILY", "asl": "ILY" }
+                        { "timestamp": "0:23", "duration": 4000, "lyric": "Think I know where you belong", "prompt": "I love you", "asl": "I love you" },
+                        { "timestamp": "0:26", "duration": 3000, "lyric": "I think I know it's with", "prompt": "You", "asl": "You" },
+                        { "timestamp": "0:31", "duration": 5000, "lyric": "You belong with me", "prompt": "ME", "asl": "Me" },
+                        { "timestamp": "0:37", "duration": 6000, "lyric": "You belong with me", "prompt": "You", "asl": "You" },
+                        { "timestamp": "0:39", "duration": 2000, "lyric": "You belong with me", "prompt": "You", "asl": "You" },
+                        { "timestamp": "0:44", "duration": 5000, "lyric": "Standing by and waiting at your back door", "prompt": "I love you", "asl": "I love you" }
                       ]
       }
     ]
