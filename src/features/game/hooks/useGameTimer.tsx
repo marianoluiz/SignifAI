@@ -17,19 +17,21 @@ export const useGameTimer = (
   song_duration: number,
   dispatch: React.ActionDispatch<[action: GameAction]>,
   navigate: NavigateFunction,
-  state: GameState
+  state: GameState,
+  song_title: string
 ) => {
   useEffect(() => {
     const interval = setInterval(() => {
-    if (song_duration > 0) {
-      dispatch(reduceDuration());
-    } else if (song_duration <= 0) {
-      navigate("/play/result", { state: { score: state.score } });
-      clearInterval(interval);
-    }
-
-  }, 1000);
+      if (song_duration > 0) {
+        dispatch(reduceDuration());
+      } else if (song_duration <= 0) {
+        navigate("/play/result", {
+          state: { score: state.score, song_title: song_title },
+        });
+        clearInterval(interval);
+      }
+    }, 1000);
 
     return () => clearInterval(interval);
-  }, [song_duration, dispatch, navigate, state.score]);
+  }, [song_duration, dispatch, navigate, state.score, song_title]);
 };
