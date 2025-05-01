@@ -51,18 +51,19 @@ const SongSelectPage = () => {
   // When you click ➡: move to next index (0 → 1 → 2 → 0)
   const handlePrev = () => {
     clickSound.playAudio();
-    setDirectionAnimation("left");
-    setCurrentIndex((prev) => (prev + 1) % song_options.length);
+    setDirectionAnimation("right");
+    setCurrentIndex(
+      (prev) => (prev - 1 + song_options.length) % song_options.length
+    );
   }
 
   // When left arrow is clicked, move to the previous item (looping)
   // When you click ⬅: move to previous (0 → 2 → 1 → 0)
   const handleNext = () => {
     clickSound.playAudio();
-    setDirectionAnimation("right");
-    setCurrentIndex(
-      (prev) => (prev - 1 + song_options.length) % song_options.length
-    );
+    setDirectionAnimation("left");
+    setCurrentIndex((prev) => (prev + 1) % song_options.length);
+
   };
 
   return (

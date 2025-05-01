@@ -2,8 +2,8 @@
 
 @theme {
     --animate-ltr: left_to_right 2s ease-in-out infinite;
-    --animate-slide-left: slideLeft .5s ease-in-out;
-    --animate-slide-right: slideRight .2s ease-in-out;
+    --animate-slide-left: slideScaleInLeft .2s ease-in-out;
+    --animate-slide-right: slideScaleInRight .2s ease-in-out;
     --animate-fade-in: fadePop 1s ease-in-out forwards;
 
     @keyframes left_to_right {
@@ -25,36 +25,26 @@
         }
     }
 
-    @keyframes slideRight {
+    @keyframes slideScaleInRight {
         0% {
-            transform: translateX(-25%);
+            transform: translateX(-25%) scale(0.95);
             opacity: 0;
         }
 
-        50% {
-            transform: translateX(-13%);
-            opacity: 0.5;
-        }
-
         100% {
-            transform: translateX(0);
+            transform: translateX(0) scale(1);
             opacity: 1;
         }
     }
 
-    @keyframes slideLeft {
+    @keyframes slideScaleInLeft {
         0% {
-            transform: translateX(25%);
+            transform: translateX(25%) scale(0.95);
             opacity: 0;
         }
 
-        50% {
-            transform: translateX(13%);
-            opacity: 0.5;
-        }
-
         100% {
-            transform: translateX(0);
+            transform: translateX(0) scale(1);
             opacity: 1;
         }
     }

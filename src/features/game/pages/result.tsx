@@ -15,7 +15,7 @@ const ResultPage = () => {
   
   useEffect(() => {
     victoryMLsound.playAudio();
-  }, [victoryMLsound])
+  }, [])
 
   return (
     /* row */

@@ -200,12 +200,28 @@ const GamePage = () => {
         ></div>
 
         {!areHandsignsDone && (
-          <div className="absolute left-24 top-8">
-            <div className="bg-[rgba(0,0,0,0.5)] px-2 py-2">
+          <div className="absolute left-60 top-8">
+            <div className="bg-[rgba(0,0,0,0.5)] px-4 py-4">
               <h2 className=" text-xl text-white">
-                {state.currentLyrics.slice(0, 1000)}{" "}
-                {/* Limit to 20 characters */}
-                {state.currentLyrics.length > 20 && "..."}
+                {state.currentLyrics.slice(0, 42)}
+                {state.currentLyrics.length > 42 && (
+                  <>
+                    <br />
+                    {state.currentLyrics.slice(42, 84)}
+                  </>
+                )}
+                {state.currentLyrics.length > 84 && (
+                  <>
+                    <br />
+                    {state.currentLyrics.slice(84, 126)}
+                  </>
+                )}
+                {state.currentLyrics.length > 126 && (
+                  <>
+                    <br />
+                    {state.currentLyrics.slice(126, 168)}
+                  </>
+                )}
                 <span className="text-red-500">{state.currentPrompt}</span>
               </h2>
             </div>
