@@ -16,12 +16,12 @@ export const gameReducer = (state: GameState, action: GameAction) => {
       return { ...state, song_duration: state.song_duration - 1000}
 
     case ADD_HAND_ENTRY:
-      return { ...state, currentSymbol: action.payload.currentSymbol, currentPrompt: action.payload.currentPrompt}
+      return { ...state, currentSymbol: action.payload.currentSymbol, currentLyrics: action.payload.currentLyrics, currentPrompt: action.payload.currentPrompt}
     
     case SET_CURRENT_RATING:
-      { const { newPosition, perfectZoneX } = action.payload;
+      { const { newPosition, perfectZoneX, timestamp} = action.payload;
         const rating = calculateRating(newPosition, perfectZoneX);
-        return { ...state, currentRating: rating}; }
+        return { ...state, currentRating: rating, timestamp: timestamp}; }
 
     default:
       return state;
@@ -43,12 +43,12 @@ export const reduceDuration = () => ({
   type: REDUCE_DURATION,
 });
 
-export const addHandEntry = ( currentSymbol: string, currentPrompt: string) => ({
+export const addHandEntry = ( currentSymbol: string, currentLyrics: string, currentPrompt: string ) => ({
   type: ADD_HAND_ENTRY,
-  payload: { currentSymbol, currentPrompt}
+  payload: { currentSymbol, currentLyrics, currentPrompt}
 });
 
-export const setCurrentRating = ( newPosition: number, perfectZoneX: number ) => ({
+export const setCurrentRating = ( newPosition: number, perfectZoneX: number, timestamp: number ) => ({
   type: SET_CURRENT_RATING,
-  payload: { newPosition, perfectZoneX }
+  payload: { newPosition, perfectZoneX, timestamp }
 });

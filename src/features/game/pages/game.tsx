@@ -1,4 +1,4 @@
-import { useState, useReducer } from "react";
+import { useState, useReducer, useEffect } from "react";
 import { useParams, useNavigate } from "react-router";
 
 import { IMAGES } from "../../../constants/images"
@@ -33,7 +33,7 @@ const GamePage = () => {
   // Camera status and refs
   // Provides camera readiness status and references to the video and canvas elements
   const { isCameraReady, setIsCameraReady, canvasRef, videoRef } = useCamera();
-  
+
   // Local States
   // Tracks the X-coordinate of the hand's position and whether all hand signs are completed
   const [handXCoordinate, setHandXCoordinate] = useState(0);
@@ -45,8 +45,10 @@ const GamePage = () => {
     song_duration: wholeSongDuration, // Total duration of the song
     score: 0, // Player's current score
     currentSymbol: "bg_glitch1" as keyof typeof IMAGES, // Current hand sign symbol
+    currentLyrics: "No Lyrics" as keyof typeof IMAGES, // Current hand sign symbol
     currentPrompt: "No Prompt", // Current text prompt for the hand sign
     currentRating: "No Rating", // Current rating (e.g., PERFECT, GOOD, etc.)
+    timestamp: 0, // timestamp rating
   });
 
   // Camera setup logic
@@ -59,11 +61,36 @@ const GamePage = () => {
 
   // Game timer logic
   // Starts and ends the game based on the song's duration
-  useGameTimer(state.song_duration, dispatch, navigate, state, song_details?.title ?? "Unknown Title");
+  useGameTimer(
+    state.song_duration,
+    dispatch,
+    navigate,
+    state,
+    song_details?.title ?? "Unknown Title"
+  );
 
   // Hand movement logic
   // Handles the movement of hand signs and evaluates player performance
-  useHandMovement(isCameraReady, song_entries, dispatch, setAreHandsignsDone, setHandXCoordinate);
+  useHandMovement(
+    isCameraReady,
+    song_entries,
+    dispatch,
+    setAreHandsignsDone,
+    setHandXCoordinate
+  );
+
+  // Show Rating state
+  const [showRating, setShowRating] = useState(false);
+  useEffect(() => {
+    if (state.currentRating) {
+      setShowRating(true);
+
+      const timeout = setTimeout(() => {
+        setShowRating(false);
+      }, 1000);
+      return () => clearTimeout(timeout);
+    }
+  }, [state.currentRating, state.timestamp]);
 
   return (
     <div
@@ -119,19 +146,22 @@ const GamePage = () => {
 
       {/* Hand Conveyer */}
       <div className="mt-4 h-40 flex relative justify-end content-center">
+        <p className="text-white animate-fade-in">text</p>
         {/* Rating */}
-        <div className="absolute h-full animate-fade-in z-9 right-180">
-          <img
-            key={state.currentRating}
-            className="h-full animate-fade-in"
-            src={
-              IMAGES[
-                `${state.currentRating}_rating_effect` as keyof typeof IMAGES
-              ]
-            }
-            alt="Rating"
-          />
-        </div>
+        {showRating && (
+          <div className="absolute h-full animate-fade-in z-9 right-180 transition-all">
+            <img
+              key={state.currentRating}
+              className="h-full animate-fade-in"
+              src={
+                IMAGES[
+                  `${state.currentRating}_rating_effect` as keyof typeof IMAGES
+                ]
+              }
+              alt="Rating"
+            />
+          </div>
+        )}
 
         {/* Hand signs */}
         {!areHandsignsDone && (
@@ -140,17 +170,11 @@ const GamePage = () => {
             style={{ transform: `translateX(-${handXCoordinate}px)` }}
           >
             <img
-              src={
-                IMAGES[
-                  state.currentSymbol === "I love you"
-                    ? "I_love_you"
-                    : (state.currentSymbol as keyof typeof IMAGES)
-                ]
-              }
+              src={IMAGES[state.currentSymbol as keyof typeof IMAGES]}
               className="w-28 h-32"
               alt="Hand"
             />
-            <h2 className="4xl text-center text-white font-bold">
+            <h2 className="4xl text-center text-gray-300 font-bold">
               {state.currentSymbol}
             </h2>
           </div>
@@ -174,14 +198,19 @@ const GamePage = () => {
           className="absolute w-100 h-full bg-gradient-to-b from-red-500 via-red-500 to-red-400 z-1"
           style={{ transform: "translateX(-260px)" }}
         ></div>
-      </div>
 
-      <div className="absolute bottom-2 w-md">
-        <h2 className="text-4xl text-white">
-          Current Prompt: {state.currentPrompt}
-        </h2>
-        <h2>Current Rating: {state.currentRating}</h2>
-        <h2>Current Symbol: {state.currentSymbol}</h2>
+        {!areHandsignsDone && (
+          <div className="absolute left-24 top-8">
+            <div className="bg-[rgba(0,0,0,0.5)] px-2 py-2">
+              <h2 className=" text-xl text-white">
+                {state.currentLyrics.slice(0, 1000)}{" "}
+                {/* Limit to 20 characters */}
+                {state.currentLyrics.length > 20 && "..."}
+                <span className="text-red-500">{state.currentPrompt}</span>
+              </h2>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

@@ -1,13 +1,21 @@
 import { NavLink, useLocation } from "react-router";
 import { IMAGES } from "../../../constants/images";
 import { saveScore } from "../../../utils/firebase";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import useAudio from "../../../hooks/useAudio";
+import { AUDIO } from "../../../constants/audio";
 
 const ResultPage = () => {
   const location = useLocation();
   const { score, song_title } = location.state || {};
   const [ username, setUsername ] = useState("");
   const [ showModal, setShowModal ] = useState(false);
+  const clickSound = useAudio(AUDIO.click_sound);
+  const victoryMLsound = useAudio(AUDIO.victoryMLSound);
+  
+  useEffect(() => {
+    victoryMLsound.playAudio();
+  }, [victoryMLsound])
 
   return (
     /* row */
@@ -29,9 +37,9 @@ const ResultPage = () => {
       <div className="flex flex-col gap-12 mr-20">
         {/* score col */}
         <div className="flex flex-col">
-          <div className="flex justify-between">
-            <p className="text-4xl text-center text-white">Score: </p>
-            <p className="text-4xl text-center text-white">
+          <div className="flex justify-between items-center">
+            <p className="text-4xl text-center text-white">You got</p>
+            <p className="text-2xl text-center text-white">
               Song: {song_title}
             </p>
           </div>
@@ -64,6 +72,7 @@ const ResultPage = () => {
             onClick={() => {
               saveScore(score, song_title, username);
               setShowModal(true);
+              clickSound.playAudio()
             }}
           >
             Save
@@ -85,7 +94,10 @@ const ResultPage = () => {
             <NavLink
               to="/"
               className="px-6 py-2 bg-violet-500 text-white rounded-md"
-              onClick={() => setShowModal(false)}
+              onClick={() => {
+                setShowModal(false)
+                clickSound.playAudio()
+              }}
             >
               Back to Home
             </NavLink>

@@ -19,7 +19,7 @@ const SongSelectPage = () => {
     IMAGES.you_belong_w_me_album,
   ];
 
-    const panelImgPurple = [
+  const panelImgPurple = [
     IMAGES.wonderful_world_palbum,
     IMAGES.count_on_me_palbum,
     IMAGES.you_belong_w_me_palbum,
@@ -50,6 +50,7 @@ const SongSelectPage = () => {
   // When right arrow is clicked, move to the next item (looping)
   // When you click ➡: move to next index (0 → 1 → 2 → 0)
   const handlePrev = () => {
+    clickSound.playAudio();
     setDirectionAnimation("left");
     setCurrentIndex((prev) => (prev + 1) % song_options.length);
   }
@@ -57,6 +58,7 @@ const SongSelectPage = () => {
   // When left arrow is clicked, move to the previous item (looping)
   // When you click ⬅: move to previous (0 → 2 → 1 → 0)
   const handleNext = () => {
+    clickSound.playAudio();
     setDirectionAnimation("right");
     setCurrentIndex(
       (prev) => (prev - 1 + song_options.length) % song_options.length

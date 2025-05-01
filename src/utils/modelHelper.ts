@@ -12,7 +12,7 @@ let model: tf.GraphModel | null = null;
  */
 export const LABEL_LIST = [
   'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'K', 'L', 'M', 'N', 'O', 'P',
-  'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'I love you', 'You', 'Me'
+  'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'I_love_you', 'You', 'Me'
 ];
 
 /**

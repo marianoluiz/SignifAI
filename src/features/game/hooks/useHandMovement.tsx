@@ -39,6 +39,7 @@ export const useHandMovement = (
     | {
         timestamp: string;
         duration: number;
+        lyric: string;
         prompt: string;
         asl: string;
       }[]
@@ -63,7 +64,11 @@ export const useHandMovement = (
       }
 
       dispatch(
-        addHandEntry(song_entries[index].asl, song_entries[index].prompt)
+        addHandEntry(
+          song_entries[index].asl,
+          song_entries[index].lyric,
+          song_entries[index].prompt
+        )
       );
 
       // get duration in an entry
@@ -101,7 +106,7 @@ export const useHandMovement = (
             if (gestureStatus === true) {
               gestureJudged = true;
               const currentRating = calculateRating(newPosition, perfectZoneX);
-              dispatch(setCurrentRating(newPosition, perfectZoneX));
+              dispatch(setCurrentRating(newPosition, perfectZoneX, Date.now()));
 
               if (currentRating !== "MISS") console.log("Gesture is correct at : ", newPosition);
               else console.log("Gesture is correct but Missed timing");
@@ -110,7 +115,7 @@ export const useHandMovement = (
             } else if (gestureStatus === false) {
               gestureJudged = true;
               // MISS, pass 0 xCoordinate
-              dispatch(setCurrentRating(0, perfectZoneX));
+              dispatch(setCurrentRating(0, perfectZoneX, Date.now()));
               console.log("Gesture is incorrect");
             }
           }
@@ -120,7 +125,7 @@ export const useHandMovement = (
         if (progress >= 1) {
           if(gestureJudged === false) {
             // MISS, pass 0 xCoordinate
-            dispatch(setCurrentRating(0, perfectZoneX));
+            dispatch(setCurrentRating(0, perfectZoneX, Date.now()));
             console.log("Gesture Missed!");
           }
 
