@@ -1,14 +1,13 @@
 import { NavLink, useLocation } from "react-router";
 import { IMAGES } from "../../../constants/images";
-import { saveScore, fetchScore } from "../../../utils/firebase";
+import { saveScore } from "../../../utils/firebase";
 import { useState } from "react";
 
 const ResultPage = () => {
-
   const location = useLocation();
-  const { score, song_title } = location.state || {}; 
-  const [username, setUsername] = useState("");
-
+  const { score, song_title } = location.state || {};
+  const [ username, setUsername ] = useState("");
+  const [ showModal, setShowModal ] = useState(false);
 
   return (
     /* row */
@@ -32,7 +31,9 @@ const ResultPage = () => {
         <div className="flex flex-col">
           <div className="flex justify-between">
             <p className="text-4xl text-center text-white">Score: </p>
-            <p className="text-4xl text-center text-white">Song: {song_title}</p>
+            <p className="text-4xl text-center text-white">
+              Song: {song_title}
+            </p>
           </div>
 
           <img
@@ -49,30 +50,48 @@ const ResultPage = () => {
         {/* input name col */}
         <div>
           <span className="text-xl text-white mb-4">
-            Enter your name to save to leaderboard
+            Enter your name save your score
           </span>
           <input
             type="text"
             placeholder="Your Name"
             value={username}
-            onChange ={(e) => setUsername(e.target.value)}
+            onChange={(e) => setUsername(e.target.value)}
             className="w-full px-4 py-2 mt-4 text-lg text-gray-100 rounded-lg border-2 border-white focus:outline-none focus:ring-4 focus:ring-violet-500 focus:border-violet-500 placeholder-gray-400"
           />
-          <button className="mt-4 px-20 py-2 cursor-pointer rounded-lg bg-fuchsia-800 text-white"
-          onClick={() => {
-            saveScore(score, song_title, username);
-            fetchScore("leaderboards"); //Placeholder only, remove later
-          }}>
+          <button
+            className="mt-4 px-20 py-2 cursor-pointer rounded-lg bg-fuchsia-800 text-white"
+            onClick={() => {
+              saveScore(score, song_title, username);
+              setShowModal(true);
+            }}
+          >
             Save
           </button>
         </div>
       </div>
-      <NavLink
-        to="/"
-        className="absolute bottom-0 m-8 px-4 py-2 bg-violet-500 text-white rounded-md"
-      >
-        Back to Home
-      </NavLink>
+
+      {/* Modal Popup */}
+      {showModal && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black/30 backdrop-blur-sm z-50">
+          <div className="bg-white rounded-lg p-8 shadow-lg text-center">
+            <h2 className="text-2xl font-bold text-gray-800 mb-4">
+              Score Saved!
+            </h2>
+            <p className="text-gray-600 mb-6">
+              Score has been successfully saved to the leaderboard.
+            </p>
+
+            <NavLink
+              to="/"
+              className="px-6 py-2 bg-violet-500 text-white rounded-md"
+              onClick={() => setShowModal(false)}
+            >
+              Back to Home
+            </NavLink>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

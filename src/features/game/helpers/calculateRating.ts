@@ -1,9 +1,9 @@
 export const calculateRating = (currentPosition: number, perfectZoneX: number): string => {
   const distanceFromPerfect = Math.abs(currentPosition - perfectZoneX);
 
-  const perfectThreshold = 7.5;
-  const goodThreshold = 25.5;
-  const okThreshold = 43.5;
+  const perfectThreshold = 15.5;
+  const goodThreshold = 31.5;
+  const okThreshold = 199.5;
 
   if (distanceFromPerfect <= perfectThreshold) {
     return "PERFECT";

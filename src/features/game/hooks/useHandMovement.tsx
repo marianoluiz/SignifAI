@@ -1,6 +1,12 @@
 import { useEffect } from "react";
 import { GameAction } from "../gameTypes";
-import { addHandEntry, setCurrentRating } from "../gameReducer";
+import { addHandEntry, addScore, setCurrentRating } from "../gameReducer";
+
+import { resultLandmarks } from "../../../utils/handLandmarkerHelper"
+import { getPrediction  } from "../../../utils/modelHelper";
+
+import checkSign from "../helpers/checkSign"
+import { calculateRating } from "../helpers/calculateRating";
 
 /**
  * Custom Hook: useHandMovement
@@ -63,13 +69,15 @@ export const useHandMovement = (
       // get duration in an entry
       const duration = song_entries[index].duration;
 
-      const perfectZoneX = 400;
+      const perfectZoneX = 600;
+      const rateZone = 200;
       const perfectTime = duration;
 
       const startTime = Date.now();
+      let gestureJudged = false; // mark if sign is judged
 
-      // hand sign movement logic
-      interval = setInterval(() => {
+      // hand sign movement logic loop
+      interval = setInterval(async () => {
         // get progress and move the hand
         const elapsedTime = Date.now() - startTime;
         const progress = Math.min(elapsedTime / perfectTime, 1);
@@ -77,15 +85,46 @@ export const useHandMovement = (
 
         setHandXCoordinate(newPosition);
 
-        // Evaluate if hand sign is true
-        // ...
+
         // useRef to access
-        if (newPosition > 200) {
-          dispatch(setCurrentRating(newPosition, perfectZoneX));
+        if (!gestureJudged && newPosition > rateZone) {
+          // Evaluate
+          const predictedStr = await getPrediction(resultLandmarks);
+          // console.log('predicted string: ', predictedStr);
+
+          if (predictedStr !== "No prediction") {
+            const gestureStatus = checkSign(
+              predictedStr,
+              song_entries[index].asl
+            );
+
+            if (gestureStatus === true) {
+              gestureJudged = true;
+              const currentRating = calculateRating(newPosition, perfectZoneX);
+              dispatch(setCurrentRating(newPosition, perfectZoneX));
+
+              if (currentRating !== "MISS") console.log("Gesture is correct at : ", newPosition);
+              else console.log("Gesture is correct but Missed timing");
+
+              dispatch(addScore(currentRating, "No Difficulty Mode"));
+            } else if (gestureStatus === false) {
+              gestureJudged = true;
+              // MISS, pass 0 xCoordinate
+              dispatch(setCurrentRating(0, perfectZoneX));
+              console.log("Gesture is incorrect");
+            }
+          }
         }
 
-        // stop if more than 100% complete
+        // move to next if more than 100% complete
         if (progress >= 1) {
+          if(gestureJudged === false) {
+            // MISS, pass 0 xCoordinate
+            dispatch(setCurrentRating(0, perfectZoneX));
+            console.log("Gesture Missed!");
+          }
+
+          gestureJudged = false;
           clearInterval(interval);
           handleHandEntry(index + 1);
           setHandXCoordinate(0);

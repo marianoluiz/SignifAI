@@ -13,10 +13,16 @@ const SongSelectPage = () => {
   const song_options = songs_config.songs;
 
   // Panel Button Styles
-  const panelImg = [
+  const panelImgBlue = [
     IMAGES.wonderful_world_album,
     IMAGES.count_on_me_album,
     IMAGES.you_belong_w_me_album,
+  ];
+
+    const panelImgPurple = [
+    IMAGES.wonderful_world_palbum,
+    IMAGES.count_on_me_palbum,
+    IMAGES.you_belong_w_me_palbum,
   ];
 
   // This state keeps track of the currently centered item
@@ -91,10 +97,10 @@ const SongSelectPage = () => {
             className={`relative select-none
               ${
                 i === 1
-                ? directionAnimation === "left"
-                  ? "animate-slide-left"
-                  : "animate-slide-right"
-                : ""
+                  ? directionAnimation === "left"
+                    ? "animate-slide-left"
+                    : "animate-slide-right"
+                  : ""
               }
               hover:scale-105 transition-all
               `}
@@ -103,7 +109,7 @@ const SongSelectPage = () => {
           >
             {/* Panel Image */}
             <img
-              src={panelImg[song.key]}
+              src={i === 1 ? panelImgPurple[song.key] : panelImgBlue[song.key]}
               className={`select-none pointer-events-none
                 ${i === 1 ? "size-124" : "size-92"}`}
               alt="Panel Button Image"
