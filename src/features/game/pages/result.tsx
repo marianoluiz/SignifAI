@@ -1,10 +1,14 @@
 import { NavLink, useLocation } from "react-router";
 import { IMAGES } from "../../../constants/images";
+import { saveScore, fetchScore } from "../../../utils/firebase";
+import { useState } from "react";
 
 const ResultPage = () => {
 
   const location = useLocation();
   const { score, song_title } = location.state || {}; 
+  const [username, setUsername] = useState("");
+
 
   return (
     /* row */
@@ -50,9 +54,15 @@ const ResultPage = () => {
           <input
             type="text"
             placeholder="Your Name"
+            value={username}
+            onChange ={(e) => setUsername(e.target.value)}
             className="w-full px-4 py-2 mt-4 text-lg text-gray-100 rounded-lg border-2 border-white focus:outline-none focus:ring-4 focus:ring-violet-500 focus:border-violet-500 placeholder-gray-400"
           />
-          <button className="mt-4 px-20 py-2 cursor-pointer rounded-lg bg-fuchsia-800 text-white">
+          <button className="mt-4 px-20 py-2 cursor-pointer rounded-lg bg-fuchsia-800 text-white"
+          onClick={() => {
+            saveScore(score, song_title, username);
+            fetchScore("leaderboards"); //Placeholder only, remove later
+          }}>
             Save
           </button>
         </div>
