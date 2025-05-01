@@ -32,23 +32,20 @@ import disco_img from "/src/assets/img/results/disco_img.png"
  
 
 /* signs */
-import ONE from "/src/assets/img/signs/1.png";
-import TWO from "/src/assets/img/signs/2.png";
-import THREE from "/src/assets/img/signs/3.png";
 import B from "/src/assets/img/signs/B.png";
 import C from "/src/assets/img/signs/C.png";
 import D from "/src/assets/img/signs/D.png";
 import F from "/src/assets/img/signs/F.png";
-import ILY from "/src/assets/img/signs/ILY.png";
+import I_love_you from "/src/assets/img/signs/ILY.png";
 import L from "/src/assets/img/signs/L.png";
-import ME from "/src/assets/img/signs/ME.png";
+import Me from "/src/assets/img/signs/ME.png";
 import R from "/src/assets/img/signs/R.png";
 import S from "/src/assets/img/signs/S.png";
 import T from "/src/assets/img/signs/T.png";
 import V from "/src/assets/img/signs/V.png";
 import W from "/src/assets/img/signs/W.png";
 import Y from "/src/assets/img/signs/Y.png";
-import YOU from "/src/assets/img/signs/YOU.png";
+import You from "/src/assets/img/signs/YOU.png";
 
 export const IMAGES = {
     /* start_screen */
@@ -90,22 +87,18 @@ export const IMAGES = {
     disco_img,
 
     /* signs */
-    ONE, 
-    TWO, 
-    THREE, 
     B, 
     C, 
     D, 
     F, 
-    ILY, 
+    I_love_you, 
     L, 
-    ME, 
+    Me, 
     R, 
     S, 
     T, 
     V, 
     W, 
     Y, 
-    YOU
-
+    You
 };
