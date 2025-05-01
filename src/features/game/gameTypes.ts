@@ -3,8 +3,10 @@ export interface GameState {
     score: number;
 
     currentSymbol: string;
+    currentLyrics: string;
     currentPrompt: string;
     currentRating: string;
+    timestamp: number;
 }
 
 export const SET_GAME = "SET_GAME" as const;
@@ -30,12 +32,12 @@ type ReduceDurationAction = {
 
 type AddHandEntryAction = {
   type: typeof ADD_HAND_ENTRY;
-  payload: { currentSymbol: string, currentPrompt: string }
+  payload: { currentSymbol: string, currentLyrics: string, currentPrompt: string }
 };
 
 type setCurrentRating = ({
   type: typeof SET_CURRENT_RATING;
-  payload: { newPosition: number, perfectZoneX: number }
+  payload: { newPosition: number, perfectZoneX: number, timestamp: number }
 });
 
 export type GameAction =

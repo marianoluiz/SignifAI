@@ -2,6 +2,7 @@ import {
   HandLandmarker,
   FilesetResolver
 } from '@mediapipe/tasks-vision';
+import { getPrediction } from './modelHelper';
 
 /**
 * The handLandmarker instance used for detecting hand landmarks.
@@ -75,6 +76,10 @@ export const startWebcamAndDetect = (
       .then((stream) => {
           if (videoRef.current) {
               videoRef.current.srcObject = stream;
+
+              // Apply the horizontal flip transformation
+              videoRef.current.style.transform = "scaleX(-1)";
+              canvasRef.current.style.transform = "scaleX(-1)";
               videoRef.current.addEventListener('loadeddata', () => predictWebcam(videoRef, canvasRef));
           }
       })
@@ -130,13 +135,12 @@ const predictWebcam = async (
   canvas.width = video.videoWidth;
   canvas.height = video.videoHeight;
 
+
   if (lastVideoTime !== video.currentTime) {
       const startTimeMs = performance.now();
       lastVideoTime = video.currentTime;
       results = handLandmarker.detectForVideo(video, startTimeMs);
   }
-
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
 
   resultLandmarks.length = 0; // Clear previous landmarks
 
@@ -152,6 +156,7 @@ const predictWebcam = async (
               ctx.fill();
           }
       }
+
   }
 
   window.requestAnimationFrame(() => predictWebcam(videoRef, canvasRef));
