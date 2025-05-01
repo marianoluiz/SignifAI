@@ -5,8 +5,7 @@ import { IMAGES } from "../../../constants/images"
 import { AUDIO } from "../../../constants/audio";
 import { SplashScreenAnimation } from "../../../components/SplashScreenAnimation";
 import songs_config from "../../../config/songs_config.json";
-import { gameReducer, reduceDuration } from "../gameReducer";
-import { addScore } from "../gameReducer";
+import { gameReducer } from "../gameReducer";
 import useAudio from "../../../hooks/useAudio";
 
 import { formatTime } from "../../../utils/timeHelpers"
@@ -15,8 +14,6 @@ import { useCameraSetup } from "../hooks/useCameraSetup";
 import { useGameSetup } from "../hooks/useGameSetup";
 import { useGameTimer } from "../hooks/useGameTimer";
 import { useHandMovement } from "../hooks/useHandMovement";
-import { getPrediction } from "../../../utils/modelHelper";
-import { resultLandmarks } from "../../../utils/handLandmarkerHelper";
 
 const GamePage = () => {
   const navigate = useNavigate();
@@ -68,11 +65,6 @@ const GamePage = () => {
   // Handles the movement of hand signs and evaluates player performance
   useHandMovement(isCameraReady, song_entries, dispatch, setAreHandsignsDone, setHandXCoordinate);
 
-  // soon
-  const handleAddScore = (rating: string, difficulty: string) => {
-    dispatch(addScore(rating, difficulty));
-  };
-
   return (
     <div
       className="w-screen h-screen"
@@ -88,10 +80,13 @@ const GamePage = () => {
 
       {/* Status Header */}
       <div className="flex row justify-center">
-        <h2 className="font-moko-regular mt-8 mb-6 text-5xl text-white">
+        <h2
+          className={`font-moko-regular mt-8 mb-6 text-5xl 
+            ${song_var === "count_on_me" ? "" : "text-purple-400"}`}
+        >
           {formatTime(state.song_duration)}
         </h2>
-        <h1 className="absolute left-16 top-24 font-moko-glitch -rotate-10  text-6xl font-bold text-fuchsia-300 z-2">
+        <h1 className="absolute left-16 top-24 font-moko-glitch -rotate-10  text-6xl font-bold text-purple-700 z-2">
           {state.score}
         </h1>
       </div>
@@ -125,7 +120,7 @@ const GamePage = () => {
       {/* Hand Conveyer */}
       <div className="mt-4 h-40 flex relative justify-end content-center">
         {/* Rating */}
-        <div className="absolute h-full animate-fade-in z-9 right-140">
+        <div className="absolute h-full animate-fade-in z-9 right-180">
           <img
             key={state.currentRating}
             className="h-full animate-fade-in"
@@ -158,75 +153,25 @@ const GamePage = () => {
         {/* Area bars */}
         {/* Visual indicators for scoring zones */}
         <div
-          className="absolute w-2 h-full bg-gradient-to-b from-green-400 via-green-500 to-green-400 z-4"
-          style={{ transform: "translateX(-452px)" }}
+          className="absolute w-8 h-full bg-gradient-to-b from-green-400 via-green-500 to-green-400 z-4"
+          style={{ transform: "translateX(-628px)" }}
         ></div>
         <div
-          className="absolute w-6 h-full bg-gradient-to-b from-cyan-400 via-cyan-500 to-cyan-400 z-3"
-          style={{ transform: "translateX(-435px)" }}
+          className="absolute w-16 h-full bg-gradient-to-b from-cyan-400 via-cyan-500 to-cyan-400 z-3"
+          style={{ transform: "translateX(-596px)" }}
         ></div>
         <div
-          className="absolute w-10 h-full bg-gradient-to-b from-fuchsia-400 via-fuchsia-500 to-fuchsia-400 z-2"
-          style={{ transform: "translateX(-418px)" }}
+          className="absolute w-32 h-full bg-gradient-to-b from-fuchsia-400 via-fuchsia-500 to-fuchsia-400 z-2"
+          style={{ transform: "translateX(-532px)" }}
         ></div>
         <div
-          className="absolute w-45 h-full bg-gradient-to-b from-red-500 via-red-500 to-red-400 z-1"
-          style={{ transform: "translateX(-259px)" }}
+          className="absolute w-100 h-full bg-gradient-to-b from-red-500 via-red-500 to-red-400 z-1"
+          style={{ transform: "translateX(-260px)" }}
         ></div>
       </div>
 
       <div className="absolute bottom-2 w-md">
-        <button
-          onClick={() => handleAddScore("PERFECT", "Medium")}
-          className="px-4 py-2 bg-violet-300 "
-        >
-          Add PERFECT Score
-        </button>
-        <button
-          onClick={() => handleAddScore("PERFECT", "Medium")}
-          className="px-4 py-2 bg-violet-300"
-        >
-          Add GOOD Score
-        </button>
-
-        <button
-          onClick={() => handleAddScore("PERFECT", "Medium")}
-          className="px-4 py-2 bg-violet-300"
-        >
-          Add OK Score
-        </button>
-        <button
-          onClick={() => handleAddScore("MISS", "Medium")}
-          className="px-4 py-2 bg-violet-300"
-        >
-          Add MISS Score
-        </button>
-        <button
-          onClick={() => handleAddScore("MISS", "Medium")}
-          className="px-4 py-2 bg-violet-300"
-        >
-          Add MISS Score
-        </button>
-        <button
-          onClick={() => dispatch(reduceDuration())}
-          className="px-4 py-2 bg-violet-300"
-        >
-          Reduce Duration
-        </button>
-        <button
-          onClick={
-            () =>
-              getPrediction(resultLandmarks).then((result) => {
-                console.log("Prediction result:", result);
-              })
-            /* Example usage of getPrediction function */
-          }
-          className="px-4 py-2 bg-red-300"
-        >
-          {" "}
-          Predict
-        </button>
-        <h2>Current Prompt: {state.currentPrompt}</h2>
+        <h2 className="text-4xl text-white">Current Prompt: {state.currentPrompt}</h2>
         <h2>Current Rating: {state.currentRating}</h2>
       </div>
     </div>

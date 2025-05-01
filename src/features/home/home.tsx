@@ -49,18 +49,7 @@ const HomePage = () => {
       </div>
 
       <div className="flex flex-row justify-center gap-8">
-        <NavLink
-          to="/practice"
-          className="h-16"
-          onClick={() => clickSound.playAudio()}
-        >
-          <img
-            src={IMAGES.btn_pract}
-            className="h-16 select-none"
-            draggable="false"
-            alt="Practice Button"
-          />
-        </NavLink>
+
 
         <NavLink
           to="/play"
@@ -83,7 +72,7 @@ const HomePage = () => {
         >
           <img
             src={IMAGES.btn_lboard}
-            className="h-16 select-none"
+            className="h-24 select-none"
             draggable="false"
             alt="Leaderboard Button"
           />

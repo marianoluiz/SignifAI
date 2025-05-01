@@ -1,23 +1,6 @@
 import { GameState, GameAction, SET_GAME, ADD_SCORE, REDUCE_DURATION, ADD_HAND_ENTRY, SET_CURRENT_RATING } from "./gameTypes";
 import { calculateRating } from "./helpers/calculateRating";
-
-// Helper function to calculate score
-const calculatePointsFromRating = (rating: string, difficulty: string) => {
-  let points = 0;
-
-  // Add points based on rating
-  if (rating === "PERFECT") points += 100;
-  else if (rating === "GOOD") points += 75;
-  else if (rating === "OK") points += 50;
-  else if (rating === "MISS") return points;
-
-    // Add points based on difficulty
-  if (difficulty === "Easy") points += 5;
-  else if (difficulty === "Medium") points += 10;
-  else if (difficulty === "Hard") points += 15;
-
-  return points;
-};
+import { calculateScore } from "./helpers/calculateScore";
 
 export const gameReducer = (state: GameState, action: GameAction) => {
   switch (action.type) {
@@ -26,7 +9,7 @@ export const gameReducer = (state: GameState, action: GameAction) => {
 
     case ADD_SCORE:
       { const { rating, difficulty } = action.payload;
-      const points = calculatePointsFromRating(rating, difficulty);
+      const points = calculateScore(rating, difficulty);
       return { ...state, score: state.score + points }; }
 
     case REDUCE_DURATION:
