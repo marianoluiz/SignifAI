@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { reduceDuration } from "../gameReducer";
-import { GameAction } from "../gameTypes";
+import { GameAction, GameState } from "../gameTypes";
 import { NavigateFunction } from "react-router";
 
 /**
@@ -16,19 +16,20 @@ import { NavigateFunction } from "react-router";
 export const useGameTimer = (
   song_duration: number,
   dispatch: React.ActionDispatch<[action: GameAction]>,
-  navigate: NavigateFunction
+  navigate: NavigateFunction,
+  state: GameState
 ) => {
   useEffect(() => {
     const interval = setInterval(() => {
     if (song_duration > 0) {
       dispatch(reduceDuration());
     } else if (song_duration <= 0) {
-      // navigate("/play/result");
+      navigate("/play/result", { state: { score: state.score } });
       clearInterval(interval);
     }
 
   }, 1000);
 
     return () => clearInterval(interval);
-  }, [song_duration, dispatch, navigate]);
+  }, [song_duration, dispatch, navigate, state.score]);
 };

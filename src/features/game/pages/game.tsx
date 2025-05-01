@@ -5,7 +5,7 @@ import { IMAGES } from "../../../constants/images"
 import { AUDIO } from "../../../constants/audio";
 import { SplashScreenAnimation } from "../../../components/SplashScreenAnimation";
 import songs_config from "../../../config/songs_config.json";
-import { gameReducer } from "../gameReducer";
+import { gameReducer, reduceDuration } from "../gameReducer";
 import { addScore } from "../gameReducer";
 import useAudio from "../../../hooks/useAudio";
 
@@ -23,6 +23,7 @@ const GamePage = () => {
 
   // fetch song
   const { song_var } = useParams();
+
   const song_details = songs_config.songs.find(
     (song) => song.var_name === song_var
   );
@@ -61,7 +62,7 @@ const GamePage = () => {
 
   // Game timer logic
   // Starts and ends the game based on the song's duration
-  useGameTimer(state.song_duration, dispatch, navigate);
+  useGameTimer(state.song_duration, dispatch, navigate, state);
 
   // Hand movement logic
   // Handles the movement of hand signs and evaluates player performance
@@ -76,7 +77,9 @@ const GamePage = () => {
     <div
       className="w-screen h-screen"
       style={{
-        backgroundImage: `url(${IMAGES.bg_game})`,
+        backgroundImage: `url(${
+          IMAGES[`${song_var}_bg` as keyof typeof IMAGES]
+        })`,
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}
@@ -85,10 +88,10 @@ const GamePage = () => {
 
       {/* Status Header */}
       <div className="flex row justify-center">
-        <h2 className="font-moko-regular mt-8 mb-6 text-5xl text-emerald-950">
+        <h2 className="font-moko-regular mt-8 mb-6 text-5xl text-white">
           {formatTime(state.song_duration)}
         </h2>
-        <h1 className="absolute left-16 top-24 font-moko-glitch -rotate-10  text-6xl font-bold text-fuchsia-900 z-2">
+        <h1 className="absolute left-16 top-24 font-moko-glitch -rotate-10  text-6xl font-bold text-fuchsia-300 z-2">
           {state.score}
         </h1>
       </div>
@@ -120,7 +123,21 @@ const GamePage = () => {
       </div>
 
       {/* Hand Conveyer */}
-      <div className="mt-4 flex relative justify-end content-center">
+      <div className="mt-4 h-40 flex relative justify-end content-center">
+        {/* Rating */}
+        <div className="absolute h-full animate-fade-in z-9 right-140">
+          <img
+            key={state.currentRating}
+            className="h-full animate-fade-in"
+            src={
+              IMAGES[
+                `${state.currentRating}_rating_effect` as keyof typeof IMAGES
+              ]
+            }
+            alt="Rating"
+          />
+        </div>
+
         {/* Hand signs */}
         {!areHandsignsDone && (
           <div
@@ -132,7 +149,9 @@ const GamePage = () => {
               className="w-28 h-32"
               alt="Hand"
             />
-            <h2 className="4xl text-center font-bold">{state.currentSymbol}</h2>
+            <h2 className="4xl text-center text-white font-bold">
+              {state.currentSymbol}
+            </h2>
           </div>
         )}
 
@@ -181,6 +200,18 @@ const GamePage = () => {
           className="px-4 py-2 bg-violet-300"
         >
           Add MISS Score
+        </button>
+        <button
+          onClick={() => handleAddScore("MISS", "Medium")}
+          className="px-4 py-2 bg-violet-300"
+        >
+          Add MISS Score
+        </button>
+        <button
+          onClick={() => dispatch(reduceDuration())}
+          className="px-4 py-2 bg-violet-300"
+        >
+          Reduce Duration
         </button>
         <button
           onClick={

@@ -17,30 +17,35 @@ const HomePage = () => {
   const { isLoading } = useAppInitialization();
 
   return (
-    
     <div>
-      {isLoading && (
-        <SplashScreenAnimation />
-      )}
-    
+      {isLoading && <SplashScreenAnimation />}
+
       <img
         className="absolute top-28 right-44 size-28 -z-1"
+        draggable="false"
         src={IMAGES.bg_glitch1}
         alt="Glitch Effect"
       />
       <img
         className="absolute bottom-64 left-40 size-28 -z-1"
+        draggable="false"
         src={IMAGES.bg_glitch2}
         alt="Glitch Effect"
       />
       <img
         className="absolute bottom-36 right-52 size-28 -z-1"
+        draggable="false"
         src={IMAGES.bg_glitch3}
         alt="Glitch Effect"
       />
 
-      <div className="flex flex-col justify-center items-center">
-        <img className="h-160" src={IMAGES.main_img} alt="Main Image" />
+      <div className="flex flex-col justify-center items-center select-none">
+        <img
+          className="h-160"
+          src={IMAGES.main_img}
+          draggable="false"
+          alt="Main Image"
+        />
       </div>
 
       <div className="flex flex-row justify-center gap-8">
@@ -49,7 +54,12 @@ const HomePage = () => {
           className="h-16"
           onClick={() => clickSound.playAudio()}
         >
-          <img src={IMAGES.btn_pract} className="h-16" alt="Practice Button" />
+          <img
+            src={IMAGES.btn_pract}
+            className="h-16 select-none"
+            draggable="false"
+            alt="Practice Button"
+          />
         </NavLink>
 
         <NavLink
@@ -57,17 +67,24 @@ const HomePage = () => {
           className="h-24"
           onClick={() => clickSound.playAudio()}
         >
-          <img src={IMAGES.btn_play} className="h-24" alt="Play Button" />
+          <img
+            src={IMAGES.btn_play}
+            className="h-24 select-none"
+            draggable="false"
+            alt="Play Button"
+          />
         </NavLink>
 
         <NavLink
           to="/leaderboard"
           className="h-16"
           onClick={() => clickSound.playAudio()}
+          select-none
         >
           <img
             src={IMAGES.btn_lboard}
-            className="h-16"
+            className="h-16 select-none"
+            draggable="false"
             alt="Leaderboard Button"
           />
         </NavLink>
