@@ -5,7 +5,7 @@ import { IMAGES } from "../../../constants/images"
 import { AUDIO } from "../../../constants/audio";
 import { SplashScreenAnimation } from "../../../components/SplashScreenAnimation";
 import songs_config from "../../../config/songs_config.json";
-import { gameReducer } from "../gameReducer";
+import { gameReducer, reduceDuration } from "../gameReducer";
 import { addScore } from "../gameReducer";
 import useAudio from "../../../hooks/useAudio";
 
@@ -23,6 +23,7 @@ const GamePage = () => {
 
   // fetch song
   const { song_var } = useParams();
+
   const song_details = songs_config.songs.find(
     (song) => song.var_name === song_var
   );
@@ -32,39 +33,40 @@ const GamePage = () => {
   // play song in a global hook
   const song = useAudio(AUDIO[song_var as keyof typeof AUDIO]);
 
+  // Camera status and refs
+  // Provides camera readiness status and references to the video and canvas elements
+  const { isCameraReady, setIsCameraReady, canvasRef, videoRef } = useCamera();
+  
   // Local States
+  // Tracks the X-coordinate of the hand's position and whether all hand signs are completed
   const [handXCoordinate, setHandXCoordinate] = useState(0);
   const [areHandsignsDone, setAreHandsignsDone] = useState(false);
 
   // Reducer States with initial state
+  // Manages the game's state, including song duration, score, current hand sign, and ratings
   const [state, dispatch] = useReducer(gameReducer, {
-    song_duration: wholeSongDuration,
-    score: 0,
-    currentSymbol: "bg_glitch1" as keyof typeof IMAGES,
-    currentPrompt: "No Prompt",
-    currentRating: "No Rating",
+    song_duration: wholeSongDuration, // Total duration of the song
+    score: 0, // Player's current score
+    currentSymbol: "bg_glitch1" as keyof typeof IMAGES, // Current hand sign symbol
+    currentPrompt: "No Prompt", // Current text prompt for the hand sign
+    currentRating: "No Rating", // Current rating (e.g., PERFECT, GOOD, etc.)
   });
 
-  // camera status and refs
-  const { isCameraReady, setIsCameraReady, canvasRef, videoRef } = useCamera();
+  // Camera setup logic
+  // Configures the camera and prepares it for use
+  useCameraSetup(videoRef, canvasRef, setIsCameraReady);
 
-  // Call the useGameSetup hook to set up the game when the camera is ready.
-  useGameSetup( isCameraReady, song, dispatch, wholeSongDuration );
+  // Game setup logic
+  // Initializes the game when the camera is ready
+  useGameSetup(isCameraReady, song, dispatch, wholeSongDuration);
 
-  // Setup camera and sets the game to start
-  useCameraSetup( videoRef, canvasRef, setIsCameraReady );
+  // Game timer logic
+  // Starts and ends the game based on the song's duration
+  useGameTimer(state.song_duration, dispatch, navigate, state);
 
-  // Start and End the game
-  useGameTimer(state.song_duration, dispatch, navigate);
-
-  // Handle the hand entries and hand movements
-  useHandMovement(
-    isCameraReady,
-    song_entries,
-    dispatch,
-    setAreHandsignsDone,
-    setHandXCoordinate
-  );
+  // Hand movement logic
+  // Handles the movement of hand signs and evaluates player performance
+  useHandMovement(isCameraReady, song_entries, dispatch, setAreHandsignsDone, setHandXCoordinate);
 
   // soon
   const handleAddScore = (rating: string, difficulty: string) => {
@@ -75,7 +77,9 @@ const GamePage = () => {
     <div
       className="w-screen h-screen"
       style={{
-        backgroundImage: `url(${IMAGES.bg_game})`,
+        backgroundImage: `url(${
+          IMAGES[`${song_var}_bg` as keyof typeof IMAGES]
+        })`,
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}
@@ -84,10 +88,10 @@ const GamePage = () => {
 
       {/* Status Header */}
       <div className="flex row justify-center">
-        <h2 className="font-moko-regular mt-8 mb-6 text-5xl text-emerald-950">
+        <h2 className="font-moko-regular mt-8 mb-6 text-5xl text-white">
           {formatTime(state.song_duration)}
         </h2>
-        <h1 className="absolute left-16 top-24 font-moko-glitch -rotate-10  text-6xl font-bold text-fuchsia-900 z-2">
+        <h1 className="absolute left-16 top-24 font-moko-glitch -rotate-10  text-6xl font-bold text-fuchsia-300 z-2">
           {state.score}
         </h1>
       </div>
@@ -95,6 +99,7 @@ const GamePage = () => {
       <div className="w-screen h-[60vh] flex justify-center content-center">
         {/* user camera */}
         <div className="relative ml-8 h-full aspect-video rounded-lg">
+          {/* Video feed from the user's camera */}
           {/* ***object-cover is important to match the ratio */}
           <video
             className="absolute aspect-video w-full h-full object-cover  rounded-md"
@@ -104,6 +109,7 @@ const GamePage = () => {
             muted
             playsInline
           />
+          {/* Canvas for the drew hand landmarks */}
           <canvas
             className="absolute aspect-video w-full h-full object-cover  rounded-md"
             ref={canvasRef}
@@ -117,7 +123,21 @@ const GamePage = () => {
       </div>
 
       {/* Hand Conveyer */}
-      <div className="mt-8 flex relative justify-end content-center">
+      <div className="mt-4 h-40 flex relative justify-end content-center">
+        {/* Rating */}
+        <div className="absolute h-full animate-fade-in z-9 right-140">
+          <img
+            key={state.currentRating}
+            className="h-full animate-fade-in"
+            src={
+              IMAGES[
+                `${state.currentRating}_rating_effect` as keyof typeof IMAGES
+              ]
+            }
+            alt="Rating"
+          />
+        </div>
+
         {/* Hand signs */}
         {!areHandsignsDone && (
           <div
@@ -129,26 +149,29 @@ const GamePage = () => {
               className="w-28 h-32"
               alt="Hand"
             />
-            <h2 className="4xl text-center font-bold">{state.currentSymbol}</h2>
+            <h2 className="4xl text-center text-white font-bold">
+              {state.currentSymbol}
+            </h2>
           </div>
         )}
 
         {/* Area bars */}
+        {/* Visual indicators for scoring zones */}
         <div
-          className="absolute w-4 h-full bg-[rgba(52,211,153,0.8)] z-4"
-          style={{ transform: "translateX(-552px)" }}
+          className="absolute w-2 h-full bg-gradient-to-b from-green-400 via-green-500 to-green-400 z-4"
+          style={{ transform: "translateX(-452px)" }}
         ></div>
         <div
-          className="absolute w-13 h-full bg-[rgba(135,255,245,0.8)] z-3"
-          style={{ transform: "translateX(-535px)" }}
+          className="absolute w-6 h-full bg-gradient-to-b from-cyan-400 via-cyan-500 to-cyan-400 z-3"
+          style={{ transform: "translateX(-435px)" }}
         ></div>
         <div
-          className="absolute w-22 h-full bg-[rgba(118,143,255,0.8)] z-2"
-          style={{ transform: "translateX(-518px)" }}
+          className="absolute w-10 h-full bg-gradient-to-b from-fuchsia-400 via-fuchsia-500 to-fuchsia-400 z-2"
+          style={{ transform: "translateX(-418px)" }}
         ></div>
         <div
-          className="absolute w-90 h-full bg-[rgba(208,136,255,0.8)] z-1"
-          style={{ transform: "translateX(-359px)" }}
+          className="absolute w-45 h-full bg-gradient-to-b from-red-500 via-red-500 to-red-400 z-1"
+          style={{ transform: "translateX(-259px)" }}
         ></div>
       </div>
 
@@ -179,13 +202,29 @@ const GamePage = () => {
           Add MISS Score
         </button>
         <button
-          onClick={()=> 
-            getPrediction(resultLandmarks).then((result) => {
-              console.log("Prediction result:", result);
-            }) 
-            /* Example usage of getPrediction function */          }
+          onClick={() => handleAddScore("MISS", "Medium")}
+          className="px-4 py-2 bg-violet-300"
+        >
+          Add MISS Score
+        </button>
+        <button
+          onClick={() => dispatch(reduceDuration())}
+          className="px-4 py-2 bg-violet-300"
+        >
+          Reduce Duration
+        </button>
+        <button
+          onClick={
+            () =>
+              getPrediction(resultLandmarks).then((result) => {
+                console.log("Prediction result:", result);
+              })
+            /* Example usage of getPrediction function */
+          }
           className="px-4 py-2 bg-red-300"
-        > Predict 
+        >
+          {" "}
+          Predict
         </button>
         <h2>Current Prompt: {state.currentPrompt}</h2>
         <h2>Current Rating: {state.currentRating}</h2>

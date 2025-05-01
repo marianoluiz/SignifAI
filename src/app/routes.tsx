@@ -14,7 +14,7 @@ const AppRoutes = () => {
             <Route path="/" element={<HomePage />} />
             {/* Leaderboard */}
             <Route path="/leaderboard" element={<LeaderboardPage />} />
-            {/* Play, replace param to not loop when backing */}
+            {/* Play, replace prop to not loop when backing */}
             <Route path="/play">
                 <Route index element={<Navigate to="/play/select" replace />} />
                 <Route path="/play/select" element={<SongSelectPage />} />
