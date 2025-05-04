@@ -8,22 +8,23 @@ import LeaderboardPage from "../features/leaderboard/leaderboard";
 
 const AppRoutes = () => {
     return (
-        <BrowserRouter>
-            <Routes>
-            {/* Home */}
-            <Route path="/" element={<HomePage />} />
-            {/* Leaderboard */}
-            <Route path="/leaderboard" element={<LeaderboardPage />} />
-            {/* Play, replace prop to not loop when backing */}
-            <Route path="/play">
-                <Route index element={<Navigate to="/play/select" replace />} />
-                <Route path="/play/select" element={<SongSelectPage />} />
-                <Route path="/play/song/:song_var" element={<GamePage />} />
-                <Route path="/play/result" element={<ResultPage />} />
-            </Route>
-            </Routes>
-        </BrowserRouter>
-    )
+      <BrowserRouter>
+        <Routes>
+          {/* Home */}
+          <Route path="/" element={<HomePage />} />
+          {/* Leaderboard */}
+          <Route path="/leaderboard" element={<LeaderboardPage />} />
+          {/* Play, replace prop to not loop when backing */}
+          <Route path="/play">
+            <Route index element={<Navigate to="/play/select" replace />} />
+            <Route path="/play/select" element={<SongSelectPage />} />
+            <Route path="/play/song/:song_var" element={<GamePage />} />
+            <Route path="/play/result" element={<ResultPage />} />
+          </Route>
+          <Route path="*" element={<p className="text-2xl">There's nothing here: 404!</p>} />
+        </Routes>
+      </BrowserRouter>
+    );
 }
 
 export default AppRoutes;

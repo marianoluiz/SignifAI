@@ -50,6 +50,7 @@ const GamePage = () => {
 
   // fetch song
   const { song_var } = useParams();
+  
   const song_details = songs_config.songs.find(
     (song) => song.var_name === song_var
   );
@@ -90,6 +91,7 @@ const GamePage = () => {
 
   // Game timer logic Hook
   // Starts and ends the game based on the song's duration
+  // Passes score and song title to the result page after song is done
   useGameTimer(
     state.song_duration,
     dispatch,

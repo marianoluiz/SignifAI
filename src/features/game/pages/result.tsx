@@ -1,4 +1,4 @@
-import { NavLink, useLocation } from "react-router";
+import { useNavigate, NavLink, useLocation } from "react-router";
 import { IMAGES } from "../../../constants/images";
 import { saveScore } from "../../../utils/firebase";
 import { useEffect, useState } from "react";
@@ -30,6 +30,15 @@ import { AUDIO } from "../../../constants/audio";
 const ResultPage = () => {
   // Retrieve the score and song title from the location state
   const location = useLocation();
+  const navigate = useNavigate();
+
+  // go back to selection page if no score and song title passed
+  useEffect(() => {
+    if (!location.state) {
+      navigate("/play/select");
+    }
+  }, [location, navigate]);
+
   const { score, song_title } = location.state || {};
 
   // State to store the player's name
@@ -42,9 +51,13 @@ const ResultPage = () => {
   const clickSound = useAudio(AUDIO.click_sound);
   const victoryMLsound = useAudio(AUDIO.victoryMLSound);
 
-  // Play the victory sound when the page loads
+  // Play the victory sound after 1000ms
   useEffect(() => {
-    victoryMLsound.playAudio();
+    const timeout = setTimeout(() => {
+      victoryMLsound.playAudio();
+    }, 500);
+
+    return () => clearTimeout(timeout);
   }, [victoryMLsound]);
 
   return (
