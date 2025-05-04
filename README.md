@@ -19,6 +19,17 @@
 
 ---
 
+## 🛠️ Tech Stack
+
+- **Frontend**: React, TypeScript, TailwindCSS
+- **Machine Learning**: TensorFlow.js, MediaPipe
+- **State Management**: Redux Toolkit
+- **Routing**: React Router
+- **Backend**: Firebase Firestore
+- **Build Tool**: Vite
+
+---
+
 ## 📸 Screenshots
 
 ### Home Page
@@ -40,17 +51,6 @@
 
 ### Leaderboard
 <img src="./src/assets/readme/leaderboard_img.png" alt="Leaderboard Screen 2">
-
----
-
-## 🛠️ Tech Stack
-
-- **Frontend**: React, TypeScript, TailwindCSS
-- **Machine Learning**: TensorFlow.js, MediaPipe
-- **State Management**: Redux Toolkit
-- **Routing**: React Router
-- **Backend**: Firebase Firestore
-- **Build Tool**: Vite
 
 ---
 
