@@ -51,7 +51,7 @@ const ResultPage = () => {
   const clickSound = useAudio(AUDIO.click_sound);
   const victoryMLsound = useAudio(AUDIO.victoryMLSound);
 
-  // Play the victory sound after 1000ms
+  // Play the victory sound after 500ms
   useEffect(() => {
     const timeout = setTimeout(() => {
       victoryMLsound.playAudio();
