@@ -1,35 +1,47 @@
 import { NavLink } from "react-router";
+import { useState } from "react";
+
 import { IMAGES } from "../../constants/images";
-import { fetchScore } from "../../utils/firebase";
-import { useEffect, useState } from "react";
 import { AUDIO } from "../../constants/audio";
 import useAudio from "../../hooks/useAudio";
-import { div } from "@tensorflow/tfjs";
+import { Entry } from "./leaderboardTypes"
+import useGetData from "./hooks/useGetData";
 
-interface Entry {
-  name: string;
-  song: string;
-  score: number;
-}
-
+/**
+ * LeaderboardPage Component
+ * 
+ * Renders the leaderboard page, displaying player scores fetched from Firestore.
+ * Includes a disco ball design, a "Home" button with a click sound, and a scrollable list of scores.
+ * Shows a loading spinner while fetching data.
+ * 
+ * Features:
+ * - Fetches leaderboard scores on mount using the hook `useGetData`.
+ * - Displays player names, songs, and scores in a scrollable list.
+ * - Plays a click sound when the "Home" button is clicked.
+ * 
+ * Dependencies:
+ * - `useGetData`: a hook that fetches leaderboard data from Firestore.
+ * - `useAudio`: Custom hook for playing audio effects.
+ * - `IMAGES` and `AUDIO`: Static assets for visuals and sounds.
+ * 
+ * State:
+ * - `entries`: Stores the fetched leaderboard data.
+ * 
+ * Example Usage:
+ * ```tsx
+ * <LeaderboardPage />
+ * ```
+ */
 const LeaderboardPage = () => {
-  
+  // Custom hook to play a click sound when the "Home" button is clicked
   const clickSound = useAudio(AUDIO.click_sound);
+
+  // State to store leaderboard entries
   const [entries, setEntries] = useState<Entry[]>([]);
 
-  /* Get Score */
-  useEffect(() => {
-    const getScores = async () => {
-      try {
-        const fetchedScores = await fetchScore("leaderboards");
-        setEntries(fetchedScores); // ignore error
-      } catch (error) {
-        console.error("Error fetching scores:", error);
-      }
-    };
-
-    getScores();
-  }, []);
+  // Custom hook that fetches data on mount of component
+  // Fetch leaderboard scores, songs, and names on component mount
+  useGetData(setEntries);
 
   return (
     <div className="relative flex items-center w-screen h-screen bg-gradient-to-b from-white to-gray-300">
@@ -56,7 +68,7 @@ const LeaderboardPage = () => {
         </div>
 
         <div className="flex flex-col gap-2 mt-8 overflow-y-auto">
-          {/* Array map implementation Soon */}
+          {/* Array map each entry*/}
           {entries.length > 0 ? (
             entries.map((entry, index) => (
               <div
@@ -73,6 +85,7 @@ const LeaderboardPage = () => {
               </div>
             ))
           ) : (
+            /* Loading Animation */
             <div className="w-full flex mt-32 justify-center items-center">
               <svg
                 aria-hidden="true"

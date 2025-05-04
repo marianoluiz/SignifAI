@@ -4,18 +4,48 @@ import { saveScore } from "../../../utils/firebase";
 import { useEffect, useState } from "react";
 import useAudio from "../../../hooks/useAudio";
 import { AUDIO } from "../../../constants/audio";
-
+/**
+ * ResultPage Component
+ * 
+ * This component displays the result screen after the game ends. It shows the player's score,
+ * allows the player to save their score to the leaderboard, and provides navigation back to the home page.
+ * 
+ * Features:
+ * - Displays the player's score and the song title.
+ * - Allows the player to input their name and save their score to the leaderboard.
+ * - Plays a victory sound when the page loads.
+ * - Shows a modal popup confirming that the score has been saved.
+ * 
+ * Dependencies:
+ * - `useLocation`: Retrieves the score and song title passed from the game page.
+ * - `useAudio`: Custom hook for playing audio effects.
+ * - `saveScore`: Utility function to save the player's score to Firestore.
+ * - `IMAGES` and `AUDIO`: Static assets for visuals and sounds.
+ * 
+ * State:
+ * - `username`: Stores the player's inputted name.
+ * - `showModal`: Controls the visibility of the modal popup.
+ * 
+ */
 const ResultPage = () => {
+  // Retrieve the score and song title from the location state
   const location = useLocation();
   const { score, song_title } = location.state || {};
-  const [ username, setUsername ] = useState("");
-  const [ showModal, setShowModal ] = useState(false);
+
+  // State to store the player's name
+  const [username, setUsername] = useState("");
+
+  // State to control the visibility of the modal popup
+  const [showModal, setShowModal] = useState(false);
+
+  // Audio hooks for playing sound effects
   const clickSound = useAudio(AUDIO.click_sound);
   const victoryMLsound = useAudio(AUDIO.victoryMLSound);
-  
+
+  // Play the victory sound when the page loads
   useEffect(() => {
     victoryMLsound.playAudio();
-  }, [])
+  }, [victoryMLsound]);
 
   return (
     /* row */
@@ -27,15 +57,16 @@ const ResultPage = () => {
         backgroundPosition: "center",
       }}
     >
+      {/* Decorative hand trophy design */}
       <img
         className="ml-20 size-140 select-none pointer-events-none"
         src={IMAGES.result_hand_design}
         alt="Hand Trophy Design"
         draggable="false"
       />
-      {/* parent col */}
+      {/* Main content column */}
       <div className="flex flex-col gap-12 mr-20">
-        {/* score col */}
+        {/* Score display */}
         <div className="flex flex-col">
           <div className="flex justify-between items-center">
             <p className="text-4xl text-center text-white">You got</p>
@@ -44,18 +75,20 @@ const ResultPage = () => {
             </p>
           </div>
 
+          {/* Star design */}
           <img
             src={IMAGES.result_stars}
             className="select-none pointer-events-none"
             alt="Stars"
           />
 
+          {/* Score display box */}
           <div className="px-2 py-2 flex justify-center items-center border-4 border-white rounded-xl">
             <span className="text-8xl text-white">{score}</span>
           </div>
         </div>
 
-        {/* input name col */}
+        {/* Input for saving the player's name */}
         <div>
           <span className="text-xl text-white mb-4">
             Enter your name save your score
@@ -71,9 +104,9 @@ const ResultPage = () => {
           <button
             className="mt-4 px-20 py-2 cursor-pointer rounded-lg bg-fuchsia-800 text-white"
             onClick={() => {
-              saveScore(score, song_title, username);
-              setShowModal(true);
-              clickSound.playAudio();
+              saveScore(score, song_title, username); // Save the score to Firestore
+              setShowModal(true); // Show the modal popup
+              clickSound.playAudio(); // Play the click sound
             }}
           >
             Save
@@ -81,7 +114,7 @@ const ResultPage = () => {
         </div>
       </div>
 
-      {/* Modal Popup */}
+      {/* Modal popup for score confirmation */}
       {showModal && (
         <div className="fixed inset-0 flex items-center justify-center bg-black/30 backdrop-blur-sm z-50">
           <div className="bg-white rounded-lg p-8 shadow-lg text-center">
@@ -92,12 +125,13 @@ const ResultPage = () => {
               Score has been successfully saved to the leaderboard.
             </p>
 
+            {/* Navigation back to the home page */}
             <NavLink
               to="/"
               className="px-6 py-2 bg-violet-500 text-white rounded-md"
               onClick={() => {
-                setShowModal(false);
-                clickSound.playAudio();
+                setShowModal(false); // Close the modal
+                clickSound.playAudio(); // Play the click sound
               }}
             >
               Back to Home

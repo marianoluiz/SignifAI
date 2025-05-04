@@ -1,81 +1,119 @@
 import { NavLink } from "react-router";
 import { IMAGES } from "../../../constants/images";
-import { AUDIO } from "../../../constants/audio"
+import { AUDIO } from "../../../constants/audio";
 import useAudio from "../../../hooks/useAudio";
-
-import songs_config from "../../../config/songs_config.json"
+import songs_config from "../../../config/songs_config.json";
 import { useState } from "react";
 
+/**
+ * SongSelectPage Component
+ *
+ * This component allows the player to select a song for the game. It displays a carousel-like UI
+ * where the player can navigate between songs and select one to play. The component integrates
+ * animations, audio effects, and dynamic song data from a configuration file.
+ *
+ * Features:
+ * - Displays a carousel of songs with animations for navigation.
+ * - Allows the player to navigate between songs using left and right buttons.
+ * - Plays a click sound when navigating or selecting a song.
+ * - Dynamically loads song data (title, author, and images) from a JSON configuration file.
+ *
+ * Dependencies:
+ * - `useAudio`: Custom hook for playing audio effects.
+ * - `songs_config`: JSON configuration file containing song details.
+ * - `IMAGES` and `AUDIO`: Static assets for visuals and sounds.
+ *
+ * State:
+ * - `currentIndex`: Tracks the currently centered song in the carousel.
+ * - `directionAnimation`: Determines the animation direction ("left" or "right").
+ *
+ * Example Usage:
+ * ```tsx
+ * <SongSelectPage />
+ * ```
+ */
 const SongSelectPage = () => {
+  // Play click sound when navigating or selecting a song
   const clickSound = useAudio(AUDIO.click_sound);
 
-  // songs config from json
+  // Load song options from the JSON configuration file
   const song_options = songs_config.songs;
 
   // Panel Button Styles
+  // Blue images for inactive panels
   const panelImgBlue = [
     IMAGES.wonderful_world_album,
     IMAGES.count_on_me_album,
     IMAGES.you_belong_w_me_album,
   ];
 
+  // Purple images for the active panel
   const panelImgPurple = [
     IMAGES.wonderful_world_palbum,
     IMAGES.count_on_me_palbum,
     IMAGES.you_belong_w_me_palbum,
   ];
 
-  // This state keeps track of the currently centered item
+  // State to track the currently centered song in the carousel
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  // Determines what animation will happen to the panel
+  // State to determine the animation direction ("left" or "right")
   const [directionAnimation, setDirectionAnimation] = useState<
     "left" | "right"
   >("right");
 
-  // Helper function: Calculates the index in a circular way
-  // If currentIndex + offset is out of bounds, it wraps around using modulo
+  /**
+   * Helper function: Calculates the index in a circular way.
+   * If `currentIndex + offset` is out of bounds, it wraps around using modulo.
+   *
+   * @param offset - The offset to apply to the current index.
+   * @returns The calculated index.
+   */
   const getIndex = (offset: number) =>
     (currentIndex + offset + song_options.length) % song_options.length;
 
-  // Build an array of the 3 visible items: previous (-1), current (0), next (+1)
-  // runs when currentIndex is changed
+  /**
+   * Builds an array of the 3 visible items in the carousel: previous (-1), current (0), next (+1).
+   * This runs whenever `currentIndex` changes.
+   */
   const visibleItems = [-1, 0, 1].map((offset) => {
     const index = getIndex(offset); // Get actual index with circular logic
-    return { label: song_options[index], key: index }; // Each item have label and index
+    return { label: song_options[index], key: index }; // Each item has a label and index
   });
 
-
-  // These Next and Prev works like inverted
-  // When right arrow is clicked, move to the next item (looping)
-  // When you click ➡: move to next index (0 → 1 → 2 → 0)
+  /**
+   * Handles the "Previous" button click.
+   * Moves to the previous song in the carousel (looping).
+   */
   const handlePrev = () => {
     clickSound.playAudio();
     setDirectionAnimation("right");
     setCurrentIndex(
       (prev) => (prev - 1 + song_options.length) % song_options.length
     );
-  }
+  };
 
-  // When left arrow is clicked, move to the previous item (looping)
-  // When you click ⬅: move to previous (0 → 2 → 1 → 0)
+  /**
+   * Handles the "Next" button click.
+   * Moves to the next song in the carousel (looping).
+   */
   const handleNext = () => {
     clickSound.playAudio();
     setDirectionAnimation("left");
     setCurrentIndex((prev) => (prev + 1) % song_options.length);
-
   };
 
   return (
     <div>
-      {/* Back btn */}
+      {/* Back Button */}
       <NavLink
         to="/"
-        className="absolute top-16 -left-4 -rotate-16 px-20 py-4 bg-linear-to-r from-purple-600 to-transparent  backdrop-filterbackdrop-blur text-white"
+        className="absolute top-16 -left-4 -rotate-16 px-20 py-4 bg-linear-to-r from-purple-600 to-transparent backdrop-filterbackdrop-blur text-white"
         onClick={() => clickSound.playAudio()}
       >
         <span className="text-xl">Back</span>
       </NavLink>
+
       {/* Background */}
       <div
         style={{
@@ -88,7 +126,7 @@ const SongSelectPage = () => {
         {/* Control Button: Previous */}
         <button
           onClick={handlePrev}
-          className="px-4 py-2 cursor-pointer text-violet-800 text-6xl font-mokokoto-regular hover:scale-105 "
+          className="px-4 py-2 cursor-pointer text-violet-800 text-6xl font-mokokoto-regular hover:scale-105"
         >
           &lt;
         </button>
@@ -108,7 +146,7 @@ const SongSelectPage = () => {
               hover:scale-105 transition-all
               `}
             onClick={() => clickSound.playAudio()}
-            key={song.key} /* actual unique key for item*/
+            key={song.key} /* Unique key for each item */
           >
             {/* Panel Image */}
             <img
@@ -143,7 +181,7 @@ const SongSelectPage = () => {
         {/* Control Button: Next */}
         <button
           onClick={handleNext}
-          className="px-4 py-2 cursor-pointer text-violet-800 text-6xl font-mokokoto-regular hover:scale-105 "
+          className="px-4 py-2 cursor-pointer text-violet-800 text-6xl font-mokokoto-regular hover:scale-105"
         >
           &gt;
         </button>

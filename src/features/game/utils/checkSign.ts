@@ -1,5 +1,3 @@
-import { LABEL_LIST } from "../../../utils/modelHelper";
-
 /**
  * Checks if all predicted hand signs match the ASL values in song_entries.
  *
@@ -11,7 +9,7 @@ const checkSign = (predictedLabel: string | null, asl: string) => {
   if (predictedLabel === asl) {
     return true;
   }
-  console.log("Wrong at checksign: ", predictedLabel, "vs", asl)
+  // console.log("Wrong at checksign: ", predictedLabel, "vs", asl)
 }
 
 export default checkSign;

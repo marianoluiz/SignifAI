@@ -35,5 +35,7 @@ export const useGameSetup = (
     return () => {
       song.stopAudio();
     };
+
+    // do not include song in the dependency array or game would crash
   }, [dispatch, isCameraReady, wholeSongDuration]);
 };

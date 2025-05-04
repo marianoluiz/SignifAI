@@ -2,7 +2,6 @@ import {
   HandLandmarker,
   FilesetResolver
 } from '@mediapipe/tasks-vision';
-import { getPrediction } from './modelHelper';
 
 /**
 * The handLandmarker instance used for detecting hand landmarks.

@@ -1,4 +1,4 @@
-import { useState, useReducer, useEffect } from "react";
+import { useState, useReducer } from "react";
 import { useParams, useNavigate } from "react-router";
 
 import { IMAGES } from "../../../constants/images"
@@ -14,13 +14,42 @@ import { useCameraSetup } from "../hooks/useCameraSetup";
 import { useGameSetup } from "../hooks/useGameSetup";
 import { useGameTimer } from "../hooks/useGameTimer";
 import { useHandMovement } from "../hooks/useHandMovement";
+import useShowRating from "../hooks/useShowRating";
 
+/**
+ * GamePage Component
+ * 
+ * This component handles the main gameplay logic, including camera setup, hand movement tracking,
+ * game state management, and rendering the game UI. It integrates various hooks and utilities
+ * to manage the game's lifecycle and interactions.
+ * 
+ * Features:
+ * - Fetches song details and plays the selected song.
+ * - Sets up the camera and tracks hand movements.
+ * - Manages game state using a reducer (e.g., score, current hand sign, ratings).
+ * - Displays the game UI, including the timer, score, hand signs, and rating effects.
+ * 
+ * Dependencies:
+ * - `useAudio`: Custom hook for playing audio.
+ * - `useCamera`: Provides camera readiness status and references to video and canvas elements.
+ * - `useCameraSetup`: Configures the camera for gameplay.
+ * - `useGameSetup`: Initializes the game when the camera is ready.
+ * - `useGameTimer`: Manages the game's timer and handles game end logic.
+ * - `useHandMovement`: Tracks hand movements and evaluates player performance.
+ * - `useShowRating`: Manages the visibility of the rating effect.
+ * 
+ * State:
+ * - `state`: Managed by a reducer, includes song duration, score, current hand sign, and ratings.
+ * - `handXCoordinate`: Tracks the X-coordinate of the hand's position.
+ * - `areHandsignsDone`: Tracks whether all hand signs are completed.
+ * - `showRating`: Controls the visibility of the rating effect.
+ * 
+ */
 const GamePage = () => {
   const navigate = useNavigate();
 
   // fetch song
   const { song_var } = useParams();
-
   const song_details = songs_config.songs.find(
     (song) => song.var_name === song_var
   );
@@ -48,18 +77,18 @@ const GamePage = () => {
     currentLyrics: "No Lyrics" as keyof typeof IMAGES, // Current hand sign symbol
     currentPrompt: "No Prompt", // Current text prompt for the hand sign
     currentRating: "No Rating", // Current rating (e.g., PERFECT, GOOD, etc.)
-    timestamp: 0, // timestamp rating
+    timestamp: 0, // timestamp rating used later to rerender rating effect even if rating dont change
   });
 
-  // Camera setup logic
+  // Camera setup logic Hook
   // Configures the camera and prepares it for use
   useCameraSetup(videoRef, canvasRef, setIsCameraReady);
 
-  // Game setup logic
+  // Game setup logic Hook
   // Initializes the game when the camera is ready
   useGameSetup(isCameraReady, song, dispatch, wholeSongDuration);
 
-  // Game timer logic
+  // Game timer logic Hook
   // Starts and ends the game based on the song's duration
   useGameTimer(
     state.song_duration,
@@ -69,7 +98,7 @@ const GamePage = () => {
     song_details?.title ?? "Unknown Title"
   );
 
-  // Hand movement logic
+  // Hand movement logic Hook
   // Handles the movement of hand signs and evaluates player performance
   useHandMovement(
     isCameraReady,
@@ -79,18 +108,11 @@ const GamePage = () => {
     setHandXCoordinate
   );
 
-  // Show Rating state
-  const [showRating, setShowRating] = useState(false);
-  useEffect(() => {
-    if (state.currentRating) {
-      setShowRating(true);
-
-      const timeout = setTimeout(() => {
-        setShowRating(false);
-      }, 1000);
-      return () => clearTimeout(timeout);
-    }
-  }, [state.currentRating, state.timestamp]);
+  // Rating manager  hook
+  // Handles the rating effect duration
+  // we pass the timestamp of rating to rerender the rating effect
+  // even if rating dont change
+  const [showRating] = useShowRating(state.currentRating, state.timestamp);
 
   return (
     <div
@@ -146,7 +168,6 @@ const GamePage = () => {
 
       {/* Hand Conveyer */}
       <div className="mt-4 h-40 flex relative justify-end content-center">
-        <p className="text-white animate-fade-in">text</p>
         {/* Rating */}
         {showRating && (
           <div className="absolute h-full animate-fade-in z-9 right-180 transition-all">
@@ -199,6 +220,7 @@ const GamePage = () => {
           style={{ transform: "translateX(-260px)" }}
         ></div>
 
+        {/* Lyrics and Prompt */}
         {!areHandsignsDone && (
           <div className="absolute left-60 top-8">
             <div className="bg-[rgba(0,0,0,0.5)] px-4 py-4">
