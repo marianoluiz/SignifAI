@@ -2,7 +2,7 @@
 
 <img src="./src/assets/readme/main_img.png" alt="SignifAI Logo"/>
 
-***SignifAI*** is an interactive rhythm-based sign language game that combines music, hand gesture recognition, and fun gameplay. Players perform ***American Sign Language*** (ASL) gestures in sync with music to score points and improve their ASL skills.
+***SignifAI*** is an interactive rhythm-based sign language game that combines music, ***Artificial Intelligence*** (AI) hand gesture recognition, and fun gameplay. Players perform American Sign Language (ASL) gestures in sync with music to score points and improve their ASL skills.
 
 ---
 
