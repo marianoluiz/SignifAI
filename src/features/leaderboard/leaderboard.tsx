@@ -44,27 +44,43 @@ const LeaderboardPage = () => {
   useGetData(setEntries);
 
   return (
-    <div className="relative flex items-center w-screen h-screen bg-gradient-to-b from-white to-gray-300">
-      {/* Disco Design */}
-      <img
-        src={IMAGES.disco_img}
-        className="absolute top-16 z-4 w-120 select-none pointer-events-none"
-        alt="Disco Ball Image"
-        draggable="false"
-      />
-      <NavLink
-        to="/"
-        className="absolute bottom-12 left-40 px-6 py-3 bg-cyan-500 text-white text-lg rounded-lg shadow-md z-5"
-        onClick={() => clickSound.playAudio()}
+    <div
+      className="
+      relative overflow-hidden flex w-screen h-screen bg-gradient-to-b from-white to-gray-300
+      flex-col-reverse items-center justify-around
+      xl:flex-row xl:justify-between"
+    >
+      {/*Left Div */}
+      <div className="flex flex-col items-center">
+        <img
+          src={IMAGES.disco_img}
+          className="hidden xl:block z-4 w-120 select-none pointer-events-none"
+          alt="Disco Ball Image"
+          draggable="false"
+        />
+        <NavLink
+          to="/"
+          className="w-25 px-6 my-2 py-3 text-center bg-cyan-500 text-white text-lg rounded-lg shadow-md z-5"
+          onClick={() => clickSound.playAudio()}
+        >
+          Home
+        </NavLink>
+      </div>
+
+      {/* Right Div */}
+      <div
+        className="
+        px-2 flex flex-col
+        w-[90%] min-h-100
+        sm:w-[80%] sm:max-h-260
+        xl:w-160 xl:h-168 xl:mr-[5vw]"
       >
-        Home
-      </NavLink>
-      {/* scores */}
-      <div className="w-160 h-168 absolute right-25 px-2 flex flex-col">
         {/* title colns */}
-        <div className="flex justify-between items-center">
-          <span className="text-6xl text-cyan-500">LEADERBOARD </span>
-          <span className="text-3xl">SCORE </span>
+        <div className="flex justify-between items-center mt-8">
+          <span className="text-3xl md:text-6xl text-cyan-500">
+            LEADERBOARD{" "}
+          </span>
+          <span className="text-2xl md:text-3xl">SCORE </span>
         </div>
 
         <div className="flex flex-col gap-2 mt-8 overflow-y-auto">
@@ -75,13 +91,15 @@ const LeaderboardPage = () => {
                 key={index}
                 className="flex w-full justify-between px-8 py-4 rounded-md bg-gradient-to-b from-white to-gray-300"
               >
-                <span className="text-md w-40">
+                <span className="text-sm mx-2 sm:text-md w-40">
                   {entry.name || "Anonymous"}
                 </span>
-                <span className="text-md w-30">
+                <span className="text-sm mx-2 sm:text-md w-30">
                   {entry.song || "Anonymous"}
                 </span>
-                <span className="text-md w-10">{entry.score || 0}</span>
+                <span className="text-sm mx-2 sm:text-md w-10">
+                  {entry.score || 0}
+                </span>
               </div>
             ))
           ) : (
