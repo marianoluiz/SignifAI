@@ -22,7 +22,7 @@
 ## 🛠️ Tech Stack
 
 - **Frontend**: React, TypeScript, TailwindCSS
-- **Machine Learning**: TensorFlow.js, MediaPipe
+- **Machine Learning**: TensorFlow.js, MediaPipe Computer Vision
 - **State Management**: Redux Toolkit
 - **Routing**: React Router
 - **Backend**: Firebase Firestore
