@@ -17,48 +17,57 @@ const HomePage = () => {
   const { isLoading } = useAppInitialization();
 
   return (
-    <div>
+    <div className="overflow-hidden relative h-screen w-screen flex flex-col gap-4 justify-center items-center">
       {isLoading && <SplashScreenAnimation />}
 
+      {/* Glitches */}
       <img
-        className="absolute top-28 right-44 size-28 -z-1"
+        className="absolute size-16 md:size-24 lg:size-28 -z-1
+           top-52   -right-2
+        md:top-80 md:right-0
+        lg:top-28 lg:right-16
+        xl:top-28 xl:right-36"
         draggable="false"
         src={IMAGES.bg_glitch1}
         alt="Glitch Effect"
       />
       <img
-        className="absolute bottom-64 left-40 size-28 -z-1"
+        className="absolute size-16 md:size-24 lg:size-28 -z-1
+           bottom-72    -left-2
+        md:bottom-120 md:left-0
+        lg:bottom-64 lg:left-16
+        xl:bottom-64 xl:left-36"
         draggable="false"
         src={IMAGES.bg_glitch2}
         alt="Glitch Effect"
       />
       <img
-        className="absolute bottom-36 right-52 size-28 -z-1"
+        className="absolute size-16 md:size-24 lg:size-28 -z-1
+           bottom-64    right-8
+        md:bottom-96 md:right-20
+        lg:bottom-40 lg:right-28
+        xl:bottom-40 xl:right-56"
         draggable="false"
         src={IMAGES.bg_glitch3}
         alt="Glitch Effect"
       />
 
-      <div className="flex flex-col justify-center items-center select-none">
+      {/* Main image */}
+      <div className="flex flex-col relative w-screen h-auto justify-center items-center select-none px-4 py-2">
         <img
-          className="h-160"
+          className="h-auto max-h-128 max-w-9/10 md:max-w-9/10 xl:max-w-1/1"
           src={IMAGES.main_img}
           draggable="false"
           alt="Main Image"
         />
       </div>
 
-      <div className="flex flex-row justify-center gap-8">
-
-
-        <NavLink
-          to="/play"
-          className="h-24"
-          onClick={() => clickSound.playAudio()}
-        >
+      {/* Navigation Buttons */}
+      <div className="flex flex-row max-h-24 px-8 justify-center gap-8">
+        <NavLink to="/play" className="" onClick={() => clickSound.playAudio()}>
           <img
             src={IMAGES.btn_play}
-            className="h-24 select-none"
+            className="max-h-24 select-none"
             draggable="false"
             alt="Play Button"
           />
@@ -66,13 +75,13 @@ const HomePage = () => {
 
         <NavLink
           to="/leaderboard"
-          className="h-16"
+          className=""
           onClick={() => clickSound.playAudio()}
           select-none
         >
           <img
             src={IMAGES.btn_lboard}
-            className="h-24 select-none"
+            className="max-h-24 select-none"
             draggable="false"
             alt="Leaderboard Button"
           />
