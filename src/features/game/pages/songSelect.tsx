@@ -3,7 +3,8 @@ import { IMAGES } from "../../../constants/images";
 import { AUDIO } from "../../../constants/audio";
 import useAudio from "../../../hooks/useAudio";
 import songs_config from "../../../config/songs_config.json";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import useWindowDimensions from "../hooks/useWindowDimension";
 
 /**
  * SongSelectPage Component
@@ -13,7 +14,10 @@ import { useState } from "react";
  * animations, audio effects, and dynamic song data from a configuration file.
  *
  * Features:
- * - Displays a carousel of songs with animations for navigation.
+ * - Displays a carousel of songs with animations for navigation. uses circular indexing to loop ui
+ *    - tracks the index of the initially centered using currentIndex state 
+ *    - prev and next moves that the currentIndex in a circular manner
+ * 
  * - Allows the player to navigate between songs using left and right buttons.
  * - Plays a click sound when navigating or selecting a song.
  * - Dynamically loads song data (title, author, and images) from a JSON configuration file.
@@ -42,25 +46,41 @@ const SongSelectPage = () => {
   // Panel Button Styles
   // Blue images for inactive panels
   const panelImgBlue = [
+    IMAGES.you_belong_w_me_album,
     IMAGES.wonderful_world_album,
     IMAGES.count_on_me_album,
-    IMAGES.you_belong_w_me_album,
   ];
 
   // Purple images for the active panel
   const panelImgPurple = [
+    IMAGES.you_belong_w_me_palbum,
     IMAGES.wonderful_world_palbum,
     IMAGES.count_on_me_palbum,
-    IMAGES.you_belong_w_me_palbum,
   ];
 
-  // State to track the currently centered song in the carousel
+  // State to track the current centered song in the carousel
   const [currentIndex, setCurrentIndex] = useState(0);
+
+  // State to track if on smaller screen
+  const [ isMobile, setIsMobile ] = useState<boolean | null>(null);
 
   // State to determine the animation direction ("left" or "right")
   const [directionAnimation, setDirectionAnimation] = useState<
     "left" | "right"
   >("right");
+
+  // get window width from a hook
+  const { width } = useWindowDimensions();
+
+  useEffect(() => {
+    if (width < 768) {
+      setIsMobile(true);
+    } else {
+      setIsMobile(false);
+    }
+  }, [width]);
+
+
 
   /**
    * Helper function: Calculates the index in a circular way.
@@ -75,10 +95,11 @@ const SongSelectPage = () => {
   /**
    * Builds an array of the 3 visible items in the carousel: previous (-1), current (0), next (+1).
    * This runs whenever `currentIndex` changes.
+   * if small screen, array only [ 0 ]
    */
   const visibleItems = [-1, 0, 1].map((offset) => {
     const index = getIndex(offset); // Get actual index with circular logic
-    return { label: song_options[index], key: index }; // Each item has a label and index
+    return { label: song_options[index], key: index }; // Assign has a song configs to label and the got index in key
   });
 
   /**
@@ -104,7 +125,14 @@ const SongSelectPage = () => {
   };
 
   return (
-    <div>
+    <div
+      className="h-screen w-screen overflow-hidden"
+      style={{
+        backgroundImage: `url(${IMAGES.select_scr_bg})`,
+        backgroundPosition: "center",
+        backgroundSize: "cover",
+      }}
+    >
       {/* Back Button */}
       <NavLink
         to="/"
@@ -114,19 +142,12 @@ const SongSelectPage = () => {
         <span className="text-xl">Back</span>
       </NavLink>
 
-      {/* Background */}
-      <div
-        style={{
-          backgroundImage: `url(${IMAGES.select_scr_bg})`,
-          backgroundPosition: "center",
-          backgroundSize: "cover",
-        }}
-        className="w-screen h-screen flex justify-center items-center"
-      >
+      {/* Slider */}
+      <div className="w-screen h-screen flex justify-center items-center">
         {/* Control Button: Previous */}
         <button
           onClick={handlePrev}
-          className="px-4 py-2 cursor-pointer text-violet-800 text-6xl font-mokokoto-regular hover:scale-105"
+          className="text-3xl lg:text-6xl px-4 py-2 cursor-pointer text-violet-800 font-mokokoto-regular hover:scale-105"
         >
           &lt;
         </button>
@@ -143,6 +164,9 @@ const SongSelectPage = () => {
                     : "animate-slide-right"
                   : ""
               }
+              ${isMobile === true ? 
+                  i === 1 ? "block" : "hidden"
+                : "" }
               hover:scale-105 transition-all
               `}
             onClick={() => clickSound.playAudio()}
@@ -152,26 +176,25 @@ const SongSelectPage = () => {
             <img
               src={i === 1 ? panelImgPurple[song.key] : panelImgBlue[song.key]}
               className={`select-none pointer-events-none
-                ${i === 1 ? "size-124" : "size-92"}`}
+                ${i === 1 ? "md:w-124" : "md:w-92"}`}
               alt="Panel Button Image"
               draggable="false"
             />
 
             {/* Panel Title */}
             <div
-              className={`absolute min-w-36 -rotate-6 -left-4 py-2 px-3 bg-white drop-shadow-lg/50 flex justify-center transition-all z-2
-                ${i === 1 ? "bottom-20" : "bottom-17"}
-                `}
+              className={`absolute min-w-36 -rotate-6 -left-4 py-2 px-4 bg-white drop-shadow-lg/50 flex justify-center transition-all z-2
+                ${i === 1 ? "bottom-20" : "bottom-17"}`}
             >
-              <span className="text-center text-fuchsia-900 transition-all font-bold">
+              <span className="text-center text-sm sm:text-md lg:text-lg text-fuchsia-900 transition-all font-bold">
                 {song.label.title}
               </span>
             </div>
 
             {/* Panel Author */}
             <span
-              className={`absolute -rotate-6 pt-6 pr-6 py-2 px-4 bg-white drop-shadow-lg/50 z-1
-                ${i === 1 ? "left-11 bottom-11" : "left-3 bottom-8"}`}
+              className={`absolute text-xs sm:text-xs lg:text-sm -rotate-6 pt-6 py-2 px-4 bg-white drop-shadow-lg/50 z-1
+                ${i === 1 ? "left-11 bottom-12" : "left-3 bottom-8"}`}
             >
               By {song.label.author}
             </span>
@@ -181,7 +204,7 @@ const SongSelectPage = () => {
         {/* Control Button: Next */}
         <button
           onClick={handleNext}
-          className="px-4 py-2 cursor-pointer text-violet-800 text-6xl font-mokokoto-regular hover:scale-105"
+          className="text-3xl lg:text-6xl px-4 py-2 cursor-pointer text-violet-800 font-mokokoto-regular hover:scale-105"
         >
           &gt;
         </button>
