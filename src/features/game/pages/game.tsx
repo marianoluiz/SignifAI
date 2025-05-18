@@ -1,5 +1,5 @@
 import { useState, useReducer } from "react";
-import { useParams, useNavigate } from "react-router";
+import { useParams, useNavigate, useLocation } from "react-router";
 
 import { IMAGES } from "../../../constants/images"
 import { AUDIO } from "../../../constants/audio";
@@ -50,7 +50,11 @@ const GamePage = () => {
 
   // fetch song
   const { song_var } = useParams();
-  
+
+  // state passed
+  const location = useLocation();
+  const { deviceType } = (location.state as { deviceType?: string }) || {}; // location.state is an object
+
   const song_details = songs_config.songs.find(
     (song) => song.var_name === song_var
   );
@@ -107,7 +111,8 @@ const GamePage = () => {
     song_entries,
     dispatch,
     setAreHandsignsDone,
-    setHandXCoordinate
+    setHandXCoordinate,
+    deviceType ?? "pc"
   );
 
   // Rating manager  hook
@@ -117,8 +122,9 @@ const GamePage = () => {
   const [showRating] = useShowRating(state.currentRating, state.timestamp);
 
   return (
+    /* Screen Container */
     <div
-      className="w-screen h-screen"
+      className="w-screen h-screen flex flex-col justify-center"
       style={{
         backgroundImage: `url(${
           IMAGES[`${song_var}_bg` as keyof typeof IMAGES]
@@ -130,25 +136,37 @@ const GamePage = () => {
       {!isCameraReady && <SplashScreenAnimation />}
 
       {/* Status Header */}
-      <div className="flex row justify-center">
+      <div
+        className="flex justify-center items-center
+                   pb-2 pt-4
+                   sm:pt-8
+                   md:pb-12 
+                   lg:pb-2
+      "
+      >
         <h2
-          className={`font-moko-regular mt-8 mb-6 text-5xl 
+          className={`font-moko-regular text-3xl sm:text-5xl
             ${song_var === "count_on_me" ? "" : "text-purple-400"}`}
         >
           {formatTime(state.song_duration)}
         </h2>
-        <h1 className="absolute left-16 top-24 font-moko-glitch -rotate-10  text-6xl font-bold text-purple-700 z-2">
+        <h1
+          className="absolute font-moko-glitch -rotate-10 font-bold text-purple-700 z-2
+                    left-8 top-20 text-3xl md:text-6xl
+                    md:left-16 md:top-36
+                    lg:left-16 lg:top-24 lg:text-6xl"
+        >
           {state.score}
         </h1>
       </div>
 
-      <div className="w-screen h-[60vh] flex justify-center content-center">
+      {/* Camera Container */}
+      <div className="w-screen h-[25vh] md:h-[30vh] lg:h-[60vh] flex justify-center content-center">
         {/* user camera */}
         <div className="relative ml-8 h-full aspect-video rounded-lg">
           {/* Video feed from the user's camera */}
-          {/* ***object-cover is important to match the ratio */}
           <video
-            className="absolute aspect-video w-full h-full object-cover  rounded-md"
+            className="absolute aspect-video w-full h-full object-cover rounded-md"
             ref={videoRef}
             id="webcam"
             autoPlay
@@ -157,7 +175,7 @@ const GamePage = () => {
           />
           {/* Canvas for the drew hand landmarks */}
           <canvas
-            className="absolute aspect-video w-full h-full object-cover  rounded-md"
+            className="absolute aspect-video w-full h-full object-cover rounded-md"
             ref={canvasRef}
             id="output_canvas"
             style={{
@@ -170,61 +188,15 @@ const GamePage = () => {
 
       {/* Hand Conveyer */}
       <div className="mt-4 h-40 flex relative justify-end content-center">
-        {/* Rating */}
-        {showRating && (
-          <div className="absolute h-full animate-fade-in z-9 right-180 transition-all">
-            <img
-              key={state.currentRating}
-              className="h-full animate-fade-in"
-              src={
-                IMAGES[
-                  `${state.currentRating}_rating_effect` as keyof typeof IMAGES
-                ]
-              }
-              alt="Rating"
-            />
-          </div>
-        )}
-
-        {/* Hand signs */}
-        {!areHandsignsDone && (
-          <div
-            className="py-2 px-1 rounded-xs bg-[rgba(0,0,0,0.1)] z-10"
-            style={{ transform: `translateX(-${handXCoordinate}px)` }}
-          >
-            <img
-              src={IMAGES[state.currentSymbol as keyof typeof IMAGES]}
-              className="w-28 h-32"
-              alt="Hand"
-            />
-            <h2 className="4xl text-center text-gray-300 font-bold">
-              {state.currentSymbol}
-            </h2>
-          </div>
-        )}
-
-        {/* Area bars */}
-        {/* Visual indicators for scoring zones */}
-        <div
-          className="absolute w-8 h-full bg-gradient-to-b from-green-400 via-green-500 to-green-400 z-4"
-          style={{ transform: "translateX(-628px)" }}
-        ></div>
-        <div
-          className="absolute w-16 h-full bg-gradient-to-b from-cyan-400 via-cyan-500 to-cyan-400 z-3"
-          style={{ transform: "translateX(-596px)" }}
-        ></div>
-        <div
-          className="absolute w-32 h-full bg-gradient-to-b from-fuchsia-400 via-fuchsia-500 to-fuchsia-400 z-2"
-          style={{ transform: "translateX(-532px)" }}
-        ></div>
-        <div
-          className="absolute w-100 h-full bg-gradient-to-b from-red-500 via-red-500 to-red-400 z-1"
-          style={{ transform: "translateX(-260px)" }}
-        ></div>
-
         {/* Lyrics and Prompt */}
         {!areHandsignsDone && (
-          <div className="absolute left-60 top-8">
+          <div
+            className="absolute
+                          left-10
+                          md:left-50 md:top-50
+                          lg:left-30 lg:top-0
+                          2xl:left-80 2xl:top-8"
+          >
             <div className="bg-[rgba(0,0,0,0.5)] px-4 py-4">
               <h2 className=" text-xl text-white">
                 {state.currentLyrics.slice(0, 42)}
@@ -251,6 +223,95 @@ const GamePage = () => {
             </div>
           </div>
         )}
+
+        {/* Rating */}
+        {showRating && (
+          <div
+            className="absolute h-full animate-fade-in z-9 transition-all
+                        lg:right-180
+          "
+          >
+            <img
+              key={state.currentRating}
+              className="h-full animate-fade-in"
+              src={
+                IMAGES[
+                  `${state.currentRating}_rating_effect` as keyof typeof IMAGES
+                ]
+              }
+              alt="Rating"
+            />
+          </div>
+        )}
+
+        {/* Hand signs, width is 120 */}
+        {!areHandsignsDone && (
+          <div
+            className="py-2 px-1 rounded-xs bg-[rgba(0,0,0,0.1)] z-10"
+            style={{ transform: `translateX(-${handXCoordinate}px)` }}
+          >
+            {/*             style={{ transform: `translateX(-${handXCoordinate}px)` }}
+             */}
+            <img
+              src={IMAGES[state.currentSymbol as keyof typeof IMAGES]}
+              className="w-28 h-32"
+              alt="Hand"
+            />
+            <h2 className="4xl text-center text-gray-300 font-bold">
+              {state.currentSymbol}
+            </h2>
+          </div>
+        )}
+
+        {/* Area bars */}
+        {/* Visual indicators for scoring zones */}
+        {/* To get right width of bar, perfect - rateZone */}
+        {/* Desktop mode: handsign half: 60px, perfect: 600px, rateZone: 16px, 32px, 200px, 400px (600-200 <rateZone>) */}
+        {/* Tablet mode: handsign half: 60px, perfect: 400px, rateZone: 16px, 32px, 100px, 300px (400-100 <rateZone>) */}
+        {/* Mobile mode: handsign half: 60px, perfect: 200px, rateZone: 16px, 32px, 96px, 190px (200-10 <rateZone>) */}
+
+        {/* How many should i move this bar left side to reach 660px ?*/}
+        {/* 60-32 is 28 so i need to add 600 by 28 = 628px*/}
+        {/* 60-32 is 28 so i need to add 400 by 28 = 428px*/}
+        {/* 60-32 is 28 so i need to add 600 by 28 = 228px*/}
+        <div
+          className="absolute w-8 h-full bg-gradient-to-b from-green-400 via-green-500 to-green-400 z-4
+                    right-[228px]
+                    md:right-[428px]
+                    xl:right-[628px]
+        "
+        ></div>
+        {/* 60-64 is -4 so i need to reduce 600 by 4 = 596px */}
+        {/* 60-64 is -4 so i need to reduce 400 by 4 = 396px */}
+        {/* 60-64 is -4 so i need to reduce 200 by 4 = 196px */}
+        <div
+          className="absolute w-16 h-full bg-gradient-to-b from-cyan-400 via-cyan-500 to-cyan-400 z-3
+                    right-[196px] 
+                    md:right-[396px] 
+                    xl:right-[596px] 
+        "
+        ></div>
+        {/* 60-128 is -68 so i need to reduce 600 by 68 = 532px */}
+        {/* 60-128 is -68 so i need to reduce 400 by 68 = 332px */}
+        {/* 60-96 is -36 so i need to reduce 200 by 36 = 164px */}
+
+        <div
+          className="absolute h-full bg-gradient-to-b from-fuchsia-400 via-fuchsia-500 to-fuchsia-400 z-2
+                    w-24 right-[164px] 
+                    md:w-32 md:right-[332px] 
+                    xl:w-32 xl:right-[532px] 
+        "
+        ></div>
+        {/* 60-400 is -340 so i need to reduce 600 by 340 = 260 */}
+        {/* 60-300 is -240 so i need to reduce 400 by 240 = 160 */}
+        {/* 60-180 is -120 so i need to reduce 200 by 120 = 80 */}
+        <div
+          className="absolute  h-full bg-gradient-to-b from-red-500 via-red-500 to-red-400 z-1
+                    w-45 right-[80px]
+                    md:w-75 md:right-[160px] 
+                    xl:w-100 xl:right-[260px] 
+        "
+        ></div>
       </div>
     </div>
   );

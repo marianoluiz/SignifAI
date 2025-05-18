@@ -76,7 +76,8 @@ export const useHandMovement = (
     | undefined,
   dispatch: React.ActionDispatch<[action: GameAction]>,
   setAreHandsignsDone: React.Dispatch<React.SetStateAction<boolean>>,
-  setHandXCoordinate: React.Dispatch<React.SetStateAction<number>>
+  setHandXCoordinate: React.Dispatch<React.SetStateAction<number>>,
+  deviceType: string
 ) => {
   useEffect(() => {
     if (!isCameraReady) return;
@@ -104,8 +105,21 @@ export const useHandMovement = (
       // get duration in an entry
       const duration = song_entries[index].duration;
 
-      const perfectZoneX = 600;
-      const rateZone = 200;
+      // ======TESTING PURPOSE======
+      // deviceType = "mobile"
+
+      // default for pc
+      let perfectZoneX = 600;
+      let rateZone = 200;
+
+      if ( deviceType === "mobile" ) {
+        perfectZoneX = 200;
+        rateZone = 20;
+      } else if (deviceType === "tablet" ) {
+        perfectZoneX = 400;
+        rateZone = 100;
+      }
+
       const perfectTime = duration;
 
       const startTime = Date.now();
@@ -124,7 +138,7 @@ export const useHandMovement = (
         if (!gestureJudged && newPosition > rateZone) {
           // Evaluate using the model
           const predictedStr = await getPrediction(resultLandmarks);
-              // console.log('predicted string: ', predictedStr);
+          // console.log('predicted string: ', predictedStr);
 
           // use a helper to check if it MATCH the current ASL symbol moving in the UI
           if (predictedStr !== "No prediction") {
@@ -135,27 +149,30 @@ export const useHandMovement = (
 
             // if gesture is correct, flag as correct then calculate rating then score
             if (gestureStatus === true) {
-                gestureJudged = true;
+              gestureJudged = true;
 
-                // This variable is to get rating directly without getting from the reducer which causes stale variables
-                const currentRating = calculateRating(newPosition, perfectZoneX);
-                // dispatch the rating along with timestamp to re-render 100%
-                dispatch(setCurrentRating(newPosition, perfectZoneX, Date.now()));
+              // rating directly without getting from the reducer which causes stale variables
+              const currentRating = calculateRating(
+                newPosition,
+                perfectZoneX,
+                deviceType ?? "pc"
+              );
+              // dispatch the rating along with timestamp to re-render 100%
+              dispatch(setCurrentRating(newPosition, perfectZoneX, Date.now()));
 
-                if (currentRating !== "MISS")
-                  console.log("Gesture is correct at : ", newPosition);
-                else console.log("Gesture is correct but Missed timing");
+              if (currentRating !== "MISS")
+                console.log("Gesture is correct at : ", newPosition);
+              else console.log("Gesture is correct but Missed timing");
 
-                // useReducer function to calculate score, 
-                dispatch(addScore(currentRating, "No Difficulty Mode"));
+              // useReducer function to calculate score,
+              dispatch(addScore(currentRating, "No Difficulty Mode"));
             } else if (gestureStatus === false) {
-
-                gestureJudged = true;
-                // MISS, pass 0 xCoordinate
-                // the Date.now() is the timestamp used to re-render the state even
-                // if the xCoordinate is change used in game.tsx passed through useShowRating hook.
-                dispatch(setCurrentRating(0, perfectZoneX, Date.now()));
-                console.log("Gesture is incorrect");
+              gestureJudged = true;
+              // MISS, pass 0 xCoordinate
+              // the Date.now() is the timestamp used to re-render the state even
+              // if the xCoordinate is change used in game.tsx passed through useShowRating hook.
+              dispatch(setCurrentRating(0, perfectZoneX, Date.now()));
+              console.log("Gesture is incorrect");
             }
           }
         }
@@ -176,11 +193,10 @@ export const useHandMovement = (
           setHandXCoordinate(0);
         }
       }, 16); // 16ms
-      
     };
 
     // Start with 0 Index
     handleHandEntry(0);
-  }, [dispatch, isCameraReady, setAreHandsignsDone, setHandXCoordinate, song_entries]);
+  }, [deviceType, dispatch, isCameraReady, setAreHandsignsDone, setHandXCoordinate, song_entries]);
 };
 

@@ -62,7 +62,7 @@ const SongSelectPage = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   // State to track if on smaller screen
-  const [ isMobile, setIsMobile ] = useState<boolean | null>(null);
+  const [deviceType, setDeviceType] = useState<string>("");
 
   // State to determine the animation direction ("left" or "right")
   const [directionAnimation, setDirectionAnimation] = useState<
@@ -74,13 +74,13 @@ const SongSelectPage = () => {
 
   useEffect(() => {
     if (width < 768) {
-      setIsMobile(true);
+      setDeviceType("mobile");
+    } else if (width < 1024) {
+      setDeviceType("tablet");
     } else {
-      setIsMobile(false);
+      setDeviceType("pc");
     }
   }, [width]);
-
-
 
   /**
    * Helper function: Calculates the index in a circular way.
@@ -156,6 +156,7 @@ const SongSelectPage = () => {
         {visibleItems.map((song, i) => (
           <NavLink
             to={`/play/song/${song.label.var_name}`}
+            state={{ deviceType: deviceType }}
             className={`relative select-none
               ${
                 i === 1
@@ -164,9 +165,7 @@ const SongSelectPage = () => {
                     : "animate-slide-right"
                   : ""
               }
-              ${isMobile === true ? 
-                  i === 1 ? "block" : "hidden"
-                : "" }
+              ${deviceType === "mobile" ? (i === 1 ? "block" : "hidden") : ""}
               hover:scale-105 transition-all
               `}
             onClick={() => clickSound.playAudio()}

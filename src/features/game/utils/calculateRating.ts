@@ -11,12 +11,13 @@
  * @param perfectZoneX - The X-coordinate of the perfect zone.
  * @returns A string representing the rating: "PERFECT", "GOOD", "OK", or "MISS".
  */
-export const calculateRating = (currentPosition: number, perfectZoneX: number): string => {
+export const calculateRating = (currentPosition: number, perfectZoneX: number, deviceType: string): string => {
   const distanceFromPerfect = Math.abs(currentPosition - perfectZoneX);
 
   const perfectThreshold = 15;
   const goodThreshold = 31;
-  const okThreshold = 199;
+  // if not mobile, set 127
+  const okThreshold = deviceType !== "mobile" ? 127 : 95;
 
   if (distanceFromPerfect <= perfectThreshold) {
     return "PERFECT";
