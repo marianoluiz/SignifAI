@@ -1,5 +1,5 @@
 import { useState, useReducer } from "react";
-import { useParams, useNavigate, useLocation } from "react-router";
+import { useParams, useNavigate } from "react-router";
 
 import { IMAGES } from "../../../constants/images"
 import { AUDIO } from "../../../constants/audio";
@@ -15,6 +15,7 @@ import { useGameSetup } from "../hooks/useGameSetup";
 import { useGameTimer } from "../hooks/useGameTimer";
 import { useHandMovement } from "../hooks/useHandMovement";
 import useShowRating from "../hooks/useShowRating";
+import useDeviceType from "../hooks/useDeviceType";
 
 /**
  * GamePage Component
@@ -51,9 +52,7 @@ const GamePage = () => {
   // fetch song
   const { song_var } = useParams();
 
-  // state passed
-  const location = useLocation();
-  const { deviceType } = (location.state as { deviceType?: string }) || {}; // location.state is an object
+  const deviceType = useDeviceType();
 
   const song_details = songs_config.songs.find(
     (song) => song.var_name === song_var

@@ -1,10 +1,10 @@
+import { useState } from "react";
 import { NavLink } from "react-router";
+import songs_config from "../../../config/songs_config.json";
 import { IMAGES } from "../../../constants/images";
 import { AUDIO } from "../../../constants/audio";
 import useAudio from "../../../hooks/useAudio";
-import songs_config from "../../../config/songs_config.json";
-import { useEffect, useState } from "react";
-import useWindowDimensions from "../hooks/useWindowDimension";
+import useDeviceType from "../hooks/useDeviceType";
 
 /**
  * SongSelectPage Component
@@ -15,9 +15,9 @@ import useWindowDimensions from "../hooks/useWindowDimension";
  *
  * Features:
  * - Displays a carousel of songs with animations for navigation. uses circular indexing to loop ui
- *    - tracks the index of the initially centered using currentIndex state 
+ *    - tracks the index of the initially centered using currentIndex state
  *    - prev and next moves that the currentIndex in a circular manner
- * 
+ *
  * - Allows the player to navigate between songs using left and right buttons.
  * - Plays a click sound when navigating or selecting a song.
  * - Dynamically loads song data (title, author, and images) from a JSON configuration file.
@@ -43,6 +43,9 @@ const SongSelectPage = () => {
   // Load song options from the JSON configuration file
   const song_options = songs_config.songs;
 
+  // get device type from a hook
+  const deviceType = useDeviceType();
+
   // Panel Button Styles
   // Blue images for inactive panels
   const panelImgBlue = [
@@ -61,26 +64,10 @@ const SongSelectPage = () => {
   // State to track the current centered song in the carousel
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  // State to track if on smaller screen
-  const [deviceType, setDeviceType] = useState<string>("");
-
   // State to determine the animation direction ("left" or "right")
   const [directionAnimation, setDirectionAnimation] = useState<
     "left" | "right"
   >("right");
-
-  // get window width from a hook
-  const { width } = useWindowDimensions();
-
-  useEffect(() => {
-    if (width < 768) {
-      setDeviceType("mobile");
-    } else if (width < 1280) {
-      setDeviceType("tablet");
-    } else {
-      setDeviceType("pc");
-    }
-  }, [width]);
 
   /**
    * Helper function: Calculates the index in a circular way.
@@ -156,7 +143,6 @@ const SongSelectPage = () => {
         {visibleItems.map((song, i) => (
           <NavLink
             to={`/play/song/${song.label.var_name}`}
-            state={{ deviceType: deviceType }}
             className={`relative select-none
               ${
                 i === 1
