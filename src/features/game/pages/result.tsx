@@ -63,7 +63,7 @@ const ResultPage = () => {
   return (
     /* row */
     <div
-      className="w-screen h-screen flex gap-8 items-center justify-center"
+      className="w-screen h-screen overflow-hidden flex gap-8 items-center justify-center"
       style={{
         backgroundImage: `url(${IMAGES.results_bg})`,
         backgroundSize: "cover",

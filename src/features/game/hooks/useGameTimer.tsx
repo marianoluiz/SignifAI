@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { reduceDuration } from "../gameReducer";
 import { GameAction, GameState } from "../gameTypes";
 import { NavigateFunction } from "react-router";
+import { stopWebcam } from "../../../utils/handLandmarkerHelper";
 
 /**
  * Function handle game over
@@ -18,7 +19,8 @@ export const useGameTimer = (
   dispatch: React.ActionDispatch<[action: GameAction]>,
   navigate: NavigateFunction,
   state: GameState,
-  song_title: string
+  song_title: string,
+  videoRef: React.RefObject<HTMLVideoElement | null>
 ) => {
   useEffect(() => {
     const interval = setInterval(() => {
@@ -28,10 +30,11 @@ export const useGameTimer = (
         navigate("/play/result", {
           state: { score: state.score, song_title: song_title },
         });
+        stopWebcam(videoRef);
         clearInterval(interval);
       }
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [song_duration, dispatch, navigate, state.score, song_title]);
+  }, [song_duration, dispatch, navigate, state.score, song_title, videoRef]);
 };

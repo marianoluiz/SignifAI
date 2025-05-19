@@ -118,7 +118,8 @@ const SongSelectPage = () => {
     setIsAnimating(true);
 
     setCurrentIndex((prev) => (prev + 1) % song_options.length);
-
+    
+    // Bugfix: disable selecting when panel is animating through this state
     setTimeout(() => {
       setIsAnimating(false);
     }, 500);

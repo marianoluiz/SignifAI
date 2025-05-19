@@ -88,6 +88,23 @@ export const startWebcamAndDetect = (
 };
 
 /**
+ * Turns off webcam
+ * 
+ * @param videoRef - the video canvas reference from the ui
+ */
+export const stopWebcam = (videoRef: React.RefObject<HTMLVideoElement | null>) => {
+  const stream = videoRef.current?.srcObject as MediaStream;
+
+  if (stream) {
+    stream.getTracks().forEach((track) => {
+      track.stop();
+    });
+    videoRef.current!.srcObject = null;
+    console.log("Webcam stopped.");
+  }
+};
+
+/**
 * Draws lines between connected hand landmarks on the canvas.
 * 
 * @param ctx - Canvas rendering context.

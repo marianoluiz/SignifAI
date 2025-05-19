@@ -101,7 +101,8 @@ const GamePage = () => {
     dispatch,
     navigate,
     state,
-    song_details?.title ?? "Unknown Title"
+    song_details?.title ?? "Unknown Title",
+    videoRef
   );
 
   // Hand movement logic Hook
@@ -124,7 +125,7 @@ const GamePage = () => {
   return (
     /* Screen Container */
     <div
-      className="w-screen h-screen flex flex-col justify-center"
+      className="w-screen h-screen overflow-hidden flex flex-col justify-center"
       style={{
         backgroundImage: `url(${
           IMAGES[`${song_var}_bg` as keyof typeof IMAGES]
