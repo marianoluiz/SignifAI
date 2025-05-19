@@ -25,9 +25,9 @@ export const useGameTimer = (
       if (song_duration > 0) {
         dispatch(reduceDuration());
       } else if (song_duration <= 0) {
-        /* navigate("/play/result", {
+        navigate("/play/result", {
           state: { score: state.score, song_title: song_title },
-        }); */
+        });
         clearInterval(interval);
       }
     }, 1000);
