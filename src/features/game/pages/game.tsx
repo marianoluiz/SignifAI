@@ -208,10 +208,10 @@ const GamePage = () => {
                 {splitLyrics(state.currentLyrics).map((line, index, arr) => {
                   return (
                     <span key={line}>
-                      {line} 
+                      {line}
                       {index !== arr.length - 1 && <br />}
                     </span>
-                  )
+                  );
                 })}
                 <span className="text-red-500">{state.currentPrompt}</span>
               </h2>

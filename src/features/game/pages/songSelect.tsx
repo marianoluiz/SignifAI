@@ -89,6 +89,9 @@ const SongSelectPage = () => {
     return { label: song_options[index], key: index }; // Assign has a song configs to label and the got index in key
   });
 
+  // track if panel is still animating
+  const [ isAnimating, setIsAnimating ] = useState(false);
+
   /**
    * Handles the "Previous" button click.
    * Moves to the previous song in the carousel (looping).
@@ -96,9 +99,13 @@ const SongSelectPage = () => {
   const handlePrev = () => {
     clickSound.playAudio();
     setDirectionAnimation("right");
+    setIsAnimating(true);
     setCurrentIndex(
       (prev) => (prev - 1 + song_options.length) % song_options.length
     );
+    setTimeout(() => {
+      setIsAnimating(false);
+    }, 500)
   };
 
   /**
@@ -108,7 +115,14 @@ const SongSelectPage = () => {
   const handleNext = () => {
     clickSound.playAudio();
     setDirectionAnimation("left");
+    setIsAnimating(true);
+
     setCurrentIndex((prev) => (prev + 1) % song_options.length);
+
+    setTimeout(() => {
+      setIsAnimating(false);
+    }, 500);
+
   };
 
   return (
@@ -154,7 +168,13 @@ const SongSelectPage = () => {
               ${deviceType === "mobile" ? (i === 1 ? "block" : "hidden") : ""}
               hover:scale-105 transition-all
               `}
-            onClick={() => clickSound.playAudio()}
+            onClick={(e) => {
+              if (isAnimating) {
+                e.preventDefault(); // Prevent navigation while animating
+                return;
+              }
+              clickSound.playAudio();
+            }}
             key={song.key} /* Unique key for each item */
           >
             {/* Panel Image */}
