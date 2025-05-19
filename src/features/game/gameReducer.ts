@@ -65,8 +65,8 @@ export const gameReducer = (state: GameState, action: GameAction) => {
      */
     
     case SET_CURRENT_RATING:
-      { const { newPosition, perfectZoneX, timestamp} = action.payload;
-        const rating = calculateRating(newPosition, perfectZoneX);
+      { const { newPosition, perfectZoneX, timestamp, deviceType} = action.payload;
+        const rating = calculateRating(newPosition, perfectZoneX, deviceType);
         return { ...state, currentRating: rating, timestamp: timestamp}; }
     
     /**
@@ -132,7 +132,7 @@ export const addHandEntry = ( currentSymbol: string, currentLyrics: string, curr
  * @param timestamp - The timestamp when the rating was calculated.
  * @returns An action object with type `SET_CURRENT_RATING` and the rating data as payload.
  */
-export const setCurrentRating = ( newPosition: number, perfectZoneX: number, timestamp: number ) => ({
+export const setCurrentRating = ( newPosition: number, perfectZoneX: number, timestamp: number, deviceType: string ) => ({
   type: SET_CURRENT_RATING,
-  payload: { newPosition, perfectZoneX, timestamp }
+  payload: { newPosition, perfectZoneX, timestamp, deviceType }
 });

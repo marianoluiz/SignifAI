@@ -133,6 +133,10 @@ type setCurrentRating = {
      * The timestamp when the rating was calculated.
      */
     timestamp: number;
+    /**
+     * The device of the user
+     */
+    deviceType: string;
   };
 };
 

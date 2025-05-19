@@ -16,6 +16,7 @@ import { useGameTimer } from "../hooks/useGameTimer";
 import { useHandMovement } from "../hooks/useHandMovement";
 import useShowRating from "../hooks/useShowRating";
 import useDeviceType from "../hooks/useDeviceType";
+import splitLyrics from "../utils/splitLyrics";
 
 /**
  * GamePage Component
@@ -203,25 +204,15 @@ const GamePage = () => {
           >
             <div className="bg-[rgba(0,0,0,0.5)] px-4 py-4">
               <h2 className="text-sm md:text-lg lg:text-lg text-white">
-                {state.currentLyrics.slice(0, 42)}
-                {state.currentLyrics.length > 42 && (
-                  <>
-                    <br />
-                    {state.currentLyrics.slice(42, 84)}
-                  </>
-                )}
-                {state.currentLyrics.length > 84 && (
-                  <>
-                    <br />
-                    {state.currentLyrics.slice(84, 126)}
-                  </>
-                )}
-                {state.currentLyrics.length > 126 && (
-                  <>
-                    <br />
-                    {state.currentLyrics.slice(126, 168)}
-                  </>
-                )}
+                {/* helper function to split lyrics */}
+                {splitLyrics(state.currentLyrics).map((line, index, arr) => {
+                  return (
+                    <span key={line}>
+                      {line} 
+                      {index !== arr.length - 1 && <br />}
+                    </span>
+                  )
+                })}
                 <span className="text-red-500">{state.currentPrompt}</span>
               </h2>
             </div>
@@ -258,7 +249,6 @@ const GamePage = () => {
             className="py-2 px-1 h-full rounded-xs bg-[rgba(0,0,0,0.1)] z-10"
             style={{ transform: `translateX(-${handXCoordinate}px)` }}
           >
-
             <img
               src={IMAGES[state.currentSymbol as keyof typeof IMAGES]}
               className="w-full h-[80%]"

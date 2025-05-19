@@ -105,9 +105,6 @@ export const useHandMovement = (
       // get duration in an entry
       const duration = song_entries[index].duration;
 
-      // ======TESTING PURPOSE======
-      // deviceType = "mobile"
-
       // default for pc
       let perfectZoneX = 600;
       let rateZone = 200;
@@ -158,7 +155,14 @@ export const useHandMovement = (
                 deviceType ?? "pc"
               );
               // dispatch the rating along with timestamp to re-render 100%
-              dispatch(setCurrentRating(newPosition, perfectZoneX, Date.now()));
+              dispatch(
+                setCurrentRating(
+                  newPosition,
+                  perfectZoneX,
+                  Date.now(),
+                  deviceType ?? "pc"
+                )
+              );
 
               if (currentRating !== "MISS")
                 console.log("Gesture is correct at : ", newPosition);
@@ -171,7 +175,14 @@ export const useHandMovement = (
               // MISS, pass 0 xCoordinate
               // the Date.now() is the timestamp used to re-render the state even
               // if the xCoordinate is change used in game.tsx passed through useShowRating hook.
-              dispatch(setCurrentRating(0, perfectZoneX, Date.now()));
+              dispatch(
+                setCurrentRating(
+                  0,
+                  perfectZoneX,
+                  Date.now(),
+                  deviceType ?? "pc"
+                )
+              );
               console.log("Gesture is incorrect");
             }
           }
@@ -182,7 +193,9 @@ export const useHandMovement = (
           /* If 1 hand sign done and not judged, pass 0 as coordinate for it to be MISS rating */
           if (gestureJudged === false) {
             // MISS, pass 0 xCoordinate to be rated wrong
-            dispatch(setCurrentRating(0, perfectZoneX, Date.now()));
+            dispatch(
+              setCurrentRating(0, perfectZoneX, Date.now(), deviceType ?? "pc")
+            );
             console.log("Gesture Missed!");
           }
 
