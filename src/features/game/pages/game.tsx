@@ -163,7 +163,7 @@ const GamePage = () => {
       {/* Camera Container */}
       <div className="w-screen h-[25vh] md:h-[30vh] lg:h-[60vh] flex justify-center content-center">
         {/* user camera */}
-        <div className="relative ml-8 h-full aspect-video rounded-lg">
+        <div className="relative ml-0 lg:ml-8 h-full aspect-video rounded-lg">
           {/* Video feed from the user's camera */}
           <video
             className="absolute aspect-video w-full h-full object-cover rounded-md"
@@ -187,18 +187,23 @@ const GamePage = () => {
       </div>
 
       {/* Hand Conveyer */}
-      <div className="mt-4 h-40 flex relative justify-end content-center">
+      <div
+        className="mt-4 flex relative justify-end content-center
+                    h-30
+                    sm:h-40
+      "
+      >
         {/* Lyrics and Prompt */}
         {!areHandsignsDone && (
           <div
             className="absolute
-                          left-10
+                          left-10 top-35
                           md:left-50 md:top-50
                           lg:left-30 lg:top-0
                           2xl:left-80 2xl:top-8"
           >
             <div className="bg-[rgba(0,0,0,0.5)] px-4 py-4">
-              <h2 className=" text-xl text-white">
+              <h2 className="text-sm md:text-lg lg:text-lg text-white">
                 {state.currentLyrics.slice(0, 42)}
                 {state.currentLyrics.length > 42 && (
                   <>
@@ -228,7 +233,11 @@ const GamePage = () => {
         {showRating && (
           <div
             className="absolute h-full animate-fade-in z-9 transition-all
-                        lg:right-180
+                        right-65
+                        sm:w-auto
+                        md:right-135
+                        lg:right-140
+                        xl:right-180
           "
           >
             <img
@@ -247,17 +256,16 @@ const GamePage = () => {
         {/* Hand signs, width is 120 */}
         {!areHandsignsDone && (
           <div
-            className="py-2 px-1 rounded-xs bg-[rgba(0,0,0,0.1)] z-10"
+            className="py-2 px-1 h-full rounded-xs bg-[rgba(0,0,0,0.1)] z-10"
             style={{ transform: `translateX(-${handXCoordinate}px)` }}
           >
-            {/*             style={{ transform: `translateX(-${handXCoordinate}px)` }}
-             */}
+
             <img
               src={IMAGES[state.currentSymbol as keyof typeof IMAGES]}
-              className="w-28 h-32"
+              className="w-full h-[80%]"
               alt="Hand"
             />
-            <h2 className="4xl text-center text-gray-300 font-bold">
+            <h2 className="4xl h-[20%] text-center text-gray-300 font-bold">
               {state.currentSymbol}
             </h2>
           </div>
@@ -271,6 +279,7 @@ const GamePage = () => {
         {/* Mobile mode: handsign half: 60px, perfect: 200px, rateZone: 16px, 32px, 96px, 190px (200-10 <rateZone>) */}
 
         {/* How many should i move this bar left side to reach 660px ?*/}
+        {/* PERFECT */}
         {/* 60-32 is 28 so i need to add 600 by 28 = 628px*/}
         {/* 60-32 is 28 so i need to add 400 by 28 = 428px*/}
         {/* 60-32 is 28 so i need to add 600 by 28 = 228px*/}
@@ -281,6 +290,7 @@ const GamePage = () => {
                     xl:right-[628px]
         "
         ></div>
+        {/* GOOD */}
         {/* 60-64 is -4 so i need to reduce 600 by 4 = 596px */}
         {/* 60-64 is -4 so i need to reduce 400 by 4 = 396px */}
         {/* 60-64 is -4 so i need to reduce 200 by 4 = 196px */}
@@ -291,6 +301,7 @@ const GamePage = () => {
                     xl:right-[596px] 
         "
         ></div>
+        {/* OK */}
         {/* 60-128 is -68 so i need to reduce 600 by 68 = 532px */}
         {/* 60-128 is -68 so i need to reduce 400 by 68 = 332px */}
         {/* 60-96 is -36 so i need to reduce 200 by 36 = 164px */}
@@ -302,6 +313,7 @@ const GamePage = () => {
                     xl:w-32 xl:right-[532px] 
         "
         ></div>
+        {/* MISS */}
         {/* 60-400 is -340 so i need to reduce 600 by 340 = 260 */}
         {/* 60-300 is -240 so i need to reduce 400 by 240 = 160 */}
         {/* 60-180 is -120 so i need to reduce 200 by 120 = 80 */}

@@ -75,7 +75,7 @@ const SongSelectPage = () => {
   useEffect(() => {
     if (width < 768) {
       setDeviceType("mobile");
-    } else if (width < 1024) {
+    } else if (width < 1280) {
       setDeviceType("tablet");
     } else {
       setDeviceType("pc");
@@ -182,10 +182,10 @@ const SongSelectPage = () => {
 
             {/* Panel Title */}
             <div
-              className={`absolute min-w-36 -rotate-6 -left-4 py-2 px-4 bg-white drop-shadow-lg/50 flex justify-center transition-all z-2
+              className={`absolute min-w-36 -rotate-6 -left-4 py-2 px-4 bg-white drop-shadow-lg/50 flex justify-center  z-2
                 ${i === 1 ? "bottom-20" : "bottom-17"}`}
             >
-              <span className="text-center text-sm sm:text-md lg:text-lg text-fuchsia-900 transition-all font-bold">
+              <span className="text-center text-sm sm:text-md lg:text-lg text-fuchsia-900 font-bold">
                 {song.label.title}
               </span>
             </div>

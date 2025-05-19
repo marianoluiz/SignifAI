@@ -14,9 +14,9 @@
 export const calculateRating = (currentPosition: number, perfectZoneX: number, deviceType: string): string => {
   const distanceFromPerfect = Math.abs(currentPosition - perfectZoneX);
 
-  const perfectThreshold = 15;
-  const goodThreshold = 31;
-  // if not mobile, set 127
+  const perfectThreshold = 31;
+  const goodThreshold = 63;
+  // if not mobile, set 127px the ok
   const okThreshold = deviceType !== "mobile" ? 127 : 95;
 
   if (distanceFromPerfect <= perfectThreshold) {
