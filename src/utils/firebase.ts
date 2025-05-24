@@ -32,7 +32,7 @@ const auth = getAuth(app);
 export const addDataToFirestore = async (collectionName: string, data: object) => {
     try {
         const docRef = await addDoc(collection(db, collectionName), data);
-        console.log("Document written with ID: ", docRef.id);
+        // console.log("Document written with ID: ", docRef.id);
         return docRef;
     } catch (error) {
         console.error("Error adding document: ", error);
@@ -61,7 +61,7 @@ export const fetchData = async (collectionName: string, sortBy: string = "score"
             score: doc.data().score,        // Accessing the 'score' property from the document data
             song: doc.data().song           // Accessing the 'song' property from the document data
         }));
-        console.log("Fetched data:", data);
+        // console.log("Fetched data:", data);
         return data;
     } catch (error) {
         console.error("Error fetching documents: ", error);
