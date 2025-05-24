@@ -18,6 +18,8 @@ let lastVideoTime = -1;
 */
 let results: any;
 
+let currentStream: MediaStream | null = null;
+
 /**
 * List of landmark index pairs representing hand connections for drawing.
 * Each pair connects two landmark indices.
@@ -81,6 +83,8 @@ export const startWebcamAndDetect = (
               canvasRef.current.style.transform = "scaleX(-1)";
               videoRef.current.addEventListener('loadeddata', () => predictWebcam(videoRef, canvasRef));
           }
+
+          currentStream = stream;
       })
       .catch((err) => {
           console.error("Error accessing webcam:", err);
@@ -93,13 +97,20 @@ export const startWebcamAndDetect = (
  * @param videoRef - the video canvas reference from the ui
  */
 export const stopWebcam = (videoRef: React.RefObject<HTMLVideoElement | null>) => {
-  const stream = videoRef.current?.srcObject as MediaStream;
+  
+  // this was !videoRef before
+  if (!videoRef) {
+    console.warn("videoRef.current is null in stopWebcam");
+  }
 
-  if (stream) {
-    stream.getTracks().forEach((track) => {
+  // const stream = videoRef.current?.srcObject as MediaStream;
+
+  if (currentStream) {
+    currentStream.getTracks().forEach((track) => {
       track.stop();
-    });
-    videoRef.current!.srcObject = null;
+  });
+  
+    // videoRef.current!.srcObject = null;
     console.log("Webcam stopped.");
   }
 };

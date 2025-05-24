@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import {
   initializeHandLandmarker,
   startWebcamAndDetect,
+  stopWebcam,
 } from "../../../utils/handLandmarkerHelper";
 
 
@@ -42,6 +43,8 @@ export const useCameraSetup = (
 
     return () => {
       setIsCameraReady(false);
+      stopWebcam(videoRef);
+
       videoRef.current?.removeEventListener("loadeddata", () => {
         console.log("Removed loadeddata event listener");
       });

@@ -10,8 +10,7 @@ export const useCleanup = (videoRef: React.RefObject<HTMLVideoElement | null>) =
     return () => {
       console.log("Ending Camera...")
       
-      if (videoRef)
-        stopWebcam(videoRef);
+      stopWebcam(videoRef);
     }
   }, []);
 };

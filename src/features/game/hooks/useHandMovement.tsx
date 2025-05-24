@@ -109,10 +109,10 @@ export const useHandMovement = (
       let perfectZoneX = 600;
       let rateZone = 200;
 
-      if ( deviceType === "mobile" ) {
+      if (deviceType === "mobile") {
         perfectZoneX = 200;
         rateZone = 20;
-      } else if (deviceType === "tablet" ) {
+      } else if (deviceType === "tablet") {
         perfectZoneX = 400;
         rateZone = 100;
       }
@@ -210,6 +210,12 @@ export const useHandMovement = (
 
     // Start with 0 Index
     handleHandEntry(0);
+
+    // CLEANUP: clear interval on unmount or dependency change
+    return () => {
+      if (interval) clearInterval(interval);
+      setHandXCoordinate(0); // Optionally reset hand position
+    };
   }, [deviceType, dispatch, isCameraReady, setAreHandsignsDone, setHandXCoordinate, song_entries]);
 };
 

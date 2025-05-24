@@ -134,7 +134,7 @@ const GamePage = () => {
   // we pass the timestamp of rating to rerender the rating effect
   // even if rating dont change
   const [ showRating ] = useShowRating(state.currentRating, state.timestamp);
-
+  
   return (
     /* Screen Container */
     <div
