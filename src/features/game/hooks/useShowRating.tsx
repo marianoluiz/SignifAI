@@ -8,7 +8,7 @@ import { useState, useEffect } from "react";
  * @returns A boolean state indicating whether the rating effect should be shown.
  */
 const useShowRating = (currentRating: string, timestamp: number) => {
-  const [showRating, setShowRating] = useState(false);
+  const [ showRating, setShowRating ] = useState(false);
 
   useEffect(() => {
     if (currentRating) {

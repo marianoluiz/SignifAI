@@ -1,4 +1,4 @@
-import { useState, useReducer } from "react";
+import { useState, useReducer, useMemo } from "react";
 import { useParams, useNavigate } from "react-router";
 
 import { IMAGES } from "../../../constants/images"
@@ -17,6 +17,7 @@ import { useHandMovement } from "../hooks/useHandMovement";
 import useShowRating from "../hooks/useShowRating";
 import useDeviceType from "../hooks/useDeviceType";
 import splitLyrics from "../utils/splitLyrics";
+import { useCleanup } from "../hooks/useCleanup";
 
 /**
  * GamePage Component
@@ -55,12 +56,18 @@ const GamePage = () => {
 
   const deviceType = useDeviceType();
 
-  const song_details = songs_config.songs.find(
-    (song) => song.var_name === song_var
+  const song_details = useMemo(
+    () => songs_config.songs.find((song) => song.var_name === song_var),
+    [song_var]
   );
-  const wholeSongDuration = song_details?.song_duration ?? 0;
-  const song_entries = song_details?.entries;
+  
+  const wholeSongDuration = useMemo(
+    () => song_details?.song_duration ?? 0,
+    [song_details]
+  );
 
+  const song_entries = useMemo(() => song_details?.entries, [song_details]);
+  
   // play song in a global hook
   const song = useAudio(AUDIO[song_var as keyof typeof AUDIO]);
 
@@ -105,6 +112,12 @@ const GamePage = () => {
     videoRef
   );
 
+  /**
+   * Cleanup function if back button is pressed
+   * - stops the camera if game is backed
+   */
+  useCleanup(videoRef);
+
   // Hand movement logic Hook
   // Handles the movement of hand signs and evaluates player performance
   useHandMovement(
@@ -120,7 +133,7 @@ const GamePage = () => {
   // Handles the rating effect duration
   // we pass the timestamp of rating to rerender the rating effect
   // even if rating dont change
-  const [showRating] = useShowRating(state.currentRating, state.timestamp);
+  const [ showRating ] = useShowRating(state.currentRating, state.timestamp);
 
   return (
     /* Screen Container */

@@ -25,7 +25,7 @@ export const useGameTimer = (
   useEffect(() => {
     const interval = setInterval(() => {
       if (song_duration > 0) {
-        dispatch(reduceDuration());
+        dispatch(reduceDuration(1000));
       } else if (song_duration <= 0) {
         navigate("/play/result", {
           state: { score: state.score, song_title: song_title },
@@ -35,6 +35,8 @@ export const useGameTimer = (
       }
     }, 1000);
 
-    return () => clearInterval(interval);
+    return () => {
+      clearInterval(interval);
+    };
   }, [song_duration, dispatch, navigate, state.score, song_title, videoRef]);
 };
