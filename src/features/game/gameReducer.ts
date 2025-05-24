@@ -25,12 +25,13 @@ export const gameReducer = (state: GameState, action: GameAction) => {
       return { ...state, song_duration: action.payload }
 
     /**
-     * Reduces the remaining song duration by 1000 milliseconds (1 second).
+     * Reduces the remaining song duration by a milliseconds (1 second).
      * 
      * @action.type REDUCE_DURATION
      */
     case REDUCE_DURATION:
-      return { ...state, song_duration: state.song_duration - 1000}
+      {  const { ms } = action.payload;
+      return {...state, song_duration: state.song_duration - ms} }
 
     /**
      * Updates the current hand entry data, including the symbol, lyrics, and prompt.
@@ -103,12 +104,13 @@ export const addScore = (rating: string, difficulty: string) => ({
 });
 
 /**
- * Creates an action to reduce the remaining song duration by 1000 milliseconds (1 second).
+ * Creates an action to reduce the remaining song duration by a milliseconds.
  * 
  * @returns An action object with type `REDUCE_DURATION`.
  */
-export const reduceDuration = () => ({
+export const reduceDuration = ( ms: number ) => ({
   type: REDUCE_DURATION,
+  payload: { ms }
 });
 
 /**

@@ -49,7 +49,7 @@ export const SET_GAME = "SET_GAME" as const;
 export const ADD_SCORE = "ADD_SCORE" as const;
 
 /**
- * Action type for reducing the remaining song duration by 1 second.
+ * Action type for reducing the remaining song duration by millisecond.
  */
 export const REDUCE_DURATION = "REDUCE_DURATION" as const;
 
@@ -91,6 +91,7 @@ type AddScoreAction = {
  * Action for reducing the remaining song duration by 1 second.
  */
 type ReduceDurationAction = {
+  payload: { ms: number; };
   type: typeof REDUCE_DURATION;
 };
 
