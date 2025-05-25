@@ -126,7 +126,7 @@ const GamePage = () => {
     dispatch,
     setAreHandsignsDone,
     setHandXCoordinate,
-    deviceType ?? "pc"
+    (deviceType ?? "pc") as "mobile" | "tablet" | "pc"
   );
 
   // Rating manager  hook

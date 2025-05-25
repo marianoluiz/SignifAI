@@ -77,7 +77,7 @@ export const useHandMovement = (
   dispatch: React.ActionDispatch<[action: GameAction]>,
   setAreHandsignsDone: React.Dispatch<React.SetStateAction<boolean>>,
   setHandXCoordinate: React.Dispatch<React.SetStateAction<number>>,
-  deviceType: string
+  deviceType: "mobile" | "tablet" | "pc"
 ) => {
   useEffect(() => {
     if (!isCameraReady) return;
@@ -105,23 +105,21 @@ export const useHandMovement = (
       // get duration in an entry
       const duration = song_entries[index].duration;
 
-      // default for pc
-      let perfectZoneX = 600;
-      let rateZone = 200;
+      /* Config instead of if else blocks */
+      const deviceConfig = {
+        mobile: { perfectZoneX: 200, rateZone: 20 },
+        tablet: { perfectZoneX: 400, rateZone: 100 },
+        pc: { perfectZoneX: 600, rateZone: 200 },
+      };
 
-      if (deviceType === "mobile") {
-        perfectZoneX = 200;
-        rateZone = 20;
-      } else if (deviceType === "tablet") {
-        perfectZoneX = 400;
-        rateZone = 100;
-      }
+      const { perfectZoneX, rateZone } =
+        deviceConfig[deviceType] ?? deviceConfig["pc"];
 
       const perfectTime = duration;
 
       const startTime = Date.now();
       let gestureJudged = false; // mark if sign is judged
-
+      
       // hand sign movement logic loop
       interval = setInterval(async () => {
         // get progress and move the hand
